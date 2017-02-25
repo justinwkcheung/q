@@ -1,0 +1,2 @@
+class SuggestedsongsController < ApplicationController
+end

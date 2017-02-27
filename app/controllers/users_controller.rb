@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
 
   def spotify
-     spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
-     @spotify_user = spotify_user
+     session[:user] = RSpotify::User.new(request.env['omniauth.auth'])
+     redirect_to users_path
+  end
 
-    @playlist = @spotify_user.playlists.first
-    @uri = @playlist.uri
+  def index
 
   end
 

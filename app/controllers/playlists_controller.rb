@@ -9,8 +9,11 @@ class PlaylistsController < ApplicationController
 
   def destroy
     @playlist_q = Playlist.find(params[:id])
+    me = RSpotify::User.new(session[:user])
+    byebug
     if @playlist_q.destroy
       
+      byebug
       redirect_to playlists_path
     end
   end

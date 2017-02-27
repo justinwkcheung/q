@@ -1,5 +1,2 @@
-<%= @spotify_user %>
-<%= @country %>
-<%= @email %>
-<!-- <%= @playlist %>
-<%= @tracks %> -->
+<%= @playlist.uri %>
+<iframe src="https://embed.spotify.com/?uri=<%=@uri%>" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>

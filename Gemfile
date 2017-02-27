@@ -22,6 +22,7 @@ gem 'rspotify'
 gem 'awesome_print'
 gem 'omniauth'
 gem 'omniauth-oauth2', '1.3.1'
+gem 'figaro'
 # gem 'omniauth-oauth2', '~> 1.4'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

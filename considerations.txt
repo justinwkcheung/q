@@ -1,0 +1,22 @@
+Situation:
+-We would like votes to update the order of music in a playlist in realtime.
+-We currently store the order in two places: our database and Spotify's database.
+-Our app plays music off of the Spotify webplayer iframe, which links to the spotify database.
+
+Complication:
+-There is a delay in the update between the spotify playlist and the spotify web player of up to 10 minutes
+  -To work around this, we want to impose a restriction where users would only be able to modify the 3rd+ song
+-Using Spotify's webplayer, no javascript events are sent
+  -Assuming that users are pausing / skipping music, we do not know when one song ends and another begins
+    -This presents a complication where we do not know what song the playlist is on at any given time.
+    -If we remove the ability to pause / stop the playlist once the party begins, this may solve the problem as we can based
+    everything off of run-time.
+    -If we have the party split into 30-minute segments, we would know how long each segment is, but still do not know when
+    the segment ends as users can pause/skip.
+    -There may be an opportunity to look at the html of the page to see when the duration of the song played equals to the duration of stored for the song.
+    
+
+
+Key Question:
+-While eliminating the play/pause function is not ideal, but under current limitations of the webplayer this may be a stop-gap that allows us to
+continue building the project.

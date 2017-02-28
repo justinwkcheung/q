@@ -17,8 +17,13 @@ class PlaylistsController < ApplicationController
     end
   end
 
+  def show
+    @playlist_q = Playlist.find(params[:id])
+  end
+
   def new
     @playlist = Playlist.new
+    @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
   end
 
   def destroy
@@ -31,17 +36,35 @@ class PlaylistsController < ApplicationController
   def create
     @playlist_spotify = RSpotify::User.new(session[:user]).create_playlist!(playlist_params[:name])
     session[:uri] = @playlist_spotify.uri
-
-    if @playlist_q = Playlist.create(name: playlist_params, uri: session[:uri])
+    if @playlist_q = Playlist.create(
+      name: playlist_params[:name],
+      description: playlist_params[:description],
+      theme: playlist_params[:theme],
+      uri: session[:uri])
       redirect_to playlist_path(@playlist_q)
-
     end
   end
+
+  def edit
+    @playlist_q = Playlist.find(params[:id])
+    @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
+  end
+
+  def update
+    @playlist_q = Playlist.find(params[:id])
+      if @playlist_q.update_attributes(playlist_params)
+        redirect_to playlist_path(@playlist_q)
+      else
+        render :edit
+      end
+  end
+
+
 
 private
 
   def playlist_params
-      params.require(:playlist).permit(:name)
+      params.require(:playlist).permit(:name, :description, :theme)
   end
 
 end

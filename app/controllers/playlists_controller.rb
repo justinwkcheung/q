@@ -19,6 +19,8 @@ class PlaylistsController < ApplicationController
 
   def show
     @playlist_q = Playlist.find(params[:id])
+
+    @playlist_q_songs = SuggestedSongs.where(playlist_id:params[:id])
   end
 
   def new
@@ -34,15 +36,14 @@ class PlaylistsController < ApplicationController
   end
 
   def create
-    @playlist_spotify = RSpotify::User.new(session[:user]).create_playlist!(playlist_params[:name])
-    session[:uri] = @playlist_spotify.uri
+
     if @playlist_q = Playlist.create(
       name: playlist_params[:name],
       description: playlist_params[:description],
       theme: playlist_params[:theme],
-      uri: session[:uri])
       redirect_to playlist_path(@playlist_q)
     end
+
   end
 
   def edit

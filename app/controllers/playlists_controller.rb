@@ -1,7 +1,7 @@
 class PlaylistsController < ApplicationController
 
   def player
-    render :player, layout: false 
+    render :player, layout: false
   end
 
   def index
@@ -30,7 +30,7 @@ class PlaylistsController < ApplicationController
 
   def show
     @playlist_q = Playlist.find(params[:id])
-    @playlist_q_songs = SuggestedSong.find_by(playlist_id: @playlist_q.id)
+    @playlist_q_songs = SuggestedSong.where(playlist_id: @playlist_q.id)
   end
 
   def new

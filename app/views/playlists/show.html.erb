@@ -1,11 +1,23 @@
-<%= link_to "Delete playlist", @playlist_q, method: :delete, data: {confirm: "Are you sure you want to delete this playlist?"} %>
-<%= @playlist_q.description %>
-<%= @playlist_q.theme %>
-
-<%= link_to "Edit Playlist", edit_playlist_path(@playlist_q) %>
-
-<ul>
-<% @playlist_q_songs.each do |song| %>
-<li><%=song.name %></li>
-<% end %>
-</ul>
+<div id="d_player"></div>
+<div id="dz-root"></div>
+<script src="http://e-cdn-files.deezer.com/js/min/dz.js"></script>
+<script>
+  window.dzAsyncInit = function() {
+	DZ.init({
+		appId  : '226822',
+		channelUrl : 'http://localhost:3000/playlist/player',
+    player : {
+      container: 'd_player',
+      width : 800,
+      height : 300,
+  		onload : function(){}
+	  }
+	});
+  };
+  (function() {
+	var e = document.createElement('script');
+	e.src = 'http://e-cdn-files.deezer.com/js/min/dz.js';
+	e.async = true;
+	document.getElementById('dz-root').appendChild(e);
+  }());
+</script>

@@ -1,11 +1,3 @@
-<%= link_to "Delete playlist", @playlist_q, method: :delete, data: {confirm: "Are you sure you want to delete this playlist?"} %>
-<%= @playlist_q.description %>
-<%= @playlist_q.theme %>
-
-<%= link_to "Edit Playlist", edit_playlist_path(@playlist_q) %>
-
-<ul>
-<% @playlist_q_songs.each do |song| %>
-<li><%=song.name %></li>
-<% end %>
-</ul>
+<iframe scrolling="no" frameborder="0" allowTransparency="true"
+src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=tracks&id=<%=@playlist_q_songs.song_id%>" width="700" height="90">
+</iframe>

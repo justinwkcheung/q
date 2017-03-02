@@ -19,8 +19,7 @@ class PlaylistsController < ApplicationController
 
   def show
     @playlist_q = Playlist.find(params[:id])
-
-    @playlist_q_songs = SuggestedSongs.where(playlist_id:params[:id])
+    @playlist_q_songs = SuggestedSong.find_by(playlist_id: @playlist_q.id)
   end
 
   def new
@@ -37,12 +36,12 @@ class PlaylistsController < ApplicationController
 
   def create
 
-    if @playlist_q = Playlist.create(
-      name: playlist_params[:name],
-      description: playlist_params[:description],
-      theme: playlist_params[:theme],
-      redirect_to playlist_path(@playlist_q)
-    end
+    # if @playlist_q = Playlist.create(
+    #   name: playlist_params[:name],
+    #   description: playlist_params[:description],
+    #   theme: playlist_params[:theme],
+    #   redirect_to playlist_path(@playlist_q)
+    # end
 
   end
 

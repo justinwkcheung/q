@@ -1,3 +1,23 @@
-<iframe scrolling="no" frameborder="0" allowTransparency="true"
-src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=tracks&id=<%=@playlist_q_songs.song_id%>" width="700" height="90">
-</iframe>
+<div id="d_player"></div>
+<div id="dz-root"></div>
+<script src="http://e-cdn-files.deezer.com/js/min/dz.js"></script>
+<script>
+  window.dzAsyncInit = function() {
+	DZ.init({
+		appId  : '226822',
+		channelUrl : 'http://localhost:3000/playlist/player',
+    player : {
+      container: 'd_player',
+      width : 800,
+      height : 300,
+  		onload : function(){}
+	  }
+	});
+  };
+  (function() {
+	var e = document.createElement('script');
+	e.src = 'http://e-cdn-files.deezer.com/js/min/dz.js';
+	e.async = true;
+	document.getElementById('dz-root').appendChild(e);
+  }());
+</script>

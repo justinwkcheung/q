@@ -1,5 +1,9 @@
 class PlaylistsController < ApplicationController
 
+  def player
+    render :player, layout: false 
+  end
+
   def index
     spotify_user = RSpotify::User.new(session[:user])
     @my_playlist = spotify_user.create_playlist!('my-playlist')

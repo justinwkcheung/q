@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
 
-get '/auth/spotify/callback', to: 'users#spotify'
+get '/auth/deezer/callback', to: 'sessions#create'
 end

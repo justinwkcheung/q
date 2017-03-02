@@ -1,20 +1,27 @@
 class PlaylistsController < ApplicationController
 
   def index
-    spotify_user = RSpotify::User.new(session[:user])
-    @my_playlist = spotify_user.create_playlist!('my-playlist')
+    # spotify_user = RSpotify::User.new(session[:user])
+    # @my_playlist = spotify_user.create_playlist!('my-playlist')
+    response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=#{params[:code]}&output=json")
 
-    if params[:search]
-      @artists = RSpotify::Artist.search(params[:search])
-      @albums = RSpotify::Album.search(params[:search])
-      @tracks = RSpotify::Track.search(params[:search])
-      @playlists = RSpotify::Playlist.search(params[:search])
-    else
-      @artists = []
-      @albums = []
-      @tracks = []
-      @playlists= []
-    end
+    access_token = response["access_token"]
+    @albums = HTTParty.get("http://api.deezer.com/search/album?q=#{params[:search]}&#{access_token}")
+    @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
+    @playlists = HTTParty.get("http://api.deezer.com/search/playlist?q=#{params[:search]}&#{access_token}")
+    @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
+
+    # if params[:search]
+    #   @artists = RSpotify::Artist.search(params[:search])
+    #   @albums = RSpotify::Album.search(params[:search])
+    #   @tracks = RSpotify::Track.search(params[:search])
+    #   @playlists = RSpotify::Playlist.search(params[:search])
+    # else
+    #   @artists = []
+    #   @albums = []
+    #   @tracks = []
+    #   @playlists= []
+    # end
   end
 
   def show

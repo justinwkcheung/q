@@ -14,3 +14,26 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).on("turbolinks:load", function(){
+
+  $(".suggest_song").on('click', function (event){
+      console.log($(this));
+      console.log($(this).siblings('div').attr('name'));
+      console.log($(this).siblings('div').html());
+
+       event.preventDefault();
+
+       $.ajax({
+          url:'/playlists/1/suggestedsongs',
+          method:'POST',
+          data:{
+           song_id: $(this).siblings('div').attr('name'),
+           name: $(this).siblings('div').html(),
+           playlist_id: 1
+         }
+       }).done(function(data){
+         console.log(data)
+       });
+  });
+ });

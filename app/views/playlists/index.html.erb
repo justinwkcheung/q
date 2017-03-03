@@ -4,19 +4,16 @@
   <h1>Search A Song</h1>
   <%= form_tag  root_path, method: "get" do |f| %>
     <div class="field">
-      <%= label_tag :search %><br/>
       <%= text_field_tag :search %>
-    </div>
-    <div><%= submit_tag "Search" %></div>
+      <%= submit_tag "Search" %></div>
   <% end %>
 
   <div id="search_results"></div>
 </section>
 
-<h2>Search Results</h2>
 <article>
-  <h1>Albums</h1>
   <% if @albums["data"] %>
+    <h1>Albums</h1>
     <% titles = [] %>
     <% @albums["data"].each do |album| %>
       <% unless titles.include?(album['title']) %>
@@ -24,12 +21,14 @@
       <% end %>
     <% end %>
   <% end %>
-  <% titles.each do |title| %>
-    <p><a href="/?&search=<%= title %>" ><%= title %></a><p>
+  <% if titles %>
+    <% titles.each do |title| %>
+      <p><a href="/?&search=<%= title %>" ><%= title %></a><p>
+    <% end %>
   <% end %>
 
-  <h1>Tracks</h1>
-  <% if @tracks %>
+  <% if @tracks["data"] %>
+    <h1>Tracks</h1>
     <% @tracks["data"].each do |track| %>
       <div>
         <div name= <%= track["id"]%> ><%= track["title"] %></div>

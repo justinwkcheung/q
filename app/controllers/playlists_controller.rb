@@ -42,6 +42,8 @@ class PlaylistsController < ApplicationController
     #   redirect_to playlist_path(@playlist_q)
     # end
 
+    User.new(params[pa])
+
   end
 
   def edit

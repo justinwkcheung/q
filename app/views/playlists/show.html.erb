@@ -31,5 +31,6 @@
 
 <% @playlist_q_songs.each do |song| %>
 <%= song.name %>
-  <button type="button" name="button" class="vote">   Vote</button> </br>
+  <button type="button" name="button" class="upvote">   Upvote</button><button type="button" name="button" class="downvote"> Downvote</button>
+  <%= song.net_vote %> </br>
 <% end %>

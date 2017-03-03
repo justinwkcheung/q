@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function(){
+$(document).on("turbolinks:load", function(){
 
   $(".suggest_song").on('click', function (event){
       console.log($(this));

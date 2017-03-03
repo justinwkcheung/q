@@ -1,3 +1,4 @@
+<<<<<<< 69718e2833ee2fbfdbf3b471977fd0b1f20ee95b
 <%= link_to 'Sign in with Deezer', "https://connect.deezer.com/oauth/auth.php?app_id=#{ENV["deezer_application_id"]}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library" %>
 
 
@@ -38,3 +39,29 @@
     <%= f.submit %>
   </div>
 <% end %>
+=======
+<nav>
+
+<div class="nav-wrapper cyan darken-2">
+  <a href=#>Q</a>
+  <ul class="right">
+    <li>
+
+      <%= link_to 'Sign in with Deezer', "https://connect.deezer.com/oauth/auth.php?app_id=#{ENV["deezer_application_id"]}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library" %>
+
+    </li>
+  </ul>
+
+
+
+</div>
+
+<form>
+  <div class="input-field cyan darken-2">
+    <input id="search" type="search" placeholder="Search for music"required>
+    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+    <i class="material-icons">close</i>
+  </div>
+</form>
+</nav>
+>>>>>>> Add materialize scripts

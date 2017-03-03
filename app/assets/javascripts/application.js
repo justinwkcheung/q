@@ -25,7 +25,7 @@ $(document).on("turbolinks:load", function(){
        event.preventDefault();
 
        $.ajax({
-          url:'/playlists/1/suggestedsongs',
+          url:'/playlists/:playlist_id/suggestedsongs',
           method:'POST',
           data:{
            song_id: $(this).siblings('div').attr('name'),
@@ -35,5 +35,22 @@ $(document).on("turbolinks:load", function(){
        }).done(function(data){
          console.log(data)
        });
+  });
+
+  $(".vote").on('click', function() {
+
+    $.ajax({
+      url:'/playlists/:playlist_id/suggestedsongs/:suggestedsong_id/votes',
+      method: 'POST',
+      data: {
+        suggested_song_id:
+        user_id:
+        playlist_id: 
+      }
+
+
+
+    })
+
   });
  });

@@ -5,7 +5,7 @@ class VotesController < ApplicationController
   end
 
   def create
-    @vote = Vote.new(vote_params)
+    @vote = Vote.new(user_id: params[:user_id], suggested_song_id: params[:suggested_song_id], status: params[:status])
     @vote.save
   end
 

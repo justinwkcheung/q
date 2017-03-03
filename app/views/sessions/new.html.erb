@@ -1,40 +1,19 @@
 <%= link_to 'Sign in with Deezer', "https://connect.deezer.com/oauth/auth.php?app_id=#{ENV["deezer_application_id"]}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library" %>
 
+<h1>SESSIONS VIEW</h1>
+<h1>Log In</h1>
 
-<h1>Sign Up</h1>
+<%= form_tag sessions_path, method: :post do %>
+  <div class="field">
+    <%= label_tag :email %><br />
+    <%= text_field_tag :email %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %><br />
+    <%= password_field_tag :password %>
+  </div>
 
-<%= form_for @user do |f| %>
-  <% if @user.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag "Log In" %>
   </div>
 <% end %>

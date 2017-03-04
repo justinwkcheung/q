@@ -14,11 +14,13 @@
     }
   })
   };
-  setTimeout(function(){DZ.player.playTracks([<%= @playlist_q_songs.first.song_id %>])}, 3000);
-  setTimeout(function(){DZ.Event.subscribe('track_end', function(evt_name){
-    console.log("Track has ended");
-    DZ.player.playTracks([<%= @playlist_q_songs.second.song_id %>])},3000);
-  });
+    if (<%= @first_song > 0 %>) {
+      setTimeout(function(){DZ.player.playTracks([<%= @first_song %>])}, 2000);
+      setTimeout(function(){DZ.Event.subscribe('track_end', function(evt_name){
+        console.log("Track has ended");
+        DZ.player.playTracks([<%= @second_song %>])},2000);
+    });
+  };
 
 
   (function() {

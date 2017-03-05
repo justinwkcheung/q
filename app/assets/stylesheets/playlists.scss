@@ -1,3 +1,52 @@
 // Place all the styles related to the playlists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+nav {
+  margin-bottom: 10px;
+  background: #23232D;
+  padding-left: 1rem;
+}
+
+iframe {
+    width: 100%;
+}
+
+.btn {
+  padding: 0 15px; 
+}
+
+.btn:hover:before {
+  opacity:1
+}
+
+.btn:before {
+    content: '';
+    opacity: 0;
+    background-color: rgba(255,255,255,.2);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transition: opacity .2s;
+    z-index: -1;
+}
+
+.song-in-queue {
+  padding: 5px 1rem;
+  line-height: 2.5;
+  background-color: #1E1C27;
+  color: white;
+  overflow: hidden;
+}
+
+.song-list {
+  background-color: #1E1C27;
+  padding-top: 5px;
+  // padding-bottom: 5px;
+};
+
+.buttons {
+  line-height: 0;
+}

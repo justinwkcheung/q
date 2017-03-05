@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require playlists.js
 
 $(document).on("turbolinks:load", function(){
 
@@ -36,6 +37,8 @@ $(document).on("turbolinks:load", function(){
          console.log(data)
        });
   });
+
+
 
   $(".upvote").on('click', function() {
 

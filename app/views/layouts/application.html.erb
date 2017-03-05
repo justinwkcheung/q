@@ -12,7 +12,9 @@
   </head>
 
   <body>
-    <nav>
+    <div class="container">
+
+    <nav class='nav_bar'>
       <p class="user_info">
         <% if current_user %>
         Hello <%= current_user.first_name %>
@@ -25,5 +27,6 @@
 
     <%= yield %>
 
+  </div>
   </body>
 </html>

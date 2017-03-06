@@ -49,6 +49,8 @@ $(document).on("turbolinks:load", function(){
         user_id: $(this).parents('.song-in-queue').data('user-id'),
         status: 'up',
       }
+    }).done(function(){
+      location.reload();
     });
   });
 
@@ -61,6 +63,8 @@ $(document).on("turbolinks:load", function(){
         user_id: $(this).parents('.song-in-queue').data('user-id'),
         status: 'down'
       }
+    }).done(function(){
+      location.reload();
     });
   });
  });

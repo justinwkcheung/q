@@ -1,4 +1,4 @@
-//= require_self
+
 
 $(document).on("turbolinks:load", function(){
   $('.song-in-queue')

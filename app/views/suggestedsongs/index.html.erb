@@ -1,0 +1,40 @@
+<section class="search">
+
+  <h1>Search A Song</h1>
+  <%= form_tag  playlist_suggestedsongs_path, method: "get" do |f| %>
+    <div class="field">
+      <%= text_field_tag :search %>
+      <%= submit_tag "Search" %></div>
+  <% end %>
+
+  <div id="search_results"></div>
+</section>
+
+<article>
+  <% if @albums["data"] %>
+    <h1>Albums</h1>
+    <% titles = [] %>
+    <% @albums["data"].each do |album| %>
+      <% unless titles.include?(album['title']) %>
+        <% titles << album['title'] %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if titles %>
+    <% titles.each do |title| %>
+      <p><a href="/?&search=<%= title %>" ><%= title %></a><p>
+    <% end %>
+  <% end %>
+
+  <% if @tracks["data"] %>
+    <h1>Tracks</h1>
+    <% @tracks["data"].each do |track| %>
+      <div>
+        <div data-playlist-id=<%=params[:playlist_id] %> data-song-id=<%=params[:suggested_song_id]%> data-user-id=<%=session[:user_id]%> name= <%= track["id"]%> > <%= track["title"] %> </div>
+        <button class="suggest_song"> Add </button>
+      </div>
+    <% end %>
+  <% end %>
+
+
+</article>

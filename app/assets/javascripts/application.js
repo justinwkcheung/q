@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-//= require playlists.js
 
 $(document).on("turbolinks:load", function(){
 
@@ -26,15 +25,16 @@ $(document).on("turbolinks:load", function(){
        event.preventDefault();
 
        $.ajax({
-          url:'/playlists/' + session[:playlist_id] + '/suggestedsongs',
+          url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
           method:'POST',
           data:{
            song_id: $(this).siblings('div').attr('name'),
            name: $(this).siblings('div').html(),
-           user_id: session[:user_id]
+           user_id: $(this).siblings('div').data('user-id')
          }
        }).done(function(data){
          console.log(data)
+         console.log($(this).siblings('div').data('playlist-id'));
        });
   });
 
@@ -43,10 +43,10 @@ $(document).on("turbolinks:load", function(){
   $(".upvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/" + params[:playlist_id] + "/suggestedsongs/" + params[:suggested_song_id] + "/votes",
+      url:"/playlists/" + $(this).siblings('div').data('playlist-id') + "/suggestedsongs/" + $(this).siblings('div').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        user_id: session[:user_id],
+        user_id: $(this).siblings('div').data('user-id'),
         status: 'up'
       }
     });
@@ -55,10 +55,10 @@ $(document).on("turbolinks:load", function(){
   $(".downvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/" + params[:playlist_id] + "/suggestedsongs/" + params[:suggested_song_id] + "/votes",
+      url:"/playlists/" + $(this).siblings('div').data('playlist-id') + "/suggestedsongs/" + $(this).siblings('div').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        user_id: session[:user_id],
+        user_id: $(this).siblings('div').data('user-id'),
         status: 'down'
       }
     });

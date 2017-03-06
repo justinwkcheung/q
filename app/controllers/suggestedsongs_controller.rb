@@ -15,6 +15,16 @@ class SuggestedsongsController < ApplicationController
 
  end
 
+ def index
+
+   response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=#{params[:code]}&output=json")
+
+   access_token = response["access_token"]
+   @albums = HTTParty.get("http://api.deezer.com/search/album?q=#{params[:search]}&#{access_token}")
+   @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
+   @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
+ end
+
  def destroy
     @suggested_song = SuggestedSong.find(params[:id])
     @suggested_song.destroy

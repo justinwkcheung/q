@@ -1,11 +1,41 @@
-<%= link_to "Delete playlist", @playlist_q, method: :delete, data: {confirm: "Are you sure you want to delete this playlist?"} %>
-<%= @playlist_q.description %>
-<%= @playlist_q.theme %>
+<div id="d_player"></div>
+<div id="dz-root"></div>
+<script src="http://e-cdn-files.deezer.com/js/min/dz.js"></script>
+<script>
+  window.dzAsyncInit = function() {
+  DZ.init({
+    appId  : '226822',
+    channelUrl : 'http://localhost:3000/playlist/player',
+    player : {
+      container: 'd_player',
+      // width : 800, allow CSS to set 100% width
+      height : 90,
+      onload : function(){}
+    }
+  })
+  };
+    if (<%= @first_song > 0 %>) {
+      setTimeout(function(){DZ.player.playTracks([<%= @first_song %>])}, 2000);
+      setTimeout(function(){DZ.Event.subscribe('track_end', function(evt_name){
+        console.log("Track has ended");
+        DZ.player.playTracks([<%= @second_song %>])},2000);
+    });
+  };
 
-<%= link_to "Edit Playlist", edit_playlist_path(@playlist_q) %>
 
-<ul>
+  (function() {
+  var e = document.createElement('script');
+  e.src = 'http://e-cdn-files.deezer.com/js/min/dz.js';
+  e.async = true;
+  document.getElementById('dz-root').appendChild(e);
+  }());
+</script>
+
+<div class="song-list">
 <% @playlist_q_songs.each do |song| %>
-<li><%=song.name %></li>
+
+<div class="song-in-queue"><%= song.name %>&nbsp
+  <span class="right"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button>&nbsp
+  <%= song.net_vote %></span> </div>
 <% end %>
-</ul>
+</div>

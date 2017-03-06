@@ -14,3 +14,57 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require playlists.js
+
+$(document).on("turbolinks:load", function(){
+
+  $(".suggest_song").on('click', function (event){
+      console.log($(this));
+      console.log($(this).siblings('div').attr('name'));
+      console.log($(this).siblings('div').html());
+
+       event.preventDefault();
+
+       $.ajax({
+          url:'/playlists/:playlist_id/suggestedsongs',
+          method:'POST',
+          data:{
+           song_id: $(this).siblings('div').attr('name'),
+           name: $(this).siblings('div').html(),
+           playlist_id: 1
+         }
+       }).done(function(data){
+         console.log(data)
+       });
+  });
+
+
+
+  $(".upvote").on('click', function() {
+
+    $.ajax({
+      url:"/playlists/1/suggestedsongs/1/votes",
+      method: 'POST',
+      data: {
+        suggested_song_id: 1,
+        user_id: 1,
+        playlist_id: 1,
+        status: 'up'
+      }
+    });
+  });
+
+  $(".downvote").on('click', function() {
+
+    $.ajax({
+      url:"/playlists/1/suggestedsongs/1/votes",
+      method: 'POST',
+      data: {
+        suggested_song_id: 1,
+        user_id: 1,
+        playlist_id: 1,
+        status: 'down'
+      }
+    });
+  });
+ });

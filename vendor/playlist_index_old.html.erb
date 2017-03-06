@@ -1,0 +1,37 @@
+<!-- <section class="search">
+  <h1>Search A Song</h1>
+  <%= form_tag  root_path, method: "get" do |f| %>
+    <div class="field">
+      <%= label_tag :search %><br/>
+      <%= text_field_tag :search %>
+    </div>
+    <div><%= submit_tag "Search" %></div>
+  <% end %>
+
+  <div id="search_results"></div>
+</section>
+
+<h2>Search Results</h2>
+<article>
+  <h1>Albums</h1>
+  <% if @albums %>
+    <% @albums["data"].each do |album| %>
+
+      <% response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=#{params[:code]}&output=json") %>
+
+      <% access_token = response["access_token"] %>
+      <p><a href="/?&search=<%= album['title'] %>" ><%= album['title'] %></a><p>
+    <% end %>
+  <% end %>
+
+  <h1>Tracks</h1>
+  <% if @tracks %>
+    <% @tracks["data"].each do |track| %>
+      <div class="track" name=""><%= track["title"] %></div>
+        <button class="suggest_song"> Add </button>
+      </div>
+
+    <% end %>
+  <% end %>
+
+</article> -->

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228184253) do
+ActiveRecord::Schema.define(version: 20170303210810) do
 
   create_table "authorizations", force: :cascade do |t|
     t.integer  "playlist_id"
@@ -36,15 +36,16 @@ ActiveRecord::Schema.define(version: 20170228184253) do
     t.string   "name"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "net_vote"
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.string   "password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "votes", force: :cascade do |t|

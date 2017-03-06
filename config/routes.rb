@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '/playlists/player', to: 'playlists#player'
   root "playlists#index"
 
   resources :users
@@ -10,5 +11,5 @@ Rails.application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
 
-get '/auth/deezer/callback', to: 'sessions#create'
+  # get '/auth/deezer/callback', to: 'sessions#create'
 end

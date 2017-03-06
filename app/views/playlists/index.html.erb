@@ -1,32 +1,42 @@
 <!-- <iframe src="https://embed.spotify.com/?uri=spotify%3Auser%3Arichstrauss%3Aplaylist%3A0PKek3EhlcCNy6FboqtFeW" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
 
 <section class="search">
+
   <h1>Search A Song</h1>
   <%= form_tag  root_path, method: "get" do |f| %>
     <div class="field">
-      <%= label_tag :search %><br/>
       <%= text_field_tag :search %>
-    </div>
-    <div><%= submit_tag "Search" %></div>
+      <%= submit_tag "Search" %></div>
   <% end %>
 
   <div id="search_results"></div>
 </section>
 
-<h2>Search Results</h2>
 <article>
-  <h1> Album </h1>
-  <% @albums.each do |album| %>
-    <p><a href="/?&search=<%= album.name %>"><%= album.name %></a><p>
+  <% if @albums["data"] %>
+    <h1>Albums</h1>
+    <% titles = [] %>
+    <% @albums["data"].each do |album| %>
+      <% unless titles.include?(album['title']) %>
+        <% titles << album['title'] %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if titles %>
+    <% titles.each do |title| %>
+      <p><a href="/?&search=<%= title %>" ><%= title %></a><p>
+    <% end %>
   <% end %>
 
-  <h1> Tracks </h1>
-  <% @tracks.each do |track| %>
-    <p><%= track.name %> <%= track.id %></p>
-    <% @my_playlist.add_tracks!([track]) %>
+  <% if @tracks["data"] %>
+    <h1>Tracks</h1>
+    <% @tracks["data"].each do |track| %>
+      <div>
+        <div name= <%= track["id"]%> ><%= track["title"] %></div>
+        <button class="suggest_song"> Add </button>
+      </div>
+    <% end %>
   <% end %>
 
-  <h2>My Playlist</h2>
-  <%= @my_playlist.tracks %>
 
 </article>

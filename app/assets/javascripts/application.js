@@ -43,11 +43,11 @@ $(document).on("turbolinks:load", function(){
   $(".upvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/" + $(this).siblings('div').data('playlist-id') + "/suggestedsongs/" + $(this).siblings('div').data('suggested-song-id') + "/votes",
+      url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        user_id: $(this).siblings('div').data('user-id'),
-        status: 'up'
+        user_id: $(this).parents('.song-in-queue').data('user-id'),
+        status: 'up',
       }
     });
   });
@@ -55,10 +55,10 @@ $(document).on("turbolinks:load", function(){
   $(".downvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/" + $(this).siblings('div').data('playlist-id') + "/suggestedsongs/" + $(this).siblings('div').data('suggested-song-id') + "/votes",
+      url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        user_id: $(this).siblings('div').data('user-id'),
+        user_id: $(this).parents('.song-in-queue').data('user-id'),
         status: 'down'
       }
     });

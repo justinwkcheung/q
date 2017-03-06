@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303210810) do
+ActiveRecord::Schema.define(version: 20170306215057) do
 
   create_table "authorizations", force: :cascade do |t|
     t.integer  "playlist_id"
@@ -50,10 +50,10 @@ ActiveRecord::Schema.define(version: 20170303210810) do
 
   create_table "votes", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "suggested_song_id"
+    t.integer  "suggestedsong_id"
     t.string   "status"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
 end

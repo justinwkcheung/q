@@ -14,6 +14,9 @@ class PlaylistsController < ApplicationController
 
 
   def show
+
+    @playlist_q = Playlist.find(params[:id])
+    @playlist_q_songs = SuggestedSong.where(playlist_id: @playlist_q.id)
     @next_song_id = SuggestedSong.next_song_id(params[:id])
     @next_song_record = SuggestedSong.next_song_record(params[:id])
     @songs = SuggestedSong.where(playlist_id: params[:id]).order(net_vote: :desc)

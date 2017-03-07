@@ -18,6 +18,8 @@ class SuggestedsongsController < ApplicationController
 
  def index
 
+   @playlist_q = Playlist.find(params[:playlist_id])
+
    response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=#{params[:code]}&output=json")
 
    access_token = response["access_token"]

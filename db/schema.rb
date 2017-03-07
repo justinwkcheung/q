@@ -34,9 +34,10 @@ ActiveRecord::Schema.define(version: 20170306215057) do
     t.integer  "playlist_id"
     t.integer  "user_id"
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "net_vote"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "net_vote",    default: 0
+    t.boolean  "played",      default: false
   end
 
   create_table "users", force: :cascade do |t|

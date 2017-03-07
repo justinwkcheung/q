@@ -24,7 +24,9 @@ $(document).on("ready", function(){
        event.preventDefault();
 
        $.ajax({
+
           url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
+
           method:'POST',
           data:{
            song_id: $(this).siblings('div').attr('name'),

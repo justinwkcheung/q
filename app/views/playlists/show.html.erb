@@ -14,13 +14,23 @@
     }
   })
   };
-    if (<%= @first_song > 0 %>) {
-      setTimeout(function(){DZ.player.playTracks([<%= @first_song %>])}, 2000);
-      setTimeout(function(){DZ.Event.subscribe('track_end', function(evt_name){
+
+var nextSongRecord = <%= @next_song_record %>
+
+    if (<%= @next_song_id > 0 %>) {
+      setTimeout(function(){DZ.player.playTracks([<%= @next_song_id %>])}, 3000);
+      setTimeout(function(){DZ.Event.subscribe('track_end', function(){
         console.log("Track has ended");
-        DZ.player.playTracks([<%= @second_song %>])},2000);
-    });
-  };
+        $.ajax({
+          url: '/playlists/<%=params[:id]%>/update_song?song_id=' + nextSongRecord,
+          method: 'get',
+        }).done(function(data){
+          DZ.player.playTracks([data['song_id']]);
+          nextSongRecord = data['song_record'];
+        })
+      })}, 3000)};
+
+
 
 
   (function() {
@@ -32,7 +42,7 @@
 </script>
 
 <div class="song-list">
-<% @playlist_q_songs.each do |song| %>
+<% @songs.each do |song| %>
 
 <div class="song-in-queue"><%= song.name %>&nbsp
   <span class="right"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button>&nbsp

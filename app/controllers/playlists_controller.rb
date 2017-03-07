@@ -16,17 +16,28 @@ class PlaylistsController < ApplicationController
 
   end
 
+#Step 1. In the model, we need to loop through the songs and only find the next song to be played
+#Step 2. In the Javascript, we need to call this controller function b4 or at the time of the song ending.
+#Step 3. Send the song to the player
+
+
+
   def show
-    @playlist_q = Playlist.find(params[:id])
-    @playlist_q_songs = SuggestedSong.where(playlist_id: @playlist_q.id)
-    if !@playlist_q_songs.empty?
-      @first_song = @playlist_q_songs.first.song_id
-      @second_song = @playlist_q_songs.second.song_id
-    else
-      @first_song = 0
-      @second_song = 0
-    end
+    @next_song_id = SuggestedSong.next_song_id(params[:id])
+    @next_song_record = SuggestedSong.next_song_record(params[:id])
+    @songs = SuggestedSong.where(playlist_id: params[:id]).order(net_vote: :desc)
   end
+
+  def update_song
+    SuggestedSong.find(params[:song_id]).update_attribute(:played, true)
+    @next_song_id = SuggestedSong.next_song_id(params[:id])
+    @next_song_record = SuggestedSong.next_song_record(params[:id])
+    render json: {song_id: @next_song_id, song_record: @next_song_record}
+  end
+
+
+
+
 
   def new
     @playlist = Playlist.new
@@ -44,13 +55,13 @@ class PlaylistsController < ApplicationController
     if create_playlist
       redirect_to playlist_path(@playlist_q)
     end
-
   end
 
   def edit
     @playlist_q = Playlist.find(params[:id])
     @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
   end
+
 
   def update
     @playlist_q = Playlist.find(params[:id])

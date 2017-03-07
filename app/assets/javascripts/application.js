@@ -26,12 +26,12 @@ $(document).on("turbolinks:load", function(){
        event.preventDefault();
 
        $.ajax({
-          url:'/playlists/:playlist_id/suggestedsongs',
+          url:'/playlists/4/suggestedsongs',
           method:'POST',
           data:{
            song_id: $(this).siblings('div').attr('name'),
            name: $(this).siblings('div').html(),
-           playlist_id: 1
+           playlist_id: 4
          }
        }).done(function(data){
          console.log(data)
@@ -43,12 +43,12 @@ $(document).on("turbolinks:load", function(){
   $(".upvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/1/suggestedsongs/1/votes",
+      url:"/playlists/1/suggestedsongs/4/votes",
       method: 'POST',
       data: {
         suggested_song_id: 1,
         user_id: 1,
-        playlist_id: 1,
+        playlist_id: 4,
         status: 'up'
       }
     });
@@ -57,12 +57,12 @@ $(document).on("turbolinks:load", function(){
   $(".downvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/1/suggestedsongs/1/votes",
+      url:"/playlists/1/suggestedsongs/4/votes",
       method: 'POST',
       data: {
         suggested_song_id: 1,
         user_id: 1,
-        playlist_id: 1,
+        playlist_id: 4,
         status: 'down'
       }
     });

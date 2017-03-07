@@ -28,6 +28,15 @@ class SuggestedsongsController < ApplicationController
    @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
  end
 
+ def show
+   @suggested_song = SuggestedSong.find(params[:id])
+   if request.xhr?
+     respond_to do |format|
+       format.json { render json: @suggested_song }
+     end
+   end
+ end
+
  def destroy
     @suggested_song = SuggestedSong.find(params[:id])
     @suggested_song.destroy

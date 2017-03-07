@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-//= require playlists.js
 
 $(document).on("turbolinks:load", function(){
 
@@ -26,15 +25,16 @@ $(document).on("turbolinks:load", function(){
        event.preventDefault();
 
        $.ajax({
-          url:'/playlists/:playlist_id/suggestedsongs',
+          url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
           method:'POST',
           data:{
            song_id: $(this).siblings('div').attr('name'),
            name: $(this).siblings('div').html(),
-           playlist_id: 1
+           user_id: $(this).siblings('div').data('user-id')
          }
        }).done(function(data){
          console.log(data)
+         console.log($(this).siblings('div').data('playlist-id'));
        });
   });
 
@@ -43,28 +43,28 @@ $(document).on("turbolinks:load", function(){
   $(".upvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/1/suggestedsongs/1/votes",
+      url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        suggested_song_id: 1,
-        user_id: 1,
-        playlist_id: 1,
-        status: 'up'
+        user_id: $(this).parents('.song-in-queue').data('user-id'),
+        status: 'up',
       }
+    }).done(function(){
+      location.reload();
     });
   });
 
   $(".downvote").on('click', function() {
 
     $.ajax({
-      url:"/playlists/1/suggestedsongs/1/votes",
+      url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        suggested_song_id: 1,
-        user_id: 1,
-        playlist_id: 1,
+        user_id: $(this).parents('.song-in-queue').data('user-id'),
         status: 'down'
       }
+    }).done(function(){
+      location.reload();
     });
   });
  });

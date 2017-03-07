@@ -1,41 +1,34 @@
 <div id="d_player"></div>
 <div id="dz-root"></div>
-<script src="http://e-cdn-files.deezer.com/js/min/dz.js"></script>
+<!--    <div id="player" style="width:100%;"></div>-->
+<script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
 <script>
-  window.dzAsyncInit = function() {
   DZ.init({
-    appId  : '226822',
-    channelUrl : 'http://localhost:3000/playlist/player',
-    player : {
-      container: 'd_player',
+      appId: '226822',
+      channelUrl: 'http://localhost:3000/playlist/player',
+      player: {
+        container: 'd_player',
       // width : 800, allow CSS to set 100% width
-      height : 90,
-      onload : function(){}
-    }
-  })
-  };
-    if (<%= @first_song > 0 %>) {
-      setTimeout(function(){DZ.player.playTracks([<%= @first_song %>])}, 2000);
-      setTimeout(function(){DZ.Event.subscribe('track_end', function(evt_name){
-        console.log("Track has ended");
-        DZ.player.playTracks([<%= @second_song %>])},2000);
-    });
-  };
-
-
-  (function() {
-  var e = document.createElement('script');
-  e.src = 'http://e-cdn-files.deezer.com/js/min/dz.js';
-  e.async = true;
-  document.getElementById('dz-root').appendChild(e);
-  }());
+        height : 90,
+        onload: function () {
+          DZ.player.playTracks([<%= @first_song %>])
+          setTimeout(function(){DZ.Event.subscribe('track_end', function(evt_name){
+          console.log("Track has ended");
+          DZ.player.playTracks([<%= @second_song %>])},2000);
+          });
+        }
+      }
+  });
 </script>
+<br/>
 
-<div class="song-list">
-<% @playlist_q_songs.each do |song| %>
+<div class="song-list"><% @playlist_q_songs.each do |song| %>
 
-<div class="song-in-queue"><%= song.name %>&nbsp
+<div class="song-in-queue" data-playlist-id=<%=@playlist_q.id%> data-user-id=<%=session[:user_id]%> data-suggested-song-id=<%= song.id %>>
+  <%= song.name %>&nbsp
   <span class="right"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button>&nbsp
   <%= song.net_vote %></span> </div>
 <% end %>
 </div>
+
+<%= link_to 'Add songs to playlist', playlist_suggestedsongs_path(@playlist_q) %>

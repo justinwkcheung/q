@@ -13,7 +13,7 @@ iframe {
 }
 
 .btn {
-  padding: 0 15px; 
+  padding: 0 15px;
 }
 
 .btn:hover:before {
@@ -39,6 +39,7 @@ iframe {
   background-color: #1E1C27;
   color: white;
   overflow: hidden;
+  position: relative;
 }
 
 .song-list {
@@ -47,6 +48,28 @@ iframe {
   // padding-bottom: 5px;
 };
 
+.q {
+  font-family: 'Abril Fatface', cursive;
+  float: left;
+  margin-top: 7px;
+}
+
+.user_info {
+  float: right;
+  padding-right: 20px;
+  margin: 0px;
+}
+
 .buttons {
-  line-height: 0;
+    position: absolute;
+    right: 60px;
+}
+
+.heart {
+    position: absolute;
+    right: 20px;
+}
+
+.nav_bar {
+    background: linear-gradient(to right, #1E1C27, #649175);
 }

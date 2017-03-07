@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 
-$(document).on("turbolinks:load", function(){
+$(document).on("ready", function(){
 
   $(".suggest_song").on('click', function (event){
       console.log($(this));

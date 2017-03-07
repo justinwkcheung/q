@@ -10,13 +10,13 @@ class PlaylistsController < ApplicationController
   def show
     @playlist_q = Playlist.find(params[:id])
     @playlist_q_songs = SuggestedSong.where(playlist_id: @playlist_q.id)
-    if !@playlist_q_songs.empty?
-      @first_song = @playlist_q_songs.first.song_id
-      @second_song = @playlist_q_songs.second.song_id
-    else
-      @first_song = 0
-      @second_song = 0
-    end
+    @first_song = @playlist_q_songs.first.song_id
+    # if !@playlist_q_songs.empty?
+    #   @second_song = @playlist_q_songs.second.song_id
+    # else
+    #   @first_song = 0
+    #   @second_song = 0
+    # end
   end
 
   def new

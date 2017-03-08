@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306215057) do
+ActiveRecord::Schema.define(version: 20170308170817) do
 
   create_table "authorizations", force: :cascade do |t|
     t.integer  "playlist_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170306215057) do
     t.string   "uri"
     t.string   "description"
     t.string   "theme"
+    t.integer  "access_code"
   end
 
   create_table "suggested_songs", force: :cascade do |t|

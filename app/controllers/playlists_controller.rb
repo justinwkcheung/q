@@ -29,9 +29,22 @@ class PlaylistsController < ApplicationController
     render json: {song_id: @next_song_id, song_record: @next_song_record}
   end
 
+  def join
 
+  end
 
+  def add_guest
+    @access_code = params["access_code"]
+    @playlist = Playlist.find_by(access_code: @access_code)
 
+    if @playlist
+      Authorization.create(playlist_id: @playlist.id, user_id: session[:user_id], status: "Guest")
+      redirect_to playlist_path(@playlist)
+    else
+      render :join
+    end
+
+  end
 
   def new
     @playlist = Playlist.new

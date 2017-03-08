@@ -47,11 +47,11 @@ var nextSongRecord = <%= @next_song_record %>
 
   <% @songs.each do |song| %>
 
-  <div class="song-in-queue" data-playlist-id=<%=@playlist_q.id%> data-user-id=<%=session[:user_id]%> data-suggested-song-id=<%= song.id %>>
+  <div class="song-in-queue" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <%= song.name %>&nbsp
     <span class="contain">
       <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
-      <span class="heart"><span class="netvote"><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
+      <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
     </span>
   </div>
 

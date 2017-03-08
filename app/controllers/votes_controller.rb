@@ -5,7 +5,6 @@ class VotesController < ApplicationController
   end
 
   def create
-    binding.pry
     @vote = Vote.new(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id], status: params[:status])
     @vote2 = Vote.where(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id])
     if @vote2 != []

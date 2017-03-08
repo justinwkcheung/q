@@ -11,6 +11,7 @@ class SuggestedsongsController < ApplicationController
 
     @songs = SuggestedSong.playlist_songs(params[:playlist_id])
     ActionCable.server.broadcast(:app, @songs)
+    
     # if request.xhr?
     #   respond_to do |format|
     #   format.json render json: @suggested_song

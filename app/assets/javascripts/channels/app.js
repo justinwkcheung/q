@@ -11,6 +11,7 @@ $('document').ready(function(){
 
     received: function(data){
       if (data.id > 0)  {
+
       console.log(data);
       console.log("single song");
       var regExp = /\d/
@@ -20,12 +21,12 @@ $('document').ready(function(){
 
       var span = $('<span>').attr('class',"buttons")
 
-      var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue darken-2').click(function() { upVote(data.id,playlist_id); })
+      var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue darken-2')
       var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
 
       var upButton = $(buttonUp).append(iconUp)
 
-      var buttonDown = $('<button>').attr('type',"button").attr('name','button').attr('class','downvote btn waves-effect waves-light red').click(function() {downVote(data.id,playlist_id); })
+      var buttonDown = $('<button>').attr('type',"button").attr('name','button').attr('class','downvote btn waves-effect waves-light red')
       var iconDown = $('<i>').attr('class','material-icons').html('thumb_down')
 
       var downButton = $(buttonDown).append(iconDown)
@@ -51,20 +52,25 @@ else {
   console.log(data.length);
   console.log("mulitple songs");
   $('.song-list').html('');
+
+  var regExp = /\d/
+  var playlist_id = parseInt(regExp.exec(window.location.pathname)[0])
+
+  if (data[0].playlist_id = playlist_id) {
   data.forEach(function(data) {
-    var regExp = /\d/
-    var playlist_id = parseInt(regExp.exec(window.location.pathname)[0])
+
+
 
     var divContainer = $('<div>').attr('class', 'song-in-queue').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
 
     var span = $('<span>').attr('class',"buttons")
 
-    var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue darken-2').click(function() { upVote(data.id,playlist_id); })
+    var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue darken-2')
     var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
 
     var upButton = $(buttonUp).append(iconUp)
 
-    var buttonDown = $('<button>').attr('type',"button").attr('name','button').attr('class','downvote btn waves-effect waves-light red').click(function() {downVote(data.id,playlist_id); })
+    var buttonDown = $('<button>').attr('type',"button").attr('name','button').attr('class','downvote btn waves-effect waves-light red')
     var iconDown = $('<i>').attr('class','material-icons').html('thumb_down')
 
     var downButton = $(buttonDown).append(iconDown)
@@ -83,10 +89,14 @@ else {
 
     $(div_replace).append(votes).append(heart)
     console.log(div_replace);
+
     $('.song-list').append(div_replace);
   })
 }
   }
 
-})
-})
+}
+}
+)
+}
+)

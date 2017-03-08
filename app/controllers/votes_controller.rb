@@ -5,6 +5,7 @@ class VotesController < ApplicationController
   end
 
   def create
+
     @vote = Vote.new(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id], status: params[:status])
     @vote2 = Vote.where(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id])
     if @vote2 != []
@@ -18,6 +19,11 @@ class VotesController < ApplicationController
       @vote.save!
     end
     net_vote(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
+
+  new_playlist =  SuggestedSong.playlist_songs(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
+
+  ActionCable.server.broadcast(:app, new_playlist)
+
   end
 
   def destroy

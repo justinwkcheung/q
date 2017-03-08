@@ -8,7 +8,9 @@ class SuggestedsongsController < ApplicationController
     # @suggested_song.user_id = session[:user_id]
 
     @suggested_song.save
-    ActionCable.server.broadcast(:app, @suggested_song)
+
+    @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+    ActionCable.server.broadcast(:app, @songs)
 
     # if request.xhr?
     #   respond_to do |format|

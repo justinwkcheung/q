@@ -43,6 +43,10 @@ $(document).on("ready", function(){
 
   $(".upvote").on('click', function() {
 
+    var playlist_id = $(this).parents('.song-in-queue').data('playlist-id');
+    var suggestedsong_id = $(this).parents('.song-in-queue').data('suggested-song-id');
+    var replacement = $(this).parents('.contain').children('.heart').children('.netvote');
+
     $.ajax({
       url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
       method: 'POST',
@@ -51,11 +55,20 @@ $(document).on("ready", function(){
         status: 'up',
       }
     }).done(function(){
-      location.reload();
+      $.ajax({
+        url:"/playlists/" + playlist_id + "/suggestedsongs/" + suggestedsong_id,
+        method: 'GET',
+      }).done(function(data){
+        $(replacement).html(data.net_vote);
+      });
     });
   });
 
   $(".downvote").on('click', function() {
+
+    var playlist_id = $(this).parents('.song-in-queue').data('playlist-id');
+    var suggestedsong_id = $(this).parents('.song-in-queue').data('suggested-song-id');
+    var replacement = $(this).parents('.contain').children('.heart').children('.netvote')
 
     $.ajax({
       url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
@@ -65,7 +78,12 @@ $(document).on("ready", function(){
         status: 'down'
       }
     }).done(function(){
-      location.reload();
+      $.ajax({
+        url:"/playlists/" + playlist_id + "/suggestedsongs/" + suggestedsong_id,
+        method: 'GET',
+      }).done(function(data){
+        $(replacement).html(data.net_vote);
+      })
     });
   });
  });

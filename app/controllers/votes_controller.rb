@@ -18,7 +18,7 @@ class VotesController < ApplicationController
     else
       @vote.save!
     end
-    net_vote(1)
+    net_vote(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
   end
 
   def destroy

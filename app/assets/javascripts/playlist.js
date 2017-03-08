@@ -23,8 +23,6 @@ $(document).on("ready", function(){
       $(this).addClass("clicked btn-flat red darken-4")
       $(this).removeClass("lighten-2 btn")
       $(this).siblings('button').removeClass('clicked btn-flat darken-4').addClass('blue lighten-2 btn')
-      // $(this).sibling('button')addClass('blue darken-4 btn')
-
     };
   });
 });

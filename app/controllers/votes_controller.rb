@@ -5,9 +5,9 @@ class VotesController < ApplicationController
   end
 
   def create
-    @vote = Vote.new(user_id: params[:user_id], suggestedsong_id: params[:suggestedsong_id], status: params[:status])
-    @vote2 = Vote.where(user_id: params[:user_id], suggestedsong_id: params[:suggestedsong_id])
-    # binding.pry
+    binding.pry
+    @vote = Vote.new(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id], status: params[:status])
+    @vote2 = Vote.where(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id])
     if @vote2 != []
       if
         @vote.user_id == @vote2[0].user_id && @vote.suggestedsong_id == @vote2[0].suggestedsong_id && @vote.status != @vote2[0].status

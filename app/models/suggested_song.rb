@@ -33,6 +33,10 @@ class SuggestedSong < ApplicationRecord
     def self.playlist_length(playlist_id)
       length = SuggestedSong.where(playlist_id: playlist_id).count
     end
+
+    def self.playlist_songs(playlist_id)
+      songs = SuggestedSong.where(playlist_id: playlist_id).order(net_vote: :desc)
+    end
 end
 
 

@@ -14,7 +14,6 @@ class PlaylistsController < ApplicationController
 
 
   def show
-
     @playlist_q = Playlist.find(params[:id])
     @playlist_q_songs = SuggestedSong.where(playlist_id: @playlist_q.id)
     @next_song_id = SuggestedSong.next_song_id(params[:id])
@@ -36,10 +35,14 @@ class PlaylistsController < ApplicationController
   def add_guest
     @access_code = params["access_code"]
     @playlist = Playlist.find_by(access_code: @access_code)
-
     if @playlist
-      Authorization.create(playlist_id: @playlist.id, user_id: session[:user_id], status: "Guest")
-      redirect_to playlist_path(@playlist)
+      @authorization = Authorization.find_by(playlist_id: @playlist.id, user_id: session[:user_id])
+      if @authorization
+        redirect_to playlist_path(@playlist)
+      else
+        Authorization.create(playlist_id: @playlist.id, user_id: session[:user_id], status: "Guest")
+        redirect_to playlist_path(@playlist)
+      end
     else
       render :join
     end

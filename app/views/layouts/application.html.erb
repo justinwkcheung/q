@@ -14,22 +14,23 @@
   </head>
 
   <body>
-    <div class="container">
 
+    
     <nav class='nav_bar'>
       <h3 class = "q">Q</h3>
       <p class="user_info">
         <% if current_user %>
-        Hello <%= current_user.first_name %>
+        Hello <%= link_to "#{current_user.first_name}!", user_path(session[:user_id]) %>
         <%= link_to "Log out", session_path(session[:user_id]), method: :delete %>
-      <% else %>
+        <% else %>
         <%= link_to "Log in", new_session_path %> or <%= link_to "Sign up", new_user_path %>
-      <% end %>
+        <% end %>
       </p>
     </nav>
+      <div class="container">
 
     <%= yield %>
 
-  </div>
+    </div>
   </body>
 </html>

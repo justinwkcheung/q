@@ -20,6 +20,16 @@ class PlaylistsController < ApplicationController
     @next_song_id = SuggestedSong.next_song_id(params[:id])
     @next_song_record = SuggestedSong.next_song_record(params[:id])
     @songs = SuggestedSong.playlist_songs(params[:id])
+
+
+    # This is related to the search function we are show
+
+    response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=#{params[:code]}&output=json")
+    access_token = response["access_token"]
+    @albums = HTTParty.get("http://api.deezer.com/search/album?q=#{params[:search]}&#{access_token}")
+    @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
+    @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
+
   end
 
   def update_song
@@ -87,6 +97,15 @@ class PlaylistsController < ApplicationController
       end
   end
 
+  def update_publicity
+    @playlist = Playlist.find(params[:id])
+    if @playlist.public == false
+      @playlist.update_attribute('public', true)
+    else
+      @playlist.update_attribute('public', false)
+    end
+  end
+
 private
 
   def playlist_params
@@ -111,5 +130,7 @@ private
       user_id: session[:user_id],
       status: "Host")
   end
+
+
 
 end

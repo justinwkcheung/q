@@ -16,6 +16,7 @@ get '/playlists/:id/update_song/', to: 'playlists#update_song', as: 'update_song
 
 
   get '/playlists/:id/next_song', to: 'playlists#next_song', as: 'next_song'
+  mount ActionCable.server => '/cable'
 
   # get '/auth/deezer/callback', to: 'sessions#create'
 end

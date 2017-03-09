@@ -1,9 +1,10 @@
-<%= link_to 'Sign in with Deezer', "https://connect.deezer.com/oauth/auth.php?app_id=#{ENV["deezer_application_id"]}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library" %>
+<!-- <%= link_to 'Sign in with Deezer', "https://connect.deezer.com/oauth/auth.php?app_id=#{ENV["deezer_application_id"]}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library" %> -->
 
-<h1>SESSIONS VIEW</h1>
-<h1>Log In</h1>
+<h1 class="title">Login</h1>
 
-<%= form_tag sessions_path, method: :post do %>
+
+<div class="login-form">
+  <%= form_tag sessions_path, method: :post do %>
   <div class="field">
     <%= label_tag :email %><br />
     <%= text_field_tag :email %>
@@ -12,8 +13,12 @@
     <%= label_tag :password %><br />
     <%= password_field_tag :password %>
   </div>
+</div>
 
-  <div class="actions">
-    <%= submit_tag "Log In" %>
-  </div>
+
+<!-- <div class="login-button"> -->
+  <button class="btn login-session white" type="submit" name="action">LOGIN
+  </button>
+<!-- </div> -->
+
 <% end %>

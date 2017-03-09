@@ -4,8 +4,7 @@ class SuggestedsongsController < ApplicationController
   end
 
  def create
-   binding.pry
-    @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id] , playlist_id: params[:playlist_id], name: params[:name])
+    @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id] , playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
     @suggested_song.save
 
     @songs = SuggestedSong.playlist_songs(params[:playlist_id])

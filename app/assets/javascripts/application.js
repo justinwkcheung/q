@@ -20,19 +20,32 @@ $(document).on("ready", function(){
   var regExp = /\d+/
   var playlistId = parseInt(regExp.exec(window.location.pathname)[0])
 
-  $(".suggest_song").on('click', function (event){
-       event.preventDefault();
-       $.ajax({
-          url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
-          method:'POST',
-          data:{
-           song_id: $(this).siblings('div').attr('name'),
-           name: $(this).siblings('div').html(),
-           user_id: $(this).siblings('div').data('user-id')
-         }
-       }).done(function(data){
-       });
-  });
+  // $(".suggest_song").on('click', function (event){
+  //      event.preventDefault();
+  //      $.ajax({
+  //         url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
+  //         method:'POST',
+  //         data:{
+  //          song_id: $(this).siblings('div').attr('name'),
+  //          name: $(this).siblings('div').html(),
+  //          user_id: $(this).siblings('div').data('user-id')
+  //        }
+  //      }).done(function(data){
+  //      });
+  // });
+
+  $('.add-search-container').on('click', function(){
+    $('.search-container').css('z-index', 2).fadeIn(800);
+    $('.upvote').css('z-index', 1);
+    $('.downvote').css('z-index', 1);
+
+  })
+
+  $('.back').on('click', function(){
+    $('.search-container').css('z-index', -1).fadeOut(800);
+    $('.upvote').css('z-index', 1);
+    $('.downvote').css('z-index', 1);
+  })
 
   $("body").delegate('.suggest_song1', 'click', function (event){
        event.preventDefault();
@@ -42,7 +55,7 @@ $(document).on("ready", function(){
           data:{
            song_id: $(this).parent().attr('song_id'),
            name: $(this).parent().attr('song_name'),
-           user_id: 1
+           artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
          console.log("DID IT");
@@ -61,19 +74,20 @@ $(document).on("ready", function(){
       data: {q: searchValue},
       dataType: 'json'
     }).done(function(data){
-      console.log(data["data"][1]);
-      var div = $('<div>').attr('song_id', data["data"][1]['id']).attr('song_name', data["data"][1]['title']);
 
-      var button = $('<button>')
-      var button = $(button).attr('class', 'suggest_song1');
-      var button = $(button).html('Add');
 
-      $(div).html(data["data"][1]["title"]).append(' - ').append(data["data"][1]["artist"]["name"]).append(button);
-      console.log(div);
-      $('#search_results').append(div);
-      console.log;
-    }).fail(function(responseData){
-      console.log("damn....")
+
+      for (var i = 0; i < data['data'].length; i++){
+        var button = $('<button>')
+        var button = $(button).attr('class', 'suggest_song1');
+        var button = $(button).html('Add');
+
+        var div = $('<div>').attr('song_id', data["data"][i]['id']).attr('song_name', data["data"][i]['title']).attr('artist', data["data"][i]["artist"]["name"]);
+
+        $(div).html(data["data"][i]["title"]).append(' - ').append(data["data"][i]["artist"]["name"]).append(button);
+
+        $('#search_results').append(div);
+      }
     })
    })
 

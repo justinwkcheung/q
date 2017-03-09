@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170309183050) do
+ActiveRecord::Schema.define(version: 20170309211524) do
 
   create_table "authorizations", force: :cascade do |t|
     t.integer  "playlist_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20170309183050) do
     t.datetime "updated_at",                  null: false
     t.integer  "net_vote",    default: 0
     t.boolean  "played",      default: false
+    t.string   "artist"
   end
 
   create_table "users", force: :cascade do |t|

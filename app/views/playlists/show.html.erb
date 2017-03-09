@@ -54,6 +54,22 @@
   }
   </script>
 
+  <div class="search-container">
+    <section class="search">
+
+      <button class="back">Back to playlist</button>  
+      <h1>Search A Song</h1>
+      <%= form_tag  playlist_suggestedsongs_path(params[:id]), method: "get" do |f| %>
+        <div class="field">
+          <%= text_field_tag :search %>
+          <span id="search-submit"><%= submit_tag "Search" %></span>
+          </div>
+      <% end %>
+
+      <div id="search_results"></div>
+    </section>
+  </div>
+
 <div class="song-list">
   <% @songs.each do |song| %>
     <% if song.played %>
@@ -61,7 +77,7 @@
     <% else %>
       <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% end %>
-    <%= song.name %>&nbsp
+    <%= song.name %>&nbsp -&nbsp <%= song.artist %>
     <span class="added-by">|&nbsp&nbsp&nbspAdded by: <%= User.find(song.user_id).first_name %></span>
 
         <span class="contain">
@@ -72,24 +88,12 @@
   <% end %>
 </div>
 
+<button class='add-search-container'> Add a song </button>
+
 
 <!-- <button class="search-button">Add songs to playlist</button> -->
 <!-- <%#= link_to "Add songs to playlist", playlist_suggestedsongs_path(@playlist_q) %> -->
 
-<section class="search">
-
-  <button class="back">Back to playlist</button>
-
-  <h1>Search A Song</h1>
-  <%= form_tag  playlist_suggestedsongs_path(params[:id]), method: "get" do |f| %>
-    <div class="field">
-      <%= text_field_tag :search %>
-      <span id="search-submit"><%= submit_tag "Search" %></span>
-      </div>
-  <% end %>
-
-  <div id="search_results"></div>
-</section>
 
 
 

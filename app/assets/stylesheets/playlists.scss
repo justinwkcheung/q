@@ -49,6 +49,7 @@ iframe {
 .song-list {
   background-color: #1E1C27;
   padding-top: 5px;
+  z-index: 1;
   // padding-bottom: 5px;
 };
 
@@ -76,4 +77,19 @@ iframe {
 
 .nav_bar {
     background: linear-gradient(to right, #1E1C27, #649175);
+}
+
+body{
+  position: relative;
+}
+
+.search-container{
+  z-index: -1;
+  position: absolute;
+  background-color: dimgray;
+  opacity: 0.9;
+  display: block;
+  width: 100%;
+  color: white;
+
 }

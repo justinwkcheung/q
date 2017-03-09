@@ -20,6 +20,13 @@ class SuggestedsongsController < ApplicationController
     @albums = HTTParty.get("http://api.deezer.com/search/album?q=#{params[:search]}&#{access_token}")
     @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
     @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
+
+    if request.xhr?
+      respond_to do |format|
+        format.json render json: {"key": "value"}
+    end
+  end
+
   end
 
  def show

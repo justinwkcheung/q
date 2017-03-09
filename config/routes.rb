@@ -9,6 +9,8 @@ get '/playlists/join', to: 'playlists#join', as: 'join'
 
 post '/playlists/add_guest', to: 'playlists#add_guest', as: 'add_guest'
 
+post '/playlists/:id/update_publicity', to: 'playlists#update_publicity', as: 'update_publicity'
+
   get '/playlists/player', to: 'playlists#player'
   root "playlists#index"
 

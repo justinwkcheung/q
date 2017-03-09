@@ -97,6 +97,15 @@ class PlaylistsController < ApplicationController
       end
   end
 
+  def update_publicity
+    @playlist = Playlist.find(params[:id])
+    if @playlist.public == false
+      @playlist.update_attribute('public', true)
+    else
+      @playlist.update_attribute('public', false)
+    end
+  end
+
 private
 
   def playlist_params
@@ -121,5 +130,7 @@ private
       user_id: session[:user_id],
       status: "Host")
   end
+
+
 
 end

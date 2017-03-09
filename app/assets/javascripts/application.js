@@ -34,6 +34,23 @@ $(document).on("ready", function(){
        });
   });
 
+  $("body").delegate('.suggest_song1', 'click', function (event){
+       event.preventDefault();
+       $.ajax({
+          url:'/playlists/' + playlistId + '/suggestedsongs',
+          method:'POST',
+          data:{
+           song_id: $(this).parent().attr('song_id'),
+           name: $(this).parent().attr('song_name'),
+           user_id: 1
+         }
+       }).done(function(data){
+         console.log("DID IT");
+       }).fail(function(){
+         console.log("failed bish!");
+       })
+  });
+
   $("body").delegate('#search-submit','click',function(event) {
     event.preventDefault();
     var searchValue = $('#search').val();
@@ -41,9 +58,20 @@ $(document).on("ready", function(){
     $.ajax({
       url: '/playlists/' + playlistId + '/suggestedsongs/',
       method: 'get',
+      data: {q: searchValue},
       dataType: 'json'
-    }).done(function(responseData){
-      console.log(responseData);
+    }).done(function(data){
+      console.log(data["data"][1]);
+      var div = $('<div>').attr('song_id', data["data"][1]['id']).attr('song_name', data["data"][1]['title']);
+
+      var button = $('<button>')
+      var button = $(button).attr('class', 'suggest_song1');
+      var button = $(button).html('Add');
+
+      $(div).html(data["data"][1]["title"]).append(' - ').append(data["data"][1]["artist"]["name"]).append(button);
+      console.log(div);
+      $('#search_results').append(div);
+      console.log;
     }).fail(function(responseData){
       console.log("damn....")
     })

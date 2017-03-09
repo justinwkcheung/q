@@ -5,6 +5,8 @@ class PlaylistsController < ApplicationController
   end
 
   def index
+    render :layout => 'alternative'
+    # render 'playlists/index': true
   end
 
 #Step 1. In the model, we need to loop through the songs and only find the next song to be played

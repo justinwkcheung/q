@@ -13,3 +13,29 @@
  *= require_tree .
  *= require_self
  */
+
+ *,
+ *:before,
+ *:after {
+   box-sizing: border-box;
+ }
+
+.alternative-background {
+   background: url("https://static.pexels.com/photos/26135/pexels-photo-26135.jpg") center center fixed no-repeat;
+   background-size: cover;
+ }
+
+ .buttons-home {
+   margin-top: 500px;
+   .logins {
+     background-color: white;
+     display: block;
+   }
+ }
+
+img {
+  height: 50px;
+  width: 30px;
+  display: inline-block;
+  margin-top: 4px;
+}

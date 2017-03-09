@@ -1,3 +1,55 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.alternative-background {
+  background: url('https://static.pexels.com/photos/26135/pexels-photo-26135.jpg') center center fixed no-repeat;
+  background-size: cover;
+}
+
+
+.intro-bio {
+  margin: 0;
+  text-align: center;
+}
+
+.login-form {
+  background-color: rgba(35, 35, 44, 0.43);
+  margin-top: 90px;
+}
+
+// .login-button {
+//   width: 100%;
+//   margin-top: 19px;
+// }
+
+label {
+  color: white
+}
+
+.buttons-home {
+  margin-top: 500px;
+  .logins {
+    display: block;
+    margin-bottom: 19px;
+    background-color: white;
+    width: 100%;
+  }
+}
+
+a {
+  color: cadetblue;
+}
+
+.login-session {
+  color: cadetblue;
+  width: 100%
+}
+
+
+input {
+  // background-color: white;
+  text-align: center;
+  padding: 0 90px;
+  // color: #039be5;
+  border: none;
+}

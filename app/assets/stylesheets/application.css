@@ -25,13 +25,13 @@
    background-size: cover;
  }
 
- .buttons-home {
+ /*.buttons-home {
    margin-top: 500px;
    .logins {
      background-color: white;
      display: block;
    }
- }
+ }*/
 
 img {
   height: 50px;

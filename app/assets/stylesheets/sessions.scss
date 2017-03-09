@@ -12,15 +12,15 @@
   text-align: center;
 }
 
-.login-form {
+.login-form, .sign-up-form {
   background-color: rgba(35, 35, 44, 0.43);
-  margin-top: 90px;
+  // margin-top: 90px;
+  margin-bottom: 10px;
 }
 
-// .login-button {
-//   width: 100%;
-//   margin-top: 19px;
-// }
+.title {
+  color: white;
+}
 
 label {
   color: white;
@@ -28,7 +28,7 @@ label {
 }
 
 .buttons-home, .buttons-user {
-  margin-top: 500px;
+  margin-top: 320px;
   .logins {
     display: block;
     margin-bottom: 19px;

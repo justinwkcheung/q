@@ -43,7 +43,10 @@
             })
           })}
         , 3000)
-      };
+      }
+      else {
+        $('.search-container').css('display','none');
+      }
 
     (function() {
       var e = document.createElement('script');
@@ -57,7 +60,7 @@
   <div class="search-container">
     <section class="search">
 
-      <button class="back">Back to playlist</button>  
+      <button class="back">Back to playlist</button>
       <h1>Search A Song</h1>
       <%= form_tag  playlist_suggestedsongs_path(params[:id]), method: "get" do |f| %>
         <div class="field">
@@ -80,16 +83,25 @@
     <%= song.name %>&nbsp -&nbsp <%= song.artist %>
     <span class="added-by">|&nbsp&nbsp&nbspAdded by: <%= User.find(song.user_id).first_name %></span>
 
+<% if @playlist_q.public %>
+        <span class="contain">
+          <span class="buttons"><button type="button" name="button" class="hidden upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="hidden downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
+        </span>
+<% else %>
         <span class="contain">
           <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
-          <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
         </span>
-      </div>
+<% end %>
+
+  <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
+</div>
+
   <% end %>
 </div>
 
-<button class='add-search-container'> Add a song </button>
-
+<% unless @playlist_q.public %>
+  <button class='add-search-container'> Add a song </button>
+<%end %>
 
 <!-- <button class="search-button">Add songs to playlist</button> -->
 <!-- <%#= link_to "Add songs to playlist", playlist_suggestedsongs_path(@playlist_q) %> -->

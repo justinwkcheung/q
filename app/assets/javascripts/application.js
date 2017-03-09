@@ -17,6 +17,10 @@
 
 $(document).on("ready", function(){
 
+  if ($('.song-list').html().trim() === '') {
+    $('.search-container').css('display','none');
+  }
+
   var regExp = /\d+/
   var playlistId = parseInt(regExp.exec(window.location.pathname)[0])
 
@@ -100,11 +104,14 @@ $(document).on("ready", function(){
     }).done(function(){
       if (status ==  "Public"){
         $('#make-public').html('Private');
+        $('.buttons').removeClass('hidden');
+        $('.add-search-container').css('display','inherit');
       }
       else {
         $('#make-public').html('Public');
+        $('.buttons').addClass('hidden');
+        $('.add-search-container').css('display','none');
       }
-
     })
   });
 

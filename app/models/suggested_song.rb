@@ -21,6 +21,7 @@ class SuggestedSong < ApplicationRecord
           return song.id
         end
       end
+      return 0
     end
 
     def self.playlist_length(playlist_id)

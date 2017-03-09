@@ -14,7 +14,7 @@ $('document').ready(function(){
       console.log("mulitple songs");
       $('.song-list').html('');
 
-      var regExp = /\d/
+      var regExp = /\d+/
       var playlist_id = parseInt(regExp.exec(window.location.pathname)[0])
 
       if (data[0].playlist_id = playlist_id) {

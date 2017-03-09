@@ -23,6 +23,17 @@ class UsersController < ApplicationController
   end
 
   def show
+    hosted_auths = Authorization.where(user_id: session[:user_id], status: "Host")
+    @hosted = []
+    hosted_auths.each do |auth|
+      @hosted << Playlist.find(auth.playlist_id)
+    end
+
+    guest_auths = Authorization.where(user_id: session[:user_id], status: "Guest")
+    @guest = []
+    guest_auths.each do |auth|
+      @guest << Playlist.find(auth.playlist_id)
+    end
   end
 
   private

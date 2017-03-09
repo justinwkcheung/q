@@ -2,9 +2,7 @@
 <div id="dz-root"></div>
 <script src="http://e-cdn-files.deezer.com/js/min/dz.js"></script>
 <script>
-var access = <%= @access %>
-
-  if (access == "Host") {
+  if (<%= @access == 'Host' %>) {
 
     window.dzAsyncInit = function() {
     DZ.init({
@@ -59,4 +57,5 @@ var access = <%= @access %>
   <% end %>
 </div>
 
-<%= link_to 'Add songs to playlist', playlist_suggestedsongs_path(@playlist_q) %>
+
+<div class="search"><%= link_to 'Add songs to playlist', playlist_suggestedsongs_path(@playlist_q) %></div>

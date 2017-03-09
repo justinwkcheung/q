@@ -1,6 +1,12 @@
 // Place all the styles related to the playlists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$player-white: #e8e8ec;
+
+html {
+  background: url("https://static.pexels.com/photos/195280/pexels-photo-195280.jpeg") center center fixed no-repeat;
+  background-size: cover;
+}
 
 nav {
   margin-bottom: 10px;
@@ -34,20 +40,20 @@ iframe {
 }
 
 .song-in-queue {
-  background: white;
-  border-bottom: 1px solid rgb(241, 239, 239);
-  border-left: 1px solid #cccccc;
-  border-right: 1px solid #cccccc;
+  // background: white;
+  border-bottom: 1px solid rgba(232, 232, 236, 0.4);
+  // border-left: 1px solid #cccccc;
+  // border-right: 1px solid #cccccc;
   padding: 5px 1rem;
   line-height: 2.5;
   // background: linear-gradient(to left, #bfbfc0, rgb(248, 248, 249));
-  color: #b7927c;
+  color: $player-white;
   overflow: hidden;
   position: relative;
 }
 
 .song-list {
-  background-color: #1E1C27;
+  background-color: rgba(30, 28, 39, 0.82);
   // padding-top: 5px;
   // padding-bottom: 5px;
 };
@@ -75,11 +81,11 @@ iframe {
 }
 
 .nav_bar {
-    // background: linear-gradient(to right, #1E1C27, #649175);
-    background: linear-gradient(to left, #dcb7a0, #aeaeae,#87b5b0)
+  background: rgba(35, 35, 44, 0.39);
+  // background: linear-gradient(to left, #dcb7a0, #aeaeae,#87b5b0)
 }
 
 .btn-flat {
   padding: 0 15px;
-  color: white; 
+  color: white;
 }

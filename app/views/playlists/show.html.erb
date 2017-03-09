@@ -25,6 +25,7 @@
         container: 'd_player',
         // width : 800, allow CSS to set 100% width
         height : 90,
+        color: '0ab091',
         onload : function(){}
       }
     })
@@ -57,6 +58,7 @@
   }
   </script>
 
+
   <div class="search-container">
     <section class="search">
 
@@ -73,6 +75,7 @@
     </section>
   </div>
 
+
 <div class="song-list">
   <% @songs.each do |song| %>
     <% if song.played %>
@@ -80,6 +83,7 @@
     <% else %>
       <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% end %>
+        
     <%= song.name %>&nbsp -&nbsp <%= song.artist %>
     <span class="added-by">|&nbsp&nbsp&nbspAdded by: <%= User.find(song.user_id).first_name %></span>
 

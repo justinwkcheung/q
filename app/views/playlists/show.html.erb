@@ -2,63 +2,65 @@
 <div id="dz-root"></div>
 <script src="http://e-cdn-files.deezer.com/js/min/dz.js"></script>
 <script>
-  window.dzAsyncInit = function() {
-  DZ.init({
-    appId  : '226822',
-    channelUrl : 'http://localhost:3000/playlist/player',
-    player : {
-      container: 'd_player',
-      // width : 800, allow CSS to set 100% width
-      height : 90,
-      // layout: 'white',
-      color: '0ab091',
-      onload : function(){}
-    }
-  })
-  };
+  if (<%= @access == 'Host' %>) {
 
+    window.dzAsyncInit = function() {
+    DZ.init({
+      appId  : '226822',
+      channelUrl : 'http://localhost:3000/playlist/player',
+      player : {
+        container: 'd_player',
+        // width : 800, allow CSS to set 100% width
+        height : 90,
+        color: '0ab091',
+        onload : function(){}
+      }
+    })
+    };
+    var nextSongRecord = <%= @next_song_record %>
+      if (<%= @next_song_id > 0 %>) {
+        setTimeout(function(){DZ.player.playTracks([<%= @next_song_id %>])}, 3000);
+        setTimeout(function(){DZ.Event.subscribe('track_end', function(){
+          console.log("Track has ended");
+          $.ajax({
+            url: '/playlists/<%=params[:id]%>/update_song?song_id=' + nextSongRecord,
+            method: 'get',
+          }).done(function(data){
+            DZ.player.playTracks([data['song_id']]);
+            nextSongRecord = data['song_record'];
+            })
+          })}
+        , 3000)
+      };
 
-var nextSongRecord = <%= @next_song_record %>
+    (function() {
+      var e = document.createElement('script');
+      e.src = 'http://e-cdn-files.deezer.com/js/min/dz.js';
+      e.async = true;
+      document.getElementById('dz-root').appendChild(e);
+    }());
+  }
+  </script>
 
-    if (<%= @next_song_id > 0 %>) {
-      setTimeout(function(){DZ.player.playTracks([<%= @next_song_id %>])}, 3000);
-      setTimeout(function(){DZ.Event.subscribe('track_end', function(){
-        console.log("Track has ended");
-        $.ajax({
-          url: '/playlists/<%=params[:id]%>/update_song?song_id=' + nextSongRecord,
-          method: 'get',
-        }).done(function(data){
-          DZ.player.playTracks([data['song_id']]);
-          nextSongRecord = data['song_record'];
-        })
-      })}, 3000)};
-
-
-
-  (function() {
-  var e = document.createElement('script');
-  e.src = 'http://e-cdn-files.deezer.com/js/min/dz.js';
-  e.async = true;
-
-  document.getElementById('dz-root').appendChild(e);
-
-  }());
-</script>
 
 <div class="song-list">
-
   <% @songs.each do |song| %>
-
-  <div class="song-in-queue" data-playlist-id=<%=@playlist_q.id%> data-user-id=<%=session[:user_id]%> data-suggested-song-id=<%= song.id %>>
+    <% if song.played %>
+      <div class="song-in-queue played" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
+    <% else %>
+      <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
+    <% end %>
     <%= song.name %>&nbsp
-    <span class="contain">
-      <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
-      <span class="heart"><span class="netvote"><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
-    </span>
-  </div>
 
+    <span class="added-by">|&nbsp&nbsp&nbspAdded by: <%= User.find(song.user_id).first_name %></span>
 
+        <span class="contain">
+          <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
+          <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
+        </span>
+      </div>
   <% end %>
 </div>
 
-<%= link_to 'Add songs to playlist', playlist_suggestedsongs_path(@playlist_q) %>
+
+<div class="search"><%= link_to 'Add songs to playlist', playlist_suggestedsongs_path(@playlist_q) %></div>

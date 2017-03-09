@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
 get '/playlists/:id/update_song/', to: 'playlists#update_song', as: 'update_song'
 
+get '/playlists/join', to: 'playlists#join', as: 'join'
+
+post '/playlists/add_guest', to: 'playlists#add_guest', as: 'add_guest'
+
   get '/playlists/player', to: 'playlists#player'
   root "playlists#index"
 

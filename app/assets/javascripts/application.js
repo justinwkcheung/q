@@ -14,19 +14,16 @@
 //= require jquery_ujs
 //= require_tree .
 
+
 $(document).on("ready", function(){
 
+  var regExp = /\d+/
+  var playlistId = parseInt(regExp.exec(window.location.pathname)[0])
+
   $(".suggest_song").on('click', function (event){
-      console.log($(this));
-      console.log($(this).siblings('div').attr('name'));
-      console.log($(this).siblings('div').html());
-
        event.preventDefault();
-
        $.ajax({
-
           url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
-
           method:'POST',
           data:{
            song_id: $(this).siblings('div').attr('name'),
@@ -34,15 +31,24 @@ $(document).on("ready", function(){
            user_id: $(this).siblings('div').data('user-id')
          }
        }).done(function(data){
-         console.log(data)
-         console.log($(this).siblings('div').data('playlist-id'));
        });
   });
 
+  // Let's add this in when we want the host to be able to add songs while the playlist is playing.
 
+  // $("body").delegate('.search','click',function() {
+  //   event.preventDefault();
+  //   $.ajax({
+  //     url: '/playlists/' + playlistId + '/suggestedsongs/new',
+  //     method: 'get',
+  //     dataType: 'json',
+  //   }).done(function(data){
+  //     $('.song-list').html('');
+  //     $('.search-area').append(data.test);
+  //   })
+  // })
 
-  $(".upvote").on('click', function() {
-
+  $("body").delegate('.upvote','click', function() {
     var playlist_id = $(this).parents('.song-in-queue').data('playlist-id');
     var suggestedsong_id = $(this).parents('.song-in-queue').data('suggested-song-id');
     var replacement = $(this).parents('.contain').children('.heart').children('.netvote');
@@ -51,7 +57,6 @@ $(document).on("ready", function(){
       url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        user_id: $(this).parents('.song-in-queue').data('user-id'),
         status: 'up',
       }
     }).done(function(){
@@ -64,17 +69,14 @@ $(document).on("ready", function(){
     });
   });
 
-  $(".downvote").on('click', function() {
-
+  $("body").delegate('.downvote','click', function() {
     var playlist_id = $(this).parents('.song-in-queue').data('playlist-id');
     var suggestedsong_id = $(this).parents('.song-in-queue').data('suggested-song-id');
     var replacement = $(this).parents('.contain').children('.heart').children('.netvote')
-
     $.ajax({
       url:"/playlists/" + $(this).parents('.song-in-queue').data('playlist-id') + "/suggestedsongs/" + $(this).parents('.song-in-queue').data('suggested-song-id') + "/votes",
       method: 'POST',
       data: {
-        user_id: $(this).parents('.song-in-queue').data('user-id'),
         status: 'down'
       }
     }).done(function(){

@@ -14,22 +14,35 @@ class PlaylistsController < ApplicationController
 
 
   def show
+
+    @access = Authorization.find_by(playlist_id: params[:id], user_id: session[:user_id])
+
+    if @access
+      @access = @access.status
+    else
+      @access = "Viewer"
+    end
+
     @playlist_q = Playlist.find(params[:id])
     @playlist_q_songs = SuggestedSong.where(playlist_id: @playlist_q.id)
+
+
     @next_song_id = SuggestedSong.next_song_id(params[:id])
     @next_song_record = SuggestedSong.next_song_record(params[:id])
-    @songs = SuggestedSong.where(playlist_id: params[:id]).order(net_vote: :desc)
+    @songs = SuggestedSong.playlist_songs(params[:id])
   end
 
   def update_song
-    SuggestedSong.find(params[:song_id]).update_attribute(:played, true)
-    @next_song_id = SuggestedSong.next_song_id(params[:id])
-    @next_song_record = SuggestedSong.next_song_record(params[:id])
-    render json: {song_id: @next_song_id, song_record: @next_song_record}
+    access = Authorization.find_by(playlist_id: params[:playlist_id], user_id: session[:user_id]).status
+    if access == "Host"
+      SuggestedSong.find(params[:song_id]).update_attribute(:played, true)
+      @next_song_id = SuggestedSong.next_song_id(params[:id])
+      @next_song_record = SuggestedSong.next_song_record(params[:id])
+      render json: {song_id: @next_song_id, song_record: @next_song_record}
+    end
   end
 
   def join
-
   end
 
   def add_guest
@@ -81,8 +94,6 @@ class PlaylistsController < ApplicationController
         render :edit
       end
   end
-
-
 
 private
 

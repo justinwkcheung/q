@@ -36,17 +36,30 @@ $(document).on("ready", function(){
 
   // Let's add this in when we want the host to be able to add songs while the playlist is playing.
 
-  // $("body").delegate('.search','click',function() {
-  //   event.preventDefault();
-  //   $.ajax({
-  //     url: '/playlists/' + playlistId + '/suggestedsongs/new',
-  //     method: 'get',
-  //     dataType: 'json',
-  //   }).done(function(data){
-  //     $('.song-list').html('');
-  //     $('.search-area').append(data.test);
-  //   })
-  // })
+  // response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=&output=json")
+  // access_token = response["access_token"]
+
+
+
+  $("body").delegate('#search-submit','click',function(event) {
+    event.preventDefault();
+    var searchValue = $('#search').val();
+    console.log(searchValue);
+    $.ajax({
+      crossDomain: false,
+      url: 'http://api.deezer.com/search/album?q=' + searchValue +"&",
+      method: 'get'
+    }).done(function(responseData){
+      console.log(responseData);
+    })
+   })
+
+
+  // # @albums = HTTParty.get("http://api.deezer.com/search/album?q=#{params[:search]}")
+  // # @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
+  // # @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
+
+
 
   $("body").delegate('.upvote','click', function() {
     var playlist_id = $(this).parents('.song-in-queue').data('playlist-id');

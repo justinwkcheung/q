@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+get '/playlists/:playlist_id/suggestedsongs/access_token', to: 'suggestedsongs#access_token', as: 'access_token'
+
 get '/playlists/:id/update_song/', to: 'playlists#update_song', as: 'update_song'
 
 get '/playlists/join', to: 'playlists#join', as: 'join'

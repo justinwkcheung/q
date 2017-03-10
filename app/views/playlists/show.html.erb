@@ -1,15 +1,30 @@
+
   <div class="playlist-details">
   <span class="desc"> </span> <%= @playlist_q.name %> <span class="desc"> <%= @playlist_q.description %></span>
 
   <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
     <button id="make-public">
+
+<div class="playlist-details">
+  <div class="name-desc-container">
+    <div class="name-desc">
+      <span class="desc"> </span><p>Name: <p><%= @playlist_q.name %> <br>
+    </div>
+    <div class="name-desc">
+    <span class="desc"><p>Description: <p><%= @playlist_q.description %></span>
+    </div>
+  </div>
+  <button id="make-public" class="btn login-session white" type="submit" name="action">
+
     <%if @playlist_q.public %>
     <%= "Public" %>
     <% else %>
     <%= "Private" %>
     <% end %>
   </button>
+
  <% end %>
+
   </div>
 
 <div id="d_player"></div>
@@ -96,8 +111,9 @@
 
       <% else %>
         <%if !(song.played) %>
+
         <span class="contain">
-          <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
+          <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
         </span>
         <% else %>
           <span class="contain"></span>
@@ -111,7 +127,7 @@
 </div>
 
 <% unless @playlist_q.public %>
-  <button class='add-search-container'> Add a song </button>
+  <button class='add-search-container btn'> Add a song </button>
 <%end %>
 
 <!-- <button class="search-button">Add songs to playlist</button> -->

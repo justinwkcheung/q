@@ -105,7 +105,7 @@ $(document).on("ready", function(){
       if (status ==  "Public"){
         $('#make-public').html('Private');
         $('.buttons').removeClass('hidden');
-        $('.add-search-container').css('display','inherit');
+        $('.add-search-container').css('display','inherit').addClass('btn');
       }
       else {
         $('#make-public').html('Public');

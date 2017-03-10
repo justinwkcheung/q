@@ -44,9 +44,9 @@
           })}
         , 3000)
       }
-      else {
-        $('.search-container').css('display','none');
-      }
+      // else {
+      //   $('.search-container').css('display','none');
+      // }
 
     (function() {
       var e = document.createElement('script');
@@ -57,22 +57,27 @@
   }
   </script>
 
+<div>
+  <% unless @playlist_q.public %>
+    <button class='add-search-container'> Add a song </button>
+  <%end %>
+</div>
 
-  <div class="search-container">
+  <div class="search-container hidden">
     <section class="search">
 
       <button class="back">Back to playlist</button>
-      <h1>Search A Song</h1>
+      <h5>Search A Song</h5>
       <%= form_tag  playlist_suggestedsongs_path(params[:id]), method: "get" do |f| %>
         <div class="field">
           <%= text_field_tag :search %>
           <span id="search-submit"><%= submit_tag "Search" %></span>
-          </div>
+        </div>
       <% end %>
 
       <div id="search_results"></div>
     </section>
-  </div>
+    </div>
 
 
 <div class="song-list">
@@ -101,16 +106,6 @@
 
   <% end %>
 </div>
-
-<% unless @playlist_q.public %>
-  <button class='add-search-container'> Add a song </button>
-<%end %>
-
-<!-- <button class="search-button">Add songs to playlist</button> -->
-<!-- <%#= link_to "Add songs to playlist", playlist_suggestedsongs_path(@playlist_q) %> -->
-
-
-
 
 <article>
   <% if @albums["data"] %>

@@ -39,14 +39,17 @@ $(document).on("ready", function(){
   // });
 
   $('.add-search-container').on('click', function(){
-    $('.search-container').css('z-index', 2).fadeIn(800);
+    $('.search-container').removeClass('hidden');
+    $('.search-container').fadeIn(800).addClass('search-container-show');
+    $('.add-search-container').addClass('hidden');
     $('.upvote').css('z-index', 1);
     $('.downvote').css('z-index', 1);
-
   })
 
   $('.back').on('click', function(){
+    $('.search-container').css('display','none');
     $('.search-container').css('z-index', -1).fadeOut(800);
+    $('.add-search-container').removeClass('hidden');
     $('.upvote').css('z-index', 1);
     $('.downvote').css('z-index', 1);
   })
@@ -62,9 +65,8 @@ $(document).on("ready", function(){
            artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
-         console.log("DID IT");
+         $(this).addClass('suggest_song1-active')
        }).fail(function(){
-         console.log("failed bish!");
        })
   });
 
@@ -84,9 +86,9 @@ $(document).on("ready", function(){
       for (var i = 0; i < data['data'].length; i++){
         var button = $('<button>')
         var button = $(button).attr('class', 'suggest_song1');
-        var button = $(button).html('Add');
+        var button = $(button).html('+');
 
-        var div = $('<div>').attr('song_id', data["data"][i]['id']).attr('song_name', data["data"][i]['title']).attr('artist', data["data"][i]["artist"]["name"]);
+        var div = $('<div>').attr('class','song-listing').attr('song_id', data["data"][i]['id']).attr('song_name', data["data"][i]['title']).attr('artist', data["data"][i]["artist"]["name"]);
 
         $(div).html(data["data"][i]["title"]).append(' - ').append(data["data"][i]["artist"]["name"]).append(button);
 

@@ -13,11 +13,14 @@
   width: 90%;
 }
 
+.hosted-playlist a {
+  color: white;
+}
+
 #host-title {
   background-color: rgba(74, 199, 164,0.9);
   border: rgba(74, 199, 164,0.9) 1px solid;
   color: white;
-  font-weight: bold;
   display: block;
   padding-left: 1rem;
 }
@@ -26,85 +29,31 @@
   background-color: rgba(232, 2, 103,0.9);
   border: rgba(232, 2, 103,0.9) 1px solid;
   color: white;
-  font-weight: bold;
   display: block;
   padding-left: 1rem;
 }
 
 .hosted-playlists {
-  background-color: rgba(0, 0, 0,0.75);
-  border: black 1px solid;
+  background-color: rgba(0, 0, 0, 0.44);
   color: white;
-  margin-top: 1rem;
+  margin-top: 9rem;
+  padding-bottom: 0.5rem;
 }
 
 .guest-playlists {
-  background-color: rgba(0, 0, 0,0.75);
-  border: black 1px solid;
+  background-color: rgba(0, 0, 0, 0.44);
   color: white;
   margin-top: 1rem;
+  padding-bottom: 0.5rem; 
 }
 
-a {
+
+#host-button a {
   color: white;
 }
 
-.host {
-  background-color: rgba(74, 199, 164,0.9);
-  width: 45%;
-  text-align: center;
-  line-height: 3rem;
-  border: black 1px solid;
-  display: inline-block;
-}
-
-.host:hover {
-  background-color: rgba(0, 0, 0, 0.9);
-  width: 45%;
-  text-align: center;
-  line-height: 3rem;
-  border: rgba(74, 199, 164,0.9) 1px solid;
-  display: inline-block;
-  font-weight: bold;
-}
-
-.host:active {
-  background-color: rgba(0, 0, 0, 0.9);
-  width: 45%;
-  text-align: center;
-  line-height: 3rem;
-  border: rgba(74, 199, 164,0.9) 1px solid;
-  display: inline-block;
-  font-weight: bold;
-}
-
-.join {
-  background-color: rgba(232, 2, 103,0.9);
-  width: 45%;
-  text-align: center;
-  line-height: 3rem;
-  border: black 1px solid;
-  display: inline-block;
-}
-
-.join:hover {
-  background-color: rgba(0, 0, 0, 0.9);
-  width: 45%;
-  text-align: center;
-  line-height: 3rem;
-  border: rgba(232, 2, 103,0.9) 1px solid;
-  display: inline-block;
-  font-weight: bold;
-}
-
-.join:active {
-  background-color: rgba(0, 0, 0, 0.9);
-  width: 45%;
-  text-align: center;
-  line-height: 3rem;
-  border: rgba(232, 2, 103,0.9) 1px solid;
-  display: inline-block;
-  font-weight: bold;
+#join-button a {
+  color: white;
 }
 
 .start-container {
@@ -114,6 +63,14 @@ a {
 label {
   color: white;
   font-size: 15px;
+}
+
+#host-button, #join-button {
+  background-color: rgba(0, 0, 0, 0.74);
+}
+
+.party-buttons {
+  margin-top: 200px;
 }
 
 .buttons-home, .buttons-user {

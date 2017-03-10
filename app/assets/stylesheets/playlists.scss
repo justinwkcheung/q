@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $player-white: #e8e8ec;
 
+
 .back {
   width: 100%;
   background-color: rgba(232, 2, 103,0.7);
@@ -139,13 +140,23 @@ iframe {
   opacity:1
 }
 
+.name-desc-container {
+  background-color: rgba(255,255,255,.2);
+}
+
+.name-desc {
+  display: inline-block;
+  margin-right: 19px;
+  color: white;
+}
+
 .btn:before {
     content: '';
     opacity: 0;
     background-color: rgba(255,255,255,.2);
     position: absolute;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     left: 0;
     top: 0;
     transition: opacity .2s;
@@ -209,9 +220,35 @@ iframe {
   color: white;
 }
 
+
+// -------------------------------------------------------------------
+
+
+/* After 480px or larger, whatever rules in here will apply */
+@media (min-width: 480px) {
+
+}
+/* After 480px or larger, whatever rules in here will apply */
+@media (min-width: 600px) {
+
+}
+
+@media (min-width: 850px) {
+
+}
+
+@media (min-width: 850px) and (max-width: 1199px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}
+
 html{
   position: relative;
 }
+
 
 .hidden {
   display: none;
@@ -223,6 +260,15 @@ html{
 
 .suggest_song1 {
   background-color: rgba(74, 199, 164,0.5);
+}
+
+.search-container{
+  z-index: -1;
+  position: absolute;
+  background-color: dimgray;
+  opacity: 0.9;
+  display: block;
+  width: 90%;
   color: white;
   border-radius: 50px;
   border: black 1px solid;

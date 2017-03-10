@@ -107,8 +107,10 @@ $(document).on("ready", function(){
       if (status ==  "Public"){
         $('#make-public').html('Private');
         $('.buttons').removeClass('hidden');
+
         $('.add-search-container').css('display','inherit')
         $('#make-public').toggleClass('active');
+
       }
       else {
         $('#make-public').html('Public');

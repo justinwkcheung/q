@@ -5,6 +5,8 @@ class PlaylistsController < ApplicationController
   end
 
   def index
+    render :layout => 'alternative'
+    # render 'playlists/index': true
   end
 
   def show

@@ -1,12 +1,25 @@
+
   <div class="playlist-details">
-  <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
-  <button id="make-public">
-  <%if @playlist_q.public %>
-  <%= "Public" %>
-  <% else %>
-  <%= "Private" %>
-  <% end %>
-</button>
+
+
+  <span class="desc"> </span> <%= @playlist_q.name %> <span class="desc"> <%= @playlist_q.description %></span>
+
+  <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
+    
+
+<div class="playlist-details">
+   <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
+  </div>
+  <button id="make-public" class="btn login-session white" type="submit" name="action">
+
+    <%if @playlist_q.public %>
+    <%= "Public" %>
+    <% else %>
+    <%= "Private" %>
+    <% end %>
+  </button>
+
+ <% end %>
 
   </div>
 
@@ -88,24 +101,44 @@
       <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% end %>
 
+
     <%= song.name %> - <%= song.artist %>
     <span class="added-by"> | Added By: <%= User.find(song.user_id).first_name %></span>
 
-<% if @playlist_q.public %>
+
+      <% if @playlist_q.public %>
+
+          <span class="contain">
+            <span class="buttons"><button type="button" name="button" class="hidden upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="hidden downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
+          </span>
+
+      <% else %>
+        <%if !(song.played) %>
+
         <span class="contain">
-          <span class="buttons"><button type="button" name="button" class="hidden upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="hidden downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
+          <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
         </span>
-<% else %>
-        <span class="contain">
-          <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
-        </span>
-<% end %>
+        <% else %>
+          <span class="contain"></span>
+        <% end %>
+      <% end %>
 
   <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
 </div>
 
   <% end %>
 </div>
+
+<% unless @playlist_q.public %>
+  <button class='add-search-container btn'> Add a song </button>
+<%end %>
+
+<!-- <button class="search-button">Add songs to playlist</button> -->
+<!-- <%#= link_to "Add songs to playlist", playlist_suggestedsongs_path(@playlist_q) %> -->
+
+
+
+
 
 <article>
   <% if @albums["data"] %>

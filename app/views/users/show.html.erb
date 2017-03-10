@@ -3,6 +3,11 @@
 <div class="join"><%= link_to "Join a Party", join_path %></div>
 </div>
 
+<div class="buttons-user">
+  <div class="btn logins"><%= link_to "Host a Party", new_playlist_path %></div>
+  <div class="btn logins"><%= link_to "Join a Party", join_path %></div>
+</div>
+
 <div class="hosted-playlists"><span id="host-title">Hosted Playlists</span>
 <ol>
   <% @hosted.each do |playlist| %>
@@ -21,4 +26,5 @@
   </div>
   <% end %>
 </ol>
+
 </div>

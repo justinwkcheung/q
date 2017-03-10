@@ -19,7 +19,7 @@ $player-white: #e8e8ec;
 }
 
 .search-container {
-  width: 84.95%;
+  width: 90%;
   position: absolute;
   border-right: 1px black solid;
   border-left:  1px black solid;
@@ -224,6 +224,17 @@ iframe {
   color: white;
 }
 
+@media (min-width: 600px) and (max-width: 999px) {
+ .search-container {
+   width: 84.95%;
+ }
+}
+
+@media (min-width: 1000px) {
+ .search-container {
+   width: 70%;
+ }
+}
 
 // -------------------------------------------------------------------
 

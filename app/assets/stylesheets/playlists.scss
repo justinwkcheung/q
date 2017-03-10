@@ -27,6 +27,16 @@ iframe {
   opacity:1
 }
 
+.name-desc-container {
+  background-color: rgba(255,255,255,.2);
+}
+
+.name-desc {
+  display: inline-block;
+  margin-right: 19px;
+  color: white;
+}
+
 .btn:before {
     content: '';
     opacity: 0;
@@ -132,7 +142,7 @@ html{
   background-color: dimgray;
   opacity: 0.9;
   display: block;
-  width: 100%;
+  width: 90%;
   color: white;
 
 }

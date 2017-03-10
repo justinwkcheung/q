@@ -37,9 +37,10 @@ $('document').ready(function(){
         var spanHeart = $('<span>').attr('class','heart')
         var iconHeart = $('<i>').attr('class','fa fa-heart').attr('style','font-size:12px')
         var netVote = $('<span>').attr('class','netvote').attr('id',data.id).html(data.net_vote)
-        var heart = $(spanHeart).append(netVote)..append(" ").append(iconHeart)
+
+        var heart = $(spanHeart).append(netVote).append(" ").append(iconHeart)
         var votes = $(span).append(upButton).append(" ").append(downButton)
-        var div_replace = $(divContainer).html(data.name).append("&nbsp -&nbsp <span>" + data.artist + "</span> | &nbsp Added by:")
+        var div_replace = $(divContainer).html(data.name + ' - ' + data.artist + ' | Added By: ' + data.user_name)
 
         $(div_replace).append(votes).append(heart)
         $('.song-list').append(div_replace);

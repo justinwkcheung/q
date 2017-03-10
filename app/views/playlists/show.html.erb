@@ -1,18 +1,14 @@
 
   <div class="playlist-details">
+
+
   <span class="desc"> </span> <%= @playlist_q.name %> <span class="desc"> <%= @playlist_q.description %></span>
 
   <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
     
 
 <div class="playlist-details">
-  <div class="name-desc-container">
-    <div class="name-desc">
-      <span class="desc"> </span><p>Name: <p><%= @playlist_q.name %> <br>
-    </div>
-    <div class="name-desc">
-    <span class="desc"><p>Description: <p><%= @playlist_q.description %></span>
-    </div>
+   <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
   </div>
   <button id="make-public" class="btn login-session white" type="submit" name="action">
 
@@ -61,9 +57,9 @@
           })}
         , 3000)
       }
-      else {
-        $('.search-container').css('display','none');
-      }
+      // else {
+      //   $('.search-container').css('display','none');
+      // }
 
     (function() {
       var e = document.createElement('script');
@@ -74,22 +70,27 @@
   }
   </script>
 
+<div>
+  <% unless @playlist_q.public %>
+    <button class='add-search-container'> Add a song </button>
+  <%end %>
+</div>
 
-  <div class="search-container">
+  <div class="search-container hidden">
     <section class="search">
 
       <button class="back">Back to playlist</button>
-      <h1>Search A Song</h1>
+      <h5>Search A Song</h5>
       <%= form_tag  playlist_suggestedsongs_path(params[:id]), method: "get" do |f| %>
         <div class="field">
           <%= text_field_tag :search %>
           <span id="search-submit"><%= submit_tag "Search" %></span>
-          </div>
+        </div>
       <% end %>
 
       <div id="search_results"></div>
     </section>
-  </div>
+    </div>
 
 
 <div class="song-list">
@@ -100,8 +101,10 @@
       <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% end %>
 
-    <%= song.name %>&nbsp -&nbsp <%= song.artist %>
-    <span class="added-by">|&nbsp&nbsp&nbspAdded by: <%= User.find(song.user_id).first_name %></span>
+
+    <%= song.name %> - <%= song.artist %>
+    <span class="added-by"> | Added By: <%= User.find(song.user_id).first_name %></span>
+
 
       <% if @playlist_q.public %>
 
@@ -132,6 +135,7 @@
 
 <!-- <button class="search-button">Add songs to playlist</button> -->
 <!-- <%#= link_to "Add songs to playlist", playlist_suggestedsongs_path(@playlist_q) %> -->
+
 
 
 

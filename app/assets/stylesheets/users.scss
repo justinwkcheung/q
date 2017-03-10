@@ -3,6 +3,113 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+.guest-playlist {
+  width: 90%;
+  border-bottom: rgba(232, 2, 103,0.9) 1px solid;
+}
+
+.hosted-playlist {
+  border-bottom: rgba(74, 199, 164,0.9) 1px solid;
+  width: 90%;
+}
+
+#host-title {
+  background-color: rgba(74, 199, 164,0.9);
+  border: rgba(74, 199, 164,0.9) 1px solid;
+  color: white;
+  font-weight: bold;
+  display: block;
+  padding-left: 1rem;
+}
+
+#guest-title {
+  background-color: rgba(232, 2, 103,0.9);
+  border: rgba(232, 2, 103,0.9) 1px solid;
+  color: white;
+  font-weight: bold;
+  display: block;
+  padding-left: 1rem;
+}
+
+.hosted-playlists {
+  background-color: rgba(0, 0, 0,0.75);
+  border: black 1px solid;
+  color: white;
+  margin-top: 1rem;
+}
+
+.guest-playlists {
+  background-color: rgba(0, 0, 0,0.75);
+  border: black 1px solid;
+  color: white;
+  margin-top: 1rem;
+}
+
+a {
+  color: white;
+}
+.host {
+  background-color: rgba(74, 199, 164,0.9);
+  width: 45%;
+  text-align: center;
+  line-height: 3rem;
+  border: black 1px solid;
+  display: inline-block;
+}
+
+.host:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 45%;
+  text-align: center;
+  line-height: 3rem;
+  border: rgba(74, 199, 164,0.9) 1px solid;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.host:active {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 45%;
+  text-align: center;
+  line-height: 3rem;
+  border: rgba(74, 199, 164,0.9) 1px solid;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.join {
+  background-color: rgba(232, 2, 103,0.9);
+  width: 45%;
+  text-align: center;
+  line-height: 3rem;
+  border: black 1px solid;
+  display: inline-block;
+}
+
+.join:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 45%;
+  text-align: center;
+  line-height: 3rem;
+  border: rgba(232, 2, 103,0.9) 1px solid;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.join:active {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 45%;
+  text-align: center;
+  line-height: 3rem;
+  border: rgba(232, 2, 103,0.9) 1px solid;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.start-container {
+  text-align: center;
+
+
 label {
   color: white;
   font-size: 15px;
@@ -47,4 +154,5 @@ h3 {
   text-align: center;
   color: white;
   text-decoration: underline;
+
 }

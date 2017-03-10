@@ -87,6 +87,7 @@ $player-white: #e8e8ec;
   float: right;
   height: 2.5em;
   border: black 1px solid;
+  float: right;
 }
 
 #make-public:hover {
@@ -96,6 +97,7 @@ $player-white: #e8e8ec;
   float: right;
   height: 2.5em;
   border: black 1px solid;
+  float: right;
 }
 
 #make-public::active {
@@ -105,6 +107,7 @@ $player-white: #e8e8ec;
   float: right;
   height: 2.5em;
   border: black 1px solid;
+  float: right;
 }
 
 #make-public.active {
@@ -114,6 +117,7 @@ $player-white: #e8e8ec;
   float: right;
   height: 2.5em;
   border: black 1px solid;
+  float: right;
 }
 
 
@@ -224,31 +228,30 @@ iframe {
 // -------------------------------------------------------------------
 
 
-/* After 480px or larger, whatever rules in here will apply */
-@media (min-width: 480px) {
-
-}
-/* After 480px or larger, whatever rules in here will apply */
-@media (min-width: 600px) {
-
-}
-
-@media (min-width: 850px) {
-
-}
-
-@media (min-width: 850px) and (max-width: 1199px) {
-
-}
-
-@media (min-width: 1200px) {
-
-}
+// /* After 480px or larger, whatever rules in here will apply */
+// @media (min-width: 480px) {
+//
+// }
+// /* After 480px or larger, whatever rules in here will apply */
+// @media (min-width: 600px) {
+//
+// }
+//
+// @media (min-width: 850px) {
+//
+// }
+//
+// @media (min-width: 850px) and (max-width: 1199px) {
+//
+// }
+//
+// @media (min-width: 1200px) {
+//
+// }
 
 html{
   position: relative;
 }
-
 
 .hidden {
   display: none;
@@ -260,15 +263,6 @@ html{
 
 .suggest_song1 {
   background-color: rgba(74, 199, 164,0.5);
-}
-
-.search-container{
-  z-index: -1;
-  position: absolute;
-  background-color: dimgray;
-  opacity: 0.9;
-  display: block;
-  width: 90%;
   color: white;
   border-radius: 50px;
   border: black 1px solid;

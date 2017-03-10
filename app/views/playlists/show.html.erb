@@ -1,24 +1,15 @@
-
+  <div>
   <div class="playlist-details">
-
-
-  <span class="desc"> </span> <%= @playlist_q.name %> <span class="desc"> <%= @playlist_q.description %></span>
-
-  <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
-    
-
-<div class="playlist-details">
-   <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
-  </div>
-  <button id="make-public" class="btn login-session white" type="submit" name="action">
-
-    <%if @playlist_q.public %>
-    <%= "Public" %>
-    <% else %>
-    <%= "Private" %>
-    <% end %>
-  </button>
-
+  <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
+    <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
+    <button id="make-public" type="submit" name="action">
+      <%if @playlist_q.public %>
+      <%= "Public" %>
+      <% else %>
+      <%= "Private" %>
+      <% end %>
+    </button>
+</div>
  <% end %>
 
   </div>
@@ -129,16 +120,6 @@
   <% end %>
 </div>
 
-<% unless @playlist_q.public %>
-  <button class='add-search-container btn'> Add a song </button>
-<%end %>
-
-<!-- <button class="search-button">Add songs to playlist</button> -->
-<!-- <%#= link_to "Add songs to playlist", playlist_suggestedsongs_path(@playlist_q) %> -->
-
-
-
-
 
 <article>
   <% if @albums["data"] %>
@@ -165,6 +146,6 @@
       </div>
     <% end %>
   <% end %>
-
-
 </article>
+
+</div>

@@ -3,24 +3,37 @@
   <div class="btn logins"><%= link_to "Host a Party", new_playlist_path %></div>
   <div class="btn logins"><%= link_to "Join a Party", join_path %></div>
 </div>
-<br><br>
-Hosted Playlists:
-<ol>
-  <% @hosted.each do |playlist| %>
-  <li><%= playlist.name %></li>
-  <ul>
-    <li><%= playlist.theme %></li>
-    <li>Access Code: <%= playlist.access_code %></li>
-  </ul>
-  <% end %>
-</ol>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-Guest Playlists:
-<ol>
-  <% @guest.each do |playlist| %>
-  <li><%= playlist.name %></li>
-  <ul>
-    <li><%= playlist.theme %></li>
-  </ul>
-  <% end %>
-</ol>
+
+<h3>Previous Playlists</h3>
+
+<div class="playlists">
+  <h5 class="play-title">Hosted Playlists:</h5>
+    <ol>
+      <% @hosted.each do |playlist| %>
+      <li><%= playlist.name %></li>
+      <ul>
+        <li><%= playlist.theme %></li>
+        <li>Access Code: <%= playlist.access_code %></li>
+      </ul>
+      <% end %>
+    </ol>
+</div>
+
+<div class="playlists">
+  <h5 class="play-title">Guest Playlists:</h5>
+    <ol>
+      <% @guest.each do |playlist| %>
+      <li><%= playlist.name %></li>
+      <ul>
+        <li><%= playlist.theme %></li>
+      </ul>
+      <% end %>
+    </ol>
+</div>

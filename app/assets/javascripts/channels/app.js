@@ -20,7 +20,11 @@ $('document').ready(function(){
 
       if (data[0].playlist_id = playlist_id) {
         data.forEach(function(data) {
-          console.log(data[0]);
+          console.log(data);
+          console.log(data.name);
+          console.log(data.artist);
+          console.log(data.user_name);
+          console.log("this logging is working");
           if (data.played) {
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
           }

@@ -1,3 +1,10 @@
+
+  <div class="playlist-details">
+  <span class="desc"> </span> <%= @playlist_q.name %> <span class="desc"> <%= @playlist_q.description %></span>
+
+  <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
+    <button id="make-public">
+
 <div class="playlist-details">
   <div class="name-desc-container">
     <div class="name-desc">
@@ -8,6 +15,7 @@
     </div>
   </div>
   <button id="make-public" class="btn login-session white" type="submit" name="action">
+
     <%if @playlist_q.public %>
     <%= "Public" %>
     <% else %>
@@ -15,6 +23,7 @@
     <% end %>
   </button>
 
+ <% end %>
 
   </div>
 
@@ -94,15 +103,22 @@
     <%= song.name %>&nbsp -&nbsp <%= song.artist %>
     <span class="added-by">|&nbsp&nbsp&nbspAdded by: <%= User.find(song.user_id).first_name %></span>
 
-<% if @playlist_q.public %>
-        <span class="contain">
-          <span class="buttons"><button type="button" name="button" class="hidden upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="hidden downvote btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
-        </span>
-<% else %>
+      <% if @playlist_q.public %>
+
+          <span class="contain">
+            <span class="buttons"><button type="button" name="button" class="hidden upvote btn waves-effect waves-light blue darken-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="hidden downvote  btn waves-effect waves-light red"><i class="material-icons">thumb_down</i></button></span> &nbsp
+          </span>
+
+      <% else %>
+        <%if !(song.played) %>
+
         <span class="contain">
           <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
         </span>
-<% end %>
+        <% else %>
+          <span class="contain"></span>
+        <% end %>
+      <% end %>
 
   <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
 </div>

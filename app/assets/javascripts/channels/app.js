@@ -31,10 +31,10 @@ $('document').ready(function(){
           else {
             var divContainer = $('<div>').attr('class', 'song-in-queue').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
             var span = $('<span>').attr('class',"buttons")
-            var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue darken-2')
+            var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2')
             var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
             var upButton = $(buttonUp).append(iconUp)
-            var buttonDown = $('<button>').attr('type',"button").attr('name','button').attr('class','downvote btn waves-effect waves-light red')
+            var buttonDown = $('<button>').attr('type',"button").attr('name','button').attr('class','downvote btn waves-effect waves-light red lighten-2')
             var iconDown = $('<i>').attr('class','material-icons').html('thumb_down')
             var downButton = $(buttonDown).append(iconDown)
           }

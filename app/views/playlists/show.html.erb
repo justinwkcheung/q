@@ -3,7 +3,7 @@
   <span class="desc"> </span> <%= @playlist_q.name %> <span class="desc"> <%= @playlist_q.description %></span>
 
   <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
-    <button id="make-public">
+    
 
 <div class="playlist-details">
   <div class="name-desc-container">

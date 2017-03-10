@@ -37,7 +37,7 @@ $('document').ready(function(){
         var netVote = $('<span>').attr('class','netvote').attr('id',data.id).html(data.net_vote)
         var heart = $(spanHeart).append(netVote).append(iconHeart)
         var votes = $(span).append(upButton).append(downButton)
-        var div_replace = $(divContainer).html(data.name)
+        var div_replace = $(divContainer).html(data.name + ' - ' + data.artist + ' | Added By: ' + data.user_name)
         $(div_replace).append(votes).append(heart)
         $('.song-list').append(div_replace);
         })

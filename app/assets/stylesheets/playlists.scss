@@ -3,6 +3,62 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $player-white: #e8e8ec;
 
+.playlist-details {
+  background-color: black;
+  height: 2.5em;
+  line-height: 2.5em;
+}
+.playlist-name {
+  color: white;
+  font-weight: bold;
+  display: inline-block;
+  padding-left: 1rem;
+}
+
+.playlist-description {
+  color: white;
+  width: 33%;
+  font-style: italic;
+  display: inline-block;
+}
+
+#make-public {
+  background-color: #0ab091;
+  color: white;
+  width: 33%;
+  float: right;
+  height: 2.5em;
+  border: black 1px solid;
+}
+
+#make-public:hover {
+  background-color: #003a3e;
+  color: white;
+  width: 33%;
+  float: right;
+  height: 2.5em;
+  border: black 1px solid;
+}
+
+#make-public::active {
+  background-color: #003a3e;
+  color: white;
+  width: 33%;
+  float: right;
+  height: 2.5em;
+  border: black 1px solid;
+}
+
+#make-public.active {
+  background-color: #003a3e;
+  color: white;
+  width: 33%;
+  float: right;
+  height: 2.5em;
+  border: black 1px solid;
+}
+
+
 html {
   background: url("https://static.pexels.com/photos/195280/pexels-photo-195280.jpeg") center center fixed no-repeat;
   background-size: cover;

@@ -4,10 +4,10 @@ class SuggestedsongsController < ApplicationController
   end
 
  def create
-    @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id] , playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+    @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
     @suggested_song.save
 
-    songs = SuggestedSong.playlist_songs(params[:playlist_id])
+    @songs = SuggestedSong.playlist_songs(params[:playlist_id])
     ActionCable.server.broadcast(:app, @songs)
  end
 

@@ -1,6 +1,5 @@
   <div class="playlist-details">
-  <span class="desc"> </span> <%= @playlist_q.name %> <span class="desc"> <%= @playlist_q.description %></span>
-
+  <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
   <button id="make-public">
   <%if @playlist_q.public %>
   <%= "Public" %>
@@ -83,9 +82,9 @@
     <% else %>
       <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% end %>
-        
-    <%= song.name %>&nbsp -&nbsp <%= song.artist %>
-    <span class="added-by">|&nbsp&nbsp&nbspAdded by: <%= User.find(song.user_id).first_name %></span>
+
+    <%= song.name %> - <%= song.artist %>
+    <span class="added-by"> | Added By: <%= User.find(song.user_id).first_name %></span>
 
 <% if @playlist_q.public %>
         <span class="contain">

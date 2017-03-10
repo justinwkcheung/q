@@ -1,3 +1,45 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.login {
+  color: white;
+}
+
+#email {
+  color: white;
+}
+
+#password {
+  color: white;
+}
+
+label {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
+}
+
+input[type="submit"] {
+  width: 100%;
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  border: black 1px solid;
+}
+
+input[type="submit"]:hover {
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  background-color: rgba(0,0,0,0.8);
+  border: black 1px solid;
+}
+
+input[type="submit"]:active {
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  background-color: rgba(0,0,0,0.8);
+  border: black 1px solid;
+}

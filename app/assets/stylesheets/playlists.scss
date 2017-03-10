@@ -53,7 +53,13 @@ iframe {
   position: relative;
 }
 
+.played {
+  background-color: #FF9FF9
+}
+
 .song-list {
+  padding-top: 5px;
+  z-index: 1;
   background-color: rgba(30, 28, 39, 0.82);
   // padding-top: 5px;
   // padding-bottom: 5px;
@@ -91,6 +97,7 @@ iframe {
   color: white;
 }
 
+
 // -------------------------------------------------------------------
 
 
@@ -113,4 +120,21 @@ iframe {
 
 @media (min-width: 1200px) {
 
+html{
+  position: relative;
+}
+
+.search-container{
+  z-index: -1;
+  position: absolute;
+  background-color: dimgray;
+  opacity: 0.9;
+  display: block;
+  width: 100%;
+  color: white;
+
+}
+
+.hidden {
+  display: none;
 }

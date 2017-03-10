@@ -1,4 +1,26 @@
+
 <div class="buttons-user">
   <div class="btn logins"><%= link_to "Host a Party", new_playlist_path %></div>
-  <div class="btn logins"><%= link_to "Join a Party", "#" %></div>
+  <div class="btn logins"><%= link_to "Join a Party", join_path %></div>
 </div>
+<br><br>
+Hosted Playlists:
+<ol>
+  <% @hosted.each do |playlist| %>
+  <li><%= playlist.name %></li>
+  <ul>
+    <li><%= playlist.theme %></li>
+    <li>Access Code: <%= playlist.access_code %></li>
+  </ul>
+  <% end %>
+</ol>
+
+Guest Playlists:
+<ol>
+  <% @guest.each do |playlist| %>
+  <li><%= playlist.name %></li>
+  <ul>
+    <li><%= playlist.theme %></li>
+  </ul>
+  <% end %>
+</ol>

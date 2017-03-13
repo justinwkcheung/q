@@ -1,3 +1,4 @@
+
   <div>
   <div class="playlist-details">
   <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
@@ -16,50 +17,36 @@
 
 <div id="d_player"></div>
 <div id="dz-root"></div>
-<script src="http://e-cdn-files.deezer.com/js/min/dz.js"></script>
-<script>
-  if (<%= @access == 'Host' %>) {
 
-    window.dzAsyncInit = function() {
-    DZ.init({
-      appId  : '226822',
-      channelUrl : 'http://localhost:3000/playlist/player',
-      player : {
-        container: 'd_player',
-        // width : 800, allow CSS to set 100% width
-        height : 90,
-        color: '0ab091',
-        onload : function(){}
-      }
-    })
-    };
-    var nextSongRecord = <%= @next_song_record %>
-      if (<%= @next_song_id > 0 %>) {
-        setTimeout(function(){DZ.player.playTracks([<%= @next_song_id %>])}, 3000);
-        setTimeout(function(){DZ.Event.subscribe('track_end', function(){
-          console.log("Track has ended");
-          $.ajax({
-            url: '/playlists/<%=params[:id]%>/update_song?song_id=' + nextSongRecord,
-            method: 'get',
-          }).done(function(data){
-            DZ.player.playTracks([data['song_id']]);
-            nextSongRecord = data['song_record'];
-            })
-          })}
-        , 3000)
-      }
-      // else {
-      //   $('.search-container').css('display','none');
-      // }
 
-    (function() {
-      var e = document.createElement('script');
-      e.src = 'http://e-cdn-files.deezer.com/js/min/dz.js';
-      e.async = true;
-      document.getElementById('dz-root').appendChild(e);
-    }());
-  }
+  <script type="text/javascript">
+  <%= render :partial => "dz.js" %>
   </script>
+
+  <% if @access == 'Host' %>
+    <script type="text/javascript">
+      <%= render :partial => "player.js" %>
+    </script>
+  <% end %>
+
+  <% if @unplayedsongs.length != @playedsongs.length %>
+  <script>
+  setTimeout(function(){DZ.player.playTracks([<%=@next_song_id%>])},3000)
+  setTimeout(function(){DZ.Event.subscribe('track_end', function(){
+   $.ajax({
+     url: '/playlists/' + <%= @playlist_q.id %> + '/update_song?song_id=' + <%= @next_song_record %>,
+     method: 'get',
+   }).done(function(data){
+     DZ.player.playTracks([data['song_id']]);
+     nextSongRecord = data['song_record'];
+     })
+   })
+ })
+  </script>
+  <% end %>
+
+<div class="song-test" deezer-id="13917268" q-song-id="10">
+</div>
 
 <div>
   <% unless @playlist_q.public %>

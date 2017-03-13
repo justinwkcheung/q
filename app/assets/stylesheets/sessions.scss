@@ -7,7 +7,8 @@ a {
 }
 
 a.btn.logins:hover {
-  background-color: rgba(0, 0, 0, .55);
+  background-color: white;
+  color: black;
 }
 
 img.queue {
@@ -50,16 +51,24 @@ input[type="submit"]:active {
   font-weight: bold;
   background-color: rgba(0,0,0,0.8);
   border: black 1px solid;
-  color: white;
   font-size: 15px;
 }
 
 .q-description {
   background-color: white;
-  position: absolute;
-  top: 716px;
+  position: relative;
+  top: 292px;
   padding: 45px 60px;
 }
+
+.q-instructions {
+    position: relative;
+    top: 292px;
+    background-color: rgba(55, 55, 55, 0.75);
+    padding: 45px 60px;
+    color: white;
+}
+
 
 .intro {
   margin-top: 15px;
@@ -69,12 +78,10 @@ input[type="submit"]:active {
   color: white;
 }
 
-
 .alternative-background {
   background: url('https://static.pexels.com/photos/26135/pexels-photo-26135.jpg') center center fixed no-repeat;
   background-size: cover;
 }
-
 
 .intro-bio {
   margin: 0;
@@ -91,20 +98,20 @@ input[type="submit"]:active {
   color: white;
 }
 
-
 .buttons-home, .buttons-user {
   margin-top: 8px;
   .logins {
     display: block;
     margin-bottom: 19px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     width: 41%;
     margin-right: auto;
     margin-left: auto;
     border-radius: 500px;
-    color: cadetblue;
+    color: white;
     font-weight: 500;
     letter-spacing: 1.3px;
+    border: solid 1px white;
   }
 }
 

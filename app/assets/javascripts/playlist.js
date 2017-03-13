@@ -32,7 +32,7 @@ function randomPhrase() {
 
 $(document).on("ready", function(){
 
-  $('.suggest_song').on('click', function() {
+  $('.suggest_song1').on('click', function() {
     Materialize.toast(randomPhrase(), 3000, randomColor())
   });
 

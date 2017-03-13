@@ -2,35 +2,26 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+a {
+  color: cadetblue;
+}
 
+a.btn.logins:hover {
+  background-color: white;
+  color: black;
+}
 
-.login {
+img.queue {
+    width: 123px;
+    height: 205px;
+}
+
+input {
+  // background-color: white;
   color: white;
-}
-
-#email, #password {
-  color: white;
-}
-
-.alternative-background {
-  background: url('https://static.pexels.com/photos/26135/pexels-photo-26135.jpg') center center fixed no-repeat;
-  background-size: cover;
-}
-
-
-.intro-bio {
-  margin: 0;
-  text-align: center;
-}
-
-.login-form, .sign-up-form, .party-form {
-  background-color: rgba(35, 35, 44, 0.43);
-  // margin-top: 90px;
-  margin-bottom: 10px;
-}
-
-.title {
-  color: white;
+  padding: 0 90px;
+  // color: #039be5;
+  border: none;
 }
 
 label {
@@ -60,22 +51,68 @@ input[type="submit"]:active {
   font-weight: bold;
   background-color: rgba(0,0,0,0.8);
   border: black 1px solid;
-  color: white;
   font-size: 15px;
 }
 
+.q-description {
+  background-color: white;
+  position: relative;
+  top: 292px;
+  padding: 45px 60px;
+}
+
+.q-instructions {
+    position: relative;
+    top: 292px;
+    background-color: rgba(55, 55, 55, 0.75);
+    padding: 45px 60px;
+    color: white;
+}
+
+
+.intro {
+  margin-top: 15px;
+}
+
+.login {
+  color: white;
+}
+
+.alternative-background {
+  background: url('https://static.pexels.com/photos/26135/pexels-photo-26135.jpg') center center fixed no-repeat;
+  background-size: cover;
+}
+
+.intro-bio {
+  margin: 0;
+  text-align: center;
+}
+
+.login-form, .sign-up-form, .party-form {
+  background-color: rgba(35, 35, 44, 0.43);
+  // margin-top: 90px;
+  margin-bottom: 10px;
+}
+
+.title {
+  color: white;
+}
+
 .buttons-home, .buttons-user {
-  margin-top: 320px;
+  margin-top: 8px;
   .logins {
     display: block;
     margin-bottom: 19px;
-    background-color: white;
-    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    width: 41%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 500px;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1.3px;
+    border: solid 1px white;
   }
-}
-
-a {
-  color: cadetblue;
 }
 
 .login-session {
@@ -83,12 +120,6 @@ a {
   width: 100%
 }
 
-
-input {
-  // background-color: white;
+#email, #password {
   color: white;
-  padding: 0 90px;
-  // color: #039be5;
-  border: none;
-
 }

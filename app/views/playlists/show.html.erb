@@ -75,7 +75,7 @@
       <%= form_tag  playlist_suggestedsongs_path(params[:id]), method: "get" do |f| %>
         <div class="field">
           <%= text_field_tag :search %>
-          <span id="search-submit"><%= submit_tag "Search" %></span>
+          <span class="search-submit"><%= submit_tag "Search" %></span>
         </div>
       <% end %>
 

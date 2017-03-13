@@ -14,12 +14,18 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="main-body">
 
 
     <nav class='nav_bar'>
-    <%= link_to root_path do %>
-      <%= image_tag("Q.png") %>
+    <% if session[:user_id] %>
+      <%= link_to user_path(session[:user_id]) do %>
+        <%= image_tag("Q.png") %>
+      <% end %>
+      <% else %>
+        <%= link_to root_path do %>
+          <%= image_tag("Q.png") %>
+        <% end %>
     <% end %>
       <p class="user_info">
         <% if current_user %>

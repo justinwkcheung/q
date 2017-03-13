@@ -26,5 +26,5 @@ post '/playlists/:id/update_publicity', to: 'playlists#update_publicity', as: 'u
   get '/playlists/:id/next_song', to: 'playlists#next_song', as: 'next_song'
   mount ActionCable.server => '/cable'
 
-  # get '/auth/deezer/callback', to: 'sessions#create'
+  get '/auth/deezer/callback', to: 'sessions#create'
 end

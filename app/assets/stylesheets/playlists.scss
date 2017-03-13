@@ -3,7 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $player-white: #e8e8ec;
 
-
+.intro-bio {
+  font-size: 50px;
+  color: white;
+}
 .back {
   width: 100%;
   background-color: rgba(232, 2, 103,0.7);
@@ -121,7 +124,7 @@ $player-white: #e8e8ec;
 }
 
 
-html {
+.main-body {
   background: url("https://static.pexels.com/photos/195280/pexels-photo-195280.jpeg") center center fixed no-repeat;
   background-size: cover;
 }

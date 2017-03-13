@@ -23,7 +23,7 @@
     window.dzAsyncInit = function() {
     DZ.init({
       appId  : '226822',
-      channelUrl : 'http://still-beach-57737.herokuapp.com/playlist/player',
+      channelUrl : 'http://localhost:3000/playlist/player',
       player : {
         container: 'd_player',
         // width : 800, allow CSS to set 100% width
@@ -75,7 +75,7 @@
       <%= form_tag  playlist_suggestedsongs_path(params[:id]), method: "get" do |f| %>
         <div class="field">
           <%= text_field_tag :search %>
-          <span id="search-submit"><%= submit_tag "Search" %></span>
+          <span class="search-submit"><%= submit_tag "Search" %></span>
         </div>
       <% end %>
 

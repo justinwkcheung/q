@@ -50,6 +50,8 @@ function randomPhrase() {
 
 $(document).on("ready", function(){
 
+  $('select').material_select();
+
   $('.suggest_song1').on('click', function() {
     Materialize.toast(randomPhrase(), 3000, randomColor())
   });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="alternative-background">
+<html>
   <head>
     <title>Q</title>
     <%= csrf_meta_tags %>
@@ -14,7 +14,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class='alternative-background'>
 
 
     <nav class='nav_bar'>
@@ -25,14 +25,25 @@
         Hello <%= link_to "#{current_user.first_name}!", user_path(session[:user_id]) %>
         <%= link_to "Log out", session_path(session[:user_id]), method: :delete %>
         <% else %>
-        <%= link_to "Login", new_session_path %> or <%= link_to "Sign up", new_user_path %>
+        <%= link_to "Log in", new_session_path %> or <%= link_to "Sign up", new_user_path %>
         <% end %>
       </p>
     </nav>
       <div class="container">
 
+        <div class="intro">
+          <p class="intro-bio"><img class="queue" src="/assets/Q-250f07d1bf9986fa1909967c7cf916c78ac32b8f27c0093a8abf373de2e6b8ad.png" alt=""></p>
+        </div>
+
+
+        <div class="buttons-home">
+          <div><%= link_to 'Log in', new_session_path, class: 'btn logins' %></div>
+          <div><%= link_to "Sign Up", new_user_path, class: 'btn logins' %></div>
+        </div>
+
+
+      </div>
     <%= yield %>
 
-    </div>
   </body>
 </html>

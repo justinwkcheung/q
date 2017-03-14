@@ -5,8 +5,6 @@ class PlaylistsController < ApplicationController
   end
 
   def index
-    render :layout => 'alternative'
-    # render 'playlists/index': true
   end
 
   def show
@@ -32,10 +30,13 @@ class PlaylistsController < ApplicationController
     @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
     @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
 
+    @unplayedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: false).order(played: :desc, net_vote: :desc)
+    @playedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: true)
   end
 
   def update_song
     access = Authorization.find_by(playlist_id: params[:id], user_id: session[:user_id]).status
+
     if access == "Host"
       SuggestedSong.find(params[:song_id]).update_attribute(:played, true)
       @next_song_id = SuggestedSong.next_song_id(params[:id])
@@ -69,18 +70,22 @@ class PlaylistsController < ApplicationController
   def new
     @playlist = Playlist.new
     @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
+
   end
 
   def destroy
     @playlist_q = Playlist.find(params[:id])
     if @playlist_q.destroy
-      redirect_to playlists_path
+      redirect_to user_path(session[:user_id])
     end
   end
 
   def create
-    if create_playlist
-      redirect_to playlist_path(@playlist_q)
+    access_code = create_random
+    playlist_q = create_playlist(access_code)
+    authorization = create_authorization(playlist_q)
+    if playlist_q && authorization
+      redirect_to playlist_path(playlist_q)
     end
   end
 
@@ -89,11 +94,10 @@ class PlaylistsController < ApplicationController
     @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
   end
 
-
   def update
     @playlist_q = Playlist.find(params[:id])
       if @playlist_q.update_attributes(playlist_params)
-        redirect_to playlist_path(@playlist_q)
+        redirect_to user_path(session[:user_id])
       else
         render :edit
       end
@@ -110,29 +114,31 @@ class PlaylistsController < ApplicationController
 
 private
 
-  def playlist_params
-      params.require(:playlist).permit(:name, :description, :theme)
-  end
-
-
-  def create_playlist
-
+  def create_random
     access_code = rand(999999)
     while Playlist.where(access_code: access_code).count > 0
       access_code = rand(999999)
     end
+    access_code
+  end
 
-    @playlist_q = Playlist.create(
+  def create_playlist(access_code)
+    Playlist.create(
       name: playlist_params[:name],
       description: playlist_params[:description],
       theme: playlist_params[:theme],
       access_code: access_code)
-    @authorization = Authorization.create(
-      playlist_id: @playlist_q.id,
+  end
+
+  def create_authorization(playlist)
+    Authorization.create(
+      playlist_id: playlist.id,
       user_id: session[:user_id],
       status: "Host")
   end
 
-
+  def playlist_params
+      params.require(:playlist).permit(:name, :description, :theme)
+  end
 
 end

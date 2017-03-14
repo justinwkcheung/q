@@ -84,9 +84,6 @@ $(document).on("ready", function(){
   $("body").delegate('.suggest_song1', 'click', function (event){
        event.preventDefault();
 
-
-       console.log(notify);
-
        $.ajax({
           url:'/playlists/' + playlistId + '/suggestedsongs',
           method:'POST',
@@ -96,8 +93,6 @@ $(document).on("ready", function(){
            artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
-
-         console.log(data.message);
 
          $('body').prepend((notify).css('display', 'block').html(data.message))
 
@@ -208,7 +203,13 @@ $(document).on("ready", function(){
       data: {
         status: 'up',
       }
-    }).done(function(){
+    }).done(function(data){
+
+      $('body').prepend((notify).css('display', 'block').html(data.message))
+      setTimeout(function(){
+        $(notify).fadeOut('slow');
+      }, 2000);
+
       $.ajax({
         url:"/playlists/" + playlist_id + "/suggestedsongs/" + suggestedsong_id,
         method: 'GET',
@@ -228,7 +229,13 @@ $(document).on("ready", function(){
       data: {
         status: 'down'
       }
-    }).done(function(){
+    }).done(function(data){
+      
+      $('body').prepend((notify).css('display', 'block').html(data.message))
+      setTimeout(function(){
+        $(notify).fadeOut('slow');
+      }, 2000);
+
       $.ajax({
         url:"/playlists/" + playlist_id + "/suggestedsongs/" + suggestedsong_id,
         method: 'GET',

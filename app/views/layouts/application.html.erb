@@ -17,6 +17,7 @@
   <body class="main-body">
 
 
+
     <nav class='nav_bar'>
     <% if session[:user_id] %>
       <%= link_to user_path(session[:user_id]) do %>
@@ -38,6 +39,24 @@
         <% end %>
       </p>
     </nav>
+
+    <!-- error messages for any flash notices or alerts anywhere -->
+        <% if flash.now[:alert] %>
+        <ul>
+          <% flash.now[:alert].each do |error| %>
+            <li id="notice"><%= error %></li>
+          <% end %>
+        </ul>
+        <% end %>
+
+        <% if flash.now[:notice] %>
+        <ul>
+        <% flash.now[:notice].each do |notice| %>
+            <li id="alert"><%= flash[:notice] %></li>
+          <% end %>
+        </ul>
+        <% end %>
+        
       <div class="container">
 
     <%= yield %>

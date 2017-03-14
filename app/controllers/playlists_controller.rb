@@ -83,18 +83,26 @@ class PlaylistsController < ApplicationController
     while Playlist.where(access_code: access_code).count > 0
       access_code = rand(999999)
     end
+    #in case the playlist_q doesnt save, in the render :new, there needs to be an @playlist
+    @playlist = Playlist.new(
+      name: playlist_params[:name],
+      description: playlist_params[:description],
+      theme: playlist_params[:theme],
+      access_code: access_code)
 
     @playlist_q = Playlist.new(
       name: playlist_params[:name],
       description: playlist_params[:description],
       theme: playlist_params[:theme],
       access_code: access_code)
-
     if @playlist_q.save
       @authorization = Authorization.new(
         playlist_id: @playlist_q.id,
         user_id: session[:user_id],
         status: "Host")
+    else
+       flash.now[:alert] = @playlist_q.errors.full_messages
+      render :new
     end
 
       if @authorization && @authorization.save

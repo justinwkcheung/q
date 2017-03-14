@@ -8,7 +8,6 @@ class SuggestedsongsController < ApplicationController
     @suggested_song.save
 
     @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-    @users = User.all
     ActionCable.server.broadcast(:app, @songs)
  end
 

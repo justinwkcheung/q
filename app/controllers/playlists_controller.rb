@@ -110,6 +110,7 @@ class PlaylistsController < ApplicationController
     else
       @playlist.update_attribute('public', false)
     end
+    ActionCable.server.broadcast(:app, [@playlist, @playlist.public])
   end
 
 private
@@ -140,5 +141,4 @@ private
   def playlist_params
       params.require(:playlist).permit(:name, :description, :theme)
   end
-
 end

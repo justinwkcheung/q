@@ -1,8 +1,8 @@
 
   <div>
   <div class="playlist-details">
-  <div class="playlist-name"><%= @playlist_q.name %>&nbsp|  </div><div class="playlist-description">&nbsp <%= @playlist_q.description %></div>
-    <% if (Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id]))[0].status == "Host" %>
+  <div class="playlist-name"><%= @playlist_q.name %>&nbsp|&nbsp</div><div class="playlist-description"> <%= @playlist_q.description %></div>
+    <% if @access == "Host" %>
     <button id="make-public" type="submit" name="action">
       <%if @playlist_q.public %>
       <%= "Public" %>
@@ -44,9 +44,6 @@
  })
   </script>
   <% end %>
-
-<div class="song-test" deezer-id="13917268" q-song-id="10">
-</div>
 
 <div>
   <% unless @playlist_q.public %>
@@ -103,36 +100,4 @@
 
   <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
 </div>
-
   <% end %>
-</div>
-
-
-<article>
-  <% if @albums["data"] %>
-    <h1>Albums</h1>
-    <% titles = [] %>
-    <% @albums["data"].each do |album| %>
-      <% unless titles.include?(album['title']) %>
-        <% titles << album['title'] %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <% if titles %>
-    <% titles.each do |title| %>
-      <p><a href="/?&search=<%= title %>" ><%= title %></a><p>
-    <% end %>
-  <% end %>
-
-  <% if @tracks["data"] %>
-    <h1>Tracks</h1>
-    <% @tracks["data"].each do |track| %>
-      <div>
-        <div data-playlist-id=<%=params[:playlist_id]%> data-user-id=<%=session[:user_id]%> name= <%= track["id"]%> > <%= track["title"] %> </div>
-        <button class="suggest_song"> Add </button>
-      </div>
-    <% end %>
-  <% end %>
-</article>
-
-</div>

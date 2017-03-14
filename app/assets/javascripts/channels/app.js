@@ -11,12 +11,27 @@ $('document').ready(function(){
     },
 
     received: function(data) {
-      $('.song-list').html('');
-
-      var regExp = /\d+/
-      var playlist_id = parseInt(regExp.exec(window.location.pathname)[0])
+      
+      var regExp = /\d+/;
+      var playlist_id = parseInt(regExp.exec(window.location.pathname)[0]);
 
       if (data[0].playlist_id === playlist_id) {
+
+        if (data[1].public === true && data.length === 2) {
+          console.log('This is going public');
+          console.log(data);
+          $('.upvote').css('display','hidden');
+          $('.downvote').css('display','hidden');
+          $('.add-search-container').css('display','hidden');
+        }
+        else if (data[1].public === false && data.length === 2) {
+          console.log('This is going private');
+          console.log(data);
+          $('.upvote').css('display','inherit');
+          $('.downvote').css('display','inherit');
+          $('.add-search-container').css('display','inherit');
+        }
+
         if (data.length === 1) {
           var nextSong = data[0].song_id;
           var nextRecord = data[0].id;
@@ -52,7 +67,10 @@ $('document').ready(function(){
         //   DZ.player.playTracks([nextSong.song_id])
         // }
 
+        $('.song-list').html('');
         data.forEach(function(data) {
+          console.log("test");
+
           if (data.played) {
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
           }
@@ -77,6 +95,7 @@ $('document').ready(function(){
         $(div_replace).append(votes).append(heart)
         $('.song-list').append(div_replace);
         })
+
       }
     }
     })

@@ -118,8 +118,6 @@ $(document).on("ready", function(){
       data: {q: searchValue},
       dataType: 'json'
     }).done(function(data){
-      // console.log(data['albums']['data']);
-
       $('#search_results').html('').append('<h5 id="search_results_albums">Albums</h5>').append('<h5 id="search_results_tracks">Tracks</h5>');
       for (var i = 0; i < data['tracks']['data'].length; i++){
         var button = $('<button>')

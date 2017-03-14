@@ -5,11 +5,18 @@ class SuggestedsongsController < ApplicationController
 
  def create
     @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
-    @suggested_song.save
+    if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
+      (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+      flash.now[:alert] = "Track is already Q'd up"
+    else
+      @suggested_song.save
+      flash.now[:notice] = "Song added!"
+    end
 
     @songs = SuggestedSong.playlist_songs(params[:playlist_id])
     @users = User.all
     ActionCable.server.broadcast(:app, @songs)
+
  end
 
   def index

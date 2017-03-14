@@ -1,6 +1,9 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.viewable-screen {
+  height: 100vh;
+}
 
 a {
   color: cadetblue;
@@ -57,13 +60,13 @@ input[type="submit"]:active {
 .q-description {
   background-color: white;
   position: relative;
-  top: 292px;
+  top: 0px;
   padding: 45px 60px;
 }
 
 .q-instructions {
     position: relative;
-    top: 292px;
+    top: 0px;
     background-color: rgba(55, 55, 55, 0.75);
     padding: 45px 60px;
     color: white;

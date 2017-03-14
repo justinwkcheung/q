@@ -21,7 +21,6 @@ class PlaylistsController < ApplicationController
     @next_song_record = SuggestedSong.next_song_record(params[:id])
     @songs = SuggestedSong.playlist_songs(params[:id])
 
-
     # This is related to the search function we are show
 
     response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=#{params[:code]}&output=json")
@@ -32,6 +31,15 @@ class PlaylistsController < ApplicationController
 
     @unplayedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: false).order(played: :desc, net_vote: :desc)
     @playedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: true)
+
+  end
+
+  def next_song
+    @next_song_id = SuggestedSong.next_song_id(params[:id])
+    @next_song_record = SuggestedSong.next_song_record(params[:id])
+    respond_to do |format|
+      format.json do render json: {song_id: @next_song_id, song_record: @next_song_record} end
+      end
   end
 
   def update_song
@@ -43,8 +51,8 @@ class PlaylistsController < ApplicationController
       @next_song_record = SuggestedSong.next_song_record(params[:id])
       render json: {song_id: @next_song_id, song_record: @next_song_record}
 
-      new_playlist =  SuggestedSong.playlist_songs(params[:id])
-      ActionCable.server.broadcast(:app, new_playlist)
+      @songs =  SuggestedSong.playlist_songs(params[:id])
+      ActionCable.server.broadcast(:app, [@songs])
     end
   end
 
@@ -110,7 +118,7 @@ class PlaylistsController < ApplicationController
     else
       @playlist.update_attribute('public', false)
     end
-    ActionCable.server.broadcast(:app, [@playlist, @playlist.public])
+    ActionCable.server.broadcast(:app, [@playlist])
   end
 
 private

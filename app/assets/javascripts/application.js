@@ -61,19 +61,6 @@ $(document).on("ready", function(){
   var regExp = /\d+/
   var playlistId = parseInt(regExp.exec(window.location.pathname)[0])
 
-  // $(".suggest_song").on('click', function (event){
-  //      event.preventDefault();
-  //      $.ajax({
-  //         url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
-  //         method:'POST',
-  //         data:{
-  //          song_id: $(this).siblings('div').attr('name'),
-  //          name: $(this).siblings('div').html(),
-  //          user_id: $(this).siblings('div').data('user-id')
-  //        }
-  //      }).done(function(data){
-  //      });
-  // });
 
   $('.add-search-container').on('click', function(){
     $('.search-container').toggleClass('hidden');
@@ -92,8 +79,14 @@ $(document).on("ready", function(){
     $('.downvote').css('z-index', 1);
   })
 
+  var notify = $("<div>").attr('class', 'notify').css('background-color', 'red').css('display', 'hidden').css('text-align', 'center');
+
   $("body").delegate('.suggest_song1', 'click', function (event){
        event.preventDefault();
+
+
+       console.log(notify);
+
        $.ajax({
           url:'/playlists/' + playlistId + '/suggestedsongs',
           method:'POST',
@@ -103,8 +96,16 @@ $(document).on("ready", function(){
            artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
-         $(this).addClass('suggest_song1-active')
-       }).fail(function(){
+
+         console.log(data.message);
+
+         $('body').prepend((notify).css('display', 'block').html(data.message))
+
+         $(this).addClass('suggest_song1-active');
+
+         setTimeout(function(){
+           $(notify).fadeOut('slow');
+         }, 2000);
        })
   });
 

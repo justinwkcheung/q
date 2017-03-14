@@ -11,8 +11,8 @@ $('document').ready(function(){
     },
 
     received: function(data) {
-      console.log(data);
-      console.log(data.length);
+      // console.log(data);
+      // console.log(data.length);
       $('.song-list').html('');
 
       var regExp = /\d+/
@@ -20,11 +20,11 @@ $('document').ready(function(){
 
       if (data[0].playlist_id = playlist_id) {
         data.forEach(function(data) {
-          console.log(data);
-          console.log(data.name);
-          console.log(data.artist);
-          console.log(data.user_name);
-          console.log("this logging is working");
+          // console.log(data);
+          // console.log(data.name);
+          // console.log(data.artist);
+          // console.log(data.user_name);
+          // console.log("this logging is working");
           if (data.played) {
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
           }

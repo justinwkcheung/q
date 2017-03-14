@@ -79,8 +79,26 @@ class PlaylistsController < ApplicationController
   end
 
   def create
-    if create_playlist
-      redirect_to playlist_path(@playlist_q)
+    access_code = rand(999999)
+    while Playlist.where(access_code: access_code).count > 0
+      access_code = rand(999999)
+    end
+
+    @playlist_q = Playlist.new(
+      name: playlist_params[:name],
+      description: playlist_params[:description],
+      theme: playlist_params[:theme],
+      access_code: access_code)
+
+    if @playlist_q.save
+      @authorization = Authorization.new(
+        playlist_id: @playlist_q.id,
+        user_id: session[:user_id],
+        status: "Host")
+    end
+
+      if @authorization && @authorization.save
+    redirect_to playlist_path(@playlist_q)
     end
   end
 
@@ -113,26 +131,5 @@ private
   def playlist_params
       params.require(:playlist).permit(:name, :description, :theme)
   end
-
-
-  def create_playlist
-
-    access_code = rand(999999)
-    while Playlist.where(access_code: access_code).count > 0
-      access_code = rand(999999)
-    end
-
-    @playlist_q = Playlist.create(
-      name: playlist_params[:name],
-      description: playlist_params[:description],
-      theme: playlist_params[:theme],
-      access_code: access_code)
-    @authorization = Authorization.create(
-      playlist_id: @playlist_q.id,
-      user_id: session[:user_id],
-      status: "Host")
-  end
-
-
 
 end

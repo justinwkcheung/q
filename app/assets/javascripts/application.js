@@ -17,7 +17,7 @@
 
 function getRandomInt() {
   min = Math.ceil(1);
-  max = Math.floor(5);
+  max = Math.floor(7);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -31,6 +31,10 @@ function randomColor() {
     return 'indigo accent-1'
   } else if (num === 4) {
     return 'green accent-4'
+  } else if (num === 5) {
+    return 'teal lighten-1'
+  } else if (num === 6) {
+    return 'orange lighten-1'
   }
 };
 
@@ -44,15 +48,15 @@ function randomPhrase() {
     return 'Nice taste in music! Song added.'
   } else if (num === 4) {
     return 'Achievement unlocked! Just kidding. Your song was still added though!'
+  } else if (num === 5) {
+    return 'Song added, sweet pick!'
+  } else if (num === 6) {
+    return 'Your song was successfully added, now go vote it up the Q!'
   }
 };
 
 
 $(document).on("ready", function(){
-
-  $('.suggest_song1').on('click', function() {
-    Materialize.toast(randomPhrase(), 3000, randomColor())
-  });
 
   if ($('.song-list').html().trim() === '') {
     $('.search-container').css('display','none');
@@ -61,19 +65,6 @@ $(document).on("ready", function(){
   var regExp = /\d+/
   var playlistId = parseInt(regExp.exec(window.location.pathname)[0])
 
-  // $(".suggest_song").on('click', function (event){
-  //      event.preventDefault();
-  //      $.ajax({
-  //         url:'/playlists/' + $(this).siblings('div').data('playlist-id') + '/suggestedsongs',
-  //         method:'POST',
-  //         data:{
-  //          song_id: $(this).siblings('div').attr('name'),
-  //          name: $(this).siblings('div').html(),
-  //          user_id: $(this).siblings('div').data('user-id')
-  //        }
-  //      }).done(function(data){
-  //      });
-  // });
 
   $('.add-search-container').on('click', function(){
     $('.search-container').toggleClass('hidden');
@@ -92,8 +83,12 @@ $(document).on("ready", function(){
     $('.downvote').css('z-index', 1);
   })
 
+  var notify = $("<div>").attr('class', 'notify').css('background-color', 'red').css('display', 'hidden').css('text-align', 'center');
+
   $("body").delegate('.suggest_song1', 'click', function (event){
+      Materialize.toast(randomPhrase(), 3000, randomColor());
        event.preventDefault();
+
        $.ajax({
           url:'/playlists/' + playlistId + '/suggestedsongs',
           method:'POST',
@@ -103,8 +98,14 @@ $(document).on("ready", function(){
            artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
-         $(this).addClass('suggest_song1-active')
-       }).fail(function(){
+
+         $('body').prepend((notify).css('display', 'block').html(data.message))
+
+         $(this).addClass('suggest_song1-active');
+
+         setTimeout(function(){
+           $(notify).fadeOut('slow');
+         }, 2000);
        })
   });
 
@@ -190,7 +191,13 @@ $(document).on("ready", function(){
       data: {
         status: 'up',
       }
-    }).done(function(){
+    }).done(function(data){
+
+      $('body').prepend((notify).css('display', 'block').html(data.message))
+      setTimeout(function(){
+        $(notify).fadeOut('slow');
+      }, 2000);
+
       $.ajax({
         url:"/playlists/" + playlist_id + "/suggestedsongs/" + suggestedsong_id,
         method: 'GET',
@@ -210,7 +217,13 @@ $(document).on("ready", function(){
       data: {
         status: 'down'
       }
-    }).done(function(){
+    }).done(function(data){
+      
+      $('body').prepend((notify).css('display', 'block').html(data.message))
+      setTimeout(function(){
+        $(notify).fadeOut('slow');
+      }, 2000);
+
       $.ajax({
         url:"/playlists/" + playlist_id + "/suggestedsongs/" + suggestedsong_id,
         method: 'GET',

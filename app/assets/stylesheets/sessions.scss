@@ -5,6 +5,13 @@
   height: 100vh;
 }
 
+input {
+  // background-color: white;
+  color: white;
+  padding: 0 90px;
+  border: none;
+}
+
 a {
   color: cadetblue;
 }
@@ -19,13 +26,6 @@ img.queue {
     height: 205px;
 }
 
-input {
-  // background-color: white;
-  color: white;
-  padding: 0 90px;
-  // color: #039be5;
-  border: none;
-}
 
 label {
   font-weight: bold;
@@ -57,6 +57,23 @@ input[type="submit"]:active {
   font-size: 15px;
 }
 
+.field {
+    color: white;
+}
+
+.dropdown {
+  color: black;
+}
+
+#login-button, #sign-up-button, #playlist-button, #join-button, #playlist-edit-button {
+  color: cadetblue;
+}
+
+.login-session {
+  color: cadetblue;
+  width: 100%
+}
+
 .q-description {
   background-color: white;
   position: relative;
@@ -79,11 +96,6 @@ input[type="submit"]:active {
 
 .login {
   color: white;
-}
-
-.alternative-background {
-  background: url('https://static.pexels.com/photos/26135/pexels-photo-26135.jpg') center center fixed no-repeat;
-  background-size: cover;
 }
 
 .intro-bio {
@@ -118,10 +130,6 @@ input[type="submit"]:active {
   }
 }
 
-.login-session {
-  color: cadetblue;
-  width: 100%
-}
 
 #email, #password {
   color: white;

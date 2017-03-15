@@ -1,7 +1,7 @@
 
   <div>
   <div class="playlist-details">
-  <div class="playlist-name"><%= @playlist_q.name %>&nbsp|&nbsp</div><div class="playlist-description"> <%= @playlist_q.description %></div>
+  <div class="playlist-name"><%= @playlist_q.name %>&nbsp|&nbsp</div><div class="playlist-description"> <%= @playlist_q.description %>&nbsp</div><div class="playlist-code">&nbsp|&nbspAccess Code: <%=@playlist_q.access_code%></div>
     <% if @access == "Host" %>
     <button id="make-public" type="submit" name="action">
       <%if @playlist_q.public %>

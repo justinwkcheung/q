@@ -11,6 +11,7 @@ $('document').ready(function(){
     },
 
     received: function(data) {
+
       var regExp = /\d+/;
       var playlist_id = parseInt(regExp.exec(window.location.pathname)[0]);
 

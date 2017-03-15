@@ -8,7 +8,7 @@
   <% @hosted.each do |playlist| %>
   <div class='hosted-playlist' playlist-id="<%=playlist.id%>">
     <li><%= link_to "#{playlist.name} | #{playlist.theme} | Access Code: #{playlist.access_code}", playlist_path(playlist) %>
-      <span class='edit-delete'><span class="guestlist"><%= link_to "Guestlist", guestlist_path %> |</span> <span class="edits"> <%= link_to "Edit", edit_playlist_path(playlist) %> | <%= link_to "Delete", playlist_path(playlist), method: :delete %> </span></span>
+      <span class='edit-delete'><span class="guestlist"><%= link_to "Guestlist", '#modal1' %> |</span> <span class="edits"> <%= link_to "Edit", edit_playlist_path(playlist) %> | <%= link_to "Delete", playlist_path(playlist), method: :delete %> </span></span>
 </div>
   <% end %>
 </ol>
@@ -25,9 +25,9 @@
 
 </div>
 
-<div class="guest-list-container hidden">
-  Guest List:
-  <span id="close">X</span>
+<div class="guest-list-container modal" id="modal1">
+  <h3 class='guest-title'>Guest List</h3>
+  <!-- <span class="modal-action modal-close waves-effect waves-green btn-flat">X</span> -->
   <ol>
 
   </ol>

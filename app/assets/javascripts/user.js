@@ -1,5 +1,10 @@
 $(document).on("ready", function(){
 
+  $('.modal').modal({
+    startingTop: '20%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+  });
+
   $('.guestlist').on('click', function(event) {
     var playlistId = parseInt($(this).parents('.hosted-playlist').attr('playlist-id'))
     event.preventDefault()
@@ -15,11 +20,11 @@ $(document).on("ready", function(){
         var guestdiv = $(li).append(span);
         $('.guest-list-container ol').append(guestdiv);
       })
-      $('.guest-list-container').fadeIn("slow",function(){})
+      // $('.guest-list-container').fadeIn("slow",function(){})
     });
 
   })
-  $('#close').on('click',function(event){
-    $('.guest-list-container').fadeOut('fast',function(){})
-  })
+  // $('#close').on('click',function(event){
+  //   $('.guest-list-container').fadeOut('fast',function(){})
+  // })
 });

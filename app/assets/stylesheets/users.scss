@@ -99,21 +99,15 @@ input {
   }
 }
 
-#close {
-  float: right;
+.guest-title {
+  text-decoration: none;
+  color: cadetblue;
+  padding-top: 20px;
+  padding-bottom: 5px;
 }
 
-.guest-list-container {
-  position: absolute;
-  top: 4rem;
-  width: 100%;
-  border: black solid 1px;
-  background-color: rgba(0,0,0,0.8);
-  color: white;
-}
-
-.container {
-  position: relative;
+.guest {
+    color: slategray;
 }
 
 h3 {

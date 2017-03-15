@@ -11,25 +11,52 @@ $('document').ready(function(){
     },
 
     received: function(data) {
-      // console.log(data);
-      // console.log(data.length);
-      $('.song-list').html('');
 
-      var regExp = /\d+/
-      var playlist_id = parseInt(regExp.exec(window.location.pathname)[0])
+      var regExp = /\d+/;
+      var playlist_id = parseInt(regExp.exec(window.location.pathname)[0]);
 
-      if (data[0].playlist_id = playlist_id) {
-        data.forEach(function(data) {
-          // console.log(data);
-          // console.log(data.name);
-          // console.log(data.artist);
-          // console.log(data.user_name);
-          // console.log("this logging is working");
+      if (data[0].id === playlist_id) {
+        if (data[0].public === true) {
+          $('#make-public').html('Public');
+          $('.que').find('.btn').addClass('hidden');
+          $('.add-search-container').addClass('hidden');
+          $('#make-public').toggleClass('active');;
+        }
+        else if (data[0].public === false) {
+          $('#make-public').html('Private');
+          $('.que').find('.btn').removeClass('hidden');
+          $('.add-search-container').removeClass('hidden');
+          $('#make-public').toggleClass('active');
+        }
+    }
+
+      if (data[0][0].playlist_id === playlist_id) {
+      if (data[1] === "restart") {
+        var nextSong = data[0][data[0].length - 1].song_id;
+        var nextRecord = data[0][data[0].length -1].id;
+          setTimeout(function(){DZ.player.playTracks([nextSong])}, 3000);
+          setTimeout(function(){DZ.Event.subscribe('track_end', function(){
+            console.log("Track has ended");
+            $.ajax({
+              url: '/playlists/' + playlist_id + '/update_song?song_id=' + nextRecord,
+              method: 'get',
+            }).done(function(data){
+              nextRecord = data['song_record'];
+              nextSong = data['song_id'];
+              DZ.player.playTracks([nextSong]);
+              })
+            })}
+          , 3000)
+      }
+
+        $('.song-list').html('');
+        data[0].forEach(function(data) {
+
           if (data.played) {
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
           }
           else {
-            var divContainer = $('<div>').attr('class', 'song-in-queue').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
+            var divContainer = $('<div>').attr('class', 'song-in-queue que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id).attr('data-deezer-id',data.song_id);
             var span = $('<span>').attr('class',"buttons")
             var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2')
             var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
@@ -49,7 +76,11 @@ $('document').ready(function(){
         $(div_replace).append(votes).append(heart)
         $('.song-list').append(div_replace);
         })
+
+        $('.que').first().addClass('playing');
+        $('.que').first().find('.btn').addClass('hidden');
       }
+
     }
     })
   }

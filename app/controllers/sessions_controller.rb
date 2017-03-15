@@ -6,6 +6,9 @@ class SessionsController < ApplicationController
   def destroy
   end
 
+  def frontpage
+    render :layout => 'alternative'
+  end
 
   def create
     user = User.find_by(email: params[:email])

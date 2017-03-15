@@ -22,9 +22,9 @@ class VotesController < ApplicationController
     end
     net_vote(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
 
-  new_playlist =  SuggestedSong.playlist_songs(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
+  @songs =  SuggestedSong.playlist_songs(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
 
-  ActionCable.server.broadcast(:app, new_playlist)
+  ActionCable.server.broadcast(:app, [@songs])
 
   end
 

@@ -17,7 +17,7 @@
 
 function getRandomInt() {
   min = Math.ceil(1);
-  max = Math.floor(5);
+  max = Math.floor(7);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -31,6 +31,10 @@ function randomColor() {
     return 'indigo accent-1'
   } else if (num === 4) {
     return 'green accent-4'
+  } else if (num === 5) {
+    return 'teal lighten-1'
+  } else if (num === 6) {
+    return 'orange lighten-1'
   }
 };
 
@@ -44,15 +48,15 @@ function randomPhrase() {
     return 'Nice taste in music! Song added.'
   } else if (num === 4) {
     return 'Achievement unlocked! Just kidding. Your song was still added though!'
+  } else if (num === 5) {
+    return 'Song added, sweet pick!'
+  } else if (num === 6) {
+    return 'Your song was successfully added, now go vote it up the Q!'
   }
 };
 
 
 $(document).on("ready", function(){
-
-  $('.suggest_song1').on('click', function() {
-    Materialize.toast(randomPhrase(), 3000, randomColor())
-  });
 
   if ($('.song-list').html().trim() === '') {
     $('.search-container').css('display','none');
@@ -82,6 +86,7 @@ $(document).on("ready", function(){
   var notify = $("<div>").attr('class', 'notify').css('background-color', 'red').css('display', 'hidden').css('text-align', 'center');
 
   $("body").delegate('.suggest_song1', 'click', function (event){
+      Materialize.toast(randomPhrase(), 3000, randomColor());
        event.preventDefault();
 
        $.ajax({
@@ -114,8 +119,6 @@ $(document).on("ready", function(){
       data: {q: searchValue},
       dataType: 'json'
     }).done(function(data){
-      // console.log(data['albums']['data']);
-
       $('#search_results').html('').append('<h5 id="search_results_albums">Albums</h5>').append('<h5 id="search_results_tracks">Tracks</h5>');
       for (var i = 0; i < data['tracks']['data'].length; i++){
         var button = $('<button>')
@@ -174,21 +177,6 @@ $(document).on("ready", function(){
     $.ajax({
       url: '/playlists/' + playlistId + '/update_publicity',
       method: 'post'
-    }).done(function(){
-      if (status ==  "Public"){
-        $('#make-public').html('Private');
-        $('.buttons').removeClass('hidden');
-
-        $('.add-search-container').css('display','inherit')
-        $('#make-public').toggleClass('active');
-
-      }
-      else {
-        $('#make-public').html('Public');
-        $('.buttons').addClass('hidden');
-        $('.add-search-container').css('display','none')
-        $('#make-public').toggleClass('active');;
-      }
     })
   });
 

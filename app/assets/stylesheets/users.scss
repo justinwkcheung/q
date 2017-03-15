@@ -2,7 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
+.edit-delete {
+  float: right;
+}
 .guest-playlist {
   width: 90%;
   border-bottom: rgba(232, 2, 103,0.9) 1px solid;

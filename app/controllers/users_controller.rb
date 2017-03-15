@@ -27,13 +27,13 @@ class UsersController < ApplicationController
     hosted_auths = Authorization.where(user_id: session[:user_id], status: "Host")
     @hosted = []
     hosted_auths.each do |auth|
-      @hosted << Playlist.find(auth.playlist_id)
+      @hosted << auth.playlist if auth.playlist
     end
 
     guest_auths = Authorization.where(user_id: session[:user_id], status: "Guest")
     @guest = []
     guest_auths.each do |auth|
-      @guest << Playlist.find(auth.playlist_id)
+      @guest << auth.playlist if auth.playlist
     end
   end
 

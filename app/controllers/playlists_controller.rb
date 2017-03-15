@@ -5,8 +5,6 @@ class PlaylistsController < ApplicationController
   end
 
   def index
-    render :layout => 'alternative'
-    # render 'playlists/index': true
   end
 
   def show
@@ -23,7 +21,6 @@ class PlaylistsController < ApplicationController
     @next_song_record = SuggestedSong.next_song_record(params[:id])
     @songs = SuggestedSong.playlist_songs(params[:id])
 
-
     # This is related to the search function we are show
 
     response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=#{params[:code]}&output=json")
@@ -32,18 +29,30 @@ class PlaylistsController < ApplicationController
     @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
     @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
 
+    @unplayedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: false).order(played: :desc, net_vote: :desc)
+    @playedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: true)
+
+  end
+
+  def next_song
+    @next_song_id = SuggestedSong.next_song_id(params[:id])
+    @next_song_record = SuggestedSong.next_song_record(params[:id])
+    respond_to do |format|
+      format.json do render json: {song_id: @next_song_id, song_record: @next_song_record} end
+      end
   end
 
   def update_song
     access = Authorization.find_by(playlist_id: params[:id], user_id: session[:user_id]).status
+
     if access == "Host"
       SuggestedSong.find(params[:song_id]).update_attribute(:played, true)
       @next_song_id = SuggestedSong.next_song_id(params[:id])
       @next_song_record = SuggestedSong.next_song_record(params[:id])
       render json: {song_id: @next_song_id, song_record: @next_song_record}
 
-      new_playlist =  SuggestedSong.playlist_songs(params[:id])
-      ActionCable.server.broadcast(:app, new_playlist)
+      @songs =  SuggestedSong.playlist_songs(params[:id])
+      ActionCable.server.broadcast(:app, [@songs])
     end
   end
 
@@ -67,14 +76,15 @@ class PlaylistsController < ApplicationController
   end
 
   def new
-    @playlist = Playlist.new
-    @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
+    @playlist_q = Playlist.new
+    @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
+
   end
 
   def destroy
     @playlist_q = Playlist.find(params[:id])
     if @playlist_q.destroy
-      redirect_to playlists_path
+      redirect_to user_path(session[:user_id])
     end
   end
 
@@ -84,11 +94,6 @@ class PlaylistsController < ApplicationController
       access_code = rand(999999)
     end
     #in case the playlist_q doesnt save, in the render :new, there needs to be an @playlist
-    @playlist = Playlist.new(
-      name: playlist_params[:name],
-      description: playlist_params[:description],
-      theme: playlist_params[:theme],
-      access_code: access_code)
 
     @playlist_q = Playlist.new(
       name: playlist_params[:name],
@@ -107,6 +112,7 @@ class PlaylistsController < ApplicationController
 
       if @authorization && @authorization.save
     redirect_to playlist_path(@playlist_q)
+
     end
   end
 
@@ -115,11 +121,10 @@ class PlaylistsController < ApplicationController
     @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
   end
 
-
   def update
     @playlist_q = Playlist.find(params[:id])
       if @playlist_q.update_attributes(playlist_params)
-        redirect_to playlist_path(@playlist_q)
+        redirect_to user_path(session[:user_id])
       else
         render :edit
       end
@@ -132,12 +137,14 @@ class PlaylistsController < ApplicationController
     else
       @playlist.update_attribute('public', false)
     end
+    ActionCable.server.broadcast(:app, [@playlist])
   end
 
 private
-
+  
   def playlist_params
       params.require(:playlist).permit(:name, :description, :theme)
   end
+
 
 end

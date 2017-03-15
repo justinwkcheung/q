@@ -7,7 +7,8 @@
 <ol>
   <% @hosted.each do |playlist| %>
   <div class='hosted-playlist'>
-  <a href="/playlists/<%=playlist.id%>"><li><%= playlist.name %> | <%= playlist.theme %> | Access Code: <%= playlist.access_code %></li></a>
+    <li><%= link_to "#{playlist.name} | #{playlist.theme} | Access Code: #{playlist.access_code}", playlist_path(playlist) %>
+      <span class="edit-delete"> <%= link_to "Edit", edit_playlist_path(playlist) %> | <%= link_to "Delete", playlist_path(playlist), method: :delete %> </span>
 </div>
   <% end %>
 </ol>
@@ -17,7 +18,7 @@
 <ol>
   <% @guest.each do |playlist| %>
   <div class="guest-playlist">
-  <a href="/playlists/<%=playlist.id%>"><li><%= playlist.name %> | <%= playlist.theme %></li></a>
+  <li><%= link_to "#{playlist.name} | #{playlist.theme}", playlist_path(playlist) %>
   </div>
   <% end %>
 </ol>

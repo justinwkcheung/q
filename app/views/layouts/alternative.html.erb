@@ -29,20 +29,23 @@
         <% end %>
       </p>
     </nav>
+    <div class="viewable-screen">
+
       <div class="container">
 
         <div class="intro">
           <p class="intro-bio"><img class="queue" src="/assets/Q-250f07d1bf9986fa1909967c7cf916c78ac32b8f27c0093a8abf373de2e6b8ad.png" alt=""></p>
         </div>
 
-
+    <% unless current_user %>
         <div class="buttons-home">
           <div><%= link_to 'Log in', new_session_path, class: 'btn logins' %></div>
           <div><%= link_to "Sign Up", new_user_path, class: 'btn logins' %></div>
         </div>
-
+    <% end %>
 
       </div>
+    </div>
     <%= yield %>
 
   </body>

@@ -52,7 +52,7 @@ class PlaylistsController < ApplicationController
       render json: {song_id: @next_song_id, song_record: @next_song_record}
 
       @songs =  SuggestedSong.playlist_songs(params[:id])
-      ActionCable.server.broadcast(:app, [@songs])
+      ActionCable.server.broadcast(:app, [@songs,'', @host_id])
     end
   end
 
@@ -76,7 +76,7 @@ class PlaylistsController < ApplicationController
   end
 
   def new
-    @playlist = Playlist.new
+    @playlist_q = Playlist.new
     @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
 
   end
@@ -118,7 +118,7 @@ class PlaylistsController < ApplicationController
     else
       @playlist.update_attribute('public', false)
     end
-    ActionCable.server.broadcast(:app, [@playlist])
+    ActionCable.server.broadcast(:app, [@playlist,'', @host_id])
   end
 
 private

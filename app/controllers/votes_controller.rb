@@ -22,7 +22,7 @@ class VotesController < ApplicationController
 
   @songs =  SuggestedSong.playlist_songs(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
 
-  ActionCable.server.broadcast(:app, [@songs])
+  ActionCable.server.broadcast(:app, [@songs,'', @host_id])
 
   end
 

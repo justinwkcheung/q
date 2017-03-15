@@ -15,13 +15,13 @@ $('document').ready(function(){
       var playlist_id = parseInt(regExp.exec(window.location.pathname)[0]);
 
       if (data[0].id === playlist_id) {
-        if (data[0].public === true) {
+        if (data[0].public === true) {  //public
           $('#make-public').html('Public');
           $('.que').find('.btn').addClass('hidden');
           $('.add-search-container').addClass('hidden');
           $('#make-public').toggleClass('active');;
         }
-        else if (data[0].public === false) {
+        else if (data[0].public === false) {  //private
           $('#make-public').html('Private');
           $('.que').find('.btn').removeClass('hidden');
           $('.add-search-container').removeClass('hidden');
@@ -72,12 +72,18 @@ $('document').ready(function(){
         var votes = $(span).append(upButton).append(" ").append(downButton)
         var div_replace = $(divContainer).html(data.name + ' - ' + data.artist + ' | Added By: ' + data.user_name)
 
-        $(div_replace).append(votes).append(heart)
-        $('.song-list').append(div_replace);
-        })
+        if (data[2] === parseInt($('.delete_user_id').text())){
+          $(div_replace).append('<a rel="nofollow" data-method="delete" href="/playlists/' + playlist_id + '/suggestedsongs/' + data.id + '">Delete</a>').append(votes).append(heart);
+        } else {
+          $(div_replace).append(votes).append(heart);
+        }
 
-        $('.que').first().addClass('playing');
-        $('.que').first().find('.btn').addClass('hidden');
+        $('.song-list').append(div_replace);
+          })
+
+          $('.que').first().addClass('playing');
+          $('.que').first().find('.btn').addClass('hidden').removeClass('que');
+
       }
 
     }

@@ -87,7 +87,9 @@
           <span class="contain"></span>
         <% end %>
       <% end %>
-
+  <% if Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id])[0].status == "Host" %>
+    <%= link_to "Delete", playlist_suggestedsong_path(@playlist_q, song), method: :delete%>
+  <% end %>
   <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
 </div>
   <% end %>

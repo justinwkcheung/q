@@ -118,7 +118,7 @@ class PlaylistsController < ApplicationController
 
   def edit
     @playlist_q = Playlist.find(params[:id])
-    @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
+    @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
   end
 
   def update
@@ -141,7 +141,7 @@ class PlaylistsController < ApplicationController
   end
 
 private
-  
+
   def playlist_params
       params.require(:playlist).permit(:name, :description, :theme)
   end

@@ -47,10 +47,12 @@ $('document').ready(function(){
               })
             })}
           , 3000)
-      }
+      }}
 
         $('.song-list').html('');
         data[0].forEach(function(data) {
+
+
 
           if (data.played) {
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
@@ -74,14 +76,19 @@ $('document').ready(function(){
         var div_replace = $(divContainer).html(data.name + ' - ' + data.artist + ' | Added By: ' + data.user_name)
 
         $(div_replace).append(votes).append(heart)
-        $('.song-list').append(div_replace);
-        })
+
+
+             $('.song-list').append(div_replace);
 
         $('.que').first().addClass('playing');
         $('.que').first().find('.btn').addClass('hidden');
-      }
+      })
 
     }
-    })
+
+
+})
+
   }
+
 )

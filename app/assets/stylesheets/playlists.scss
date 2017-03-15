@@ -82,9 +82,14 @@ $player-white: #e8e8ec;
 
 .playlist-description {
   color: white;
-  width: 33%;
+  // width: 33%;
   font-style: italic;
   display: inline-block;
+}
+
+.playlist-code {
+  display: inline-block;
+  color: white;
 }
 
 #make-public {

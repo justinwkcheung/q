@@ -49,11 +49,7 @@ function randomPhrase() {
 
 
 $(document).on("ready", function(){
-
-  $('.suggest_song1').on('click', function() {
-    Materialize.toast(randomPhrase(), 3000, randomColor())
-  });
-
+  
   if ($('.song-list').html().trim() === '') {
     $('.search-container').css('display','none');
   }
@@ -93,6 +89,7 @@ $(document).on("ready", function(){
   })
 
   $("body").delegate('.suggest_song1', 'click', function (event){
+      Materialize.toast(randomPhrase(), 3000, randomColor());
        event.preventDefault();
        $.ajax({
           url:'/playlists/' + playlistId + '/suggestedsongs',

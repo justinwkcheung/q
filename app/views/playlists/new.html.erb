@@ -10,7 +10,7 @@
     </div>
     <div class="field">
       <%= f.label :theme %>
-      <%= f.select(:theme, @themes, {:prompt => "Select a Theme"}, { :class => 'browser-default' }) %> <br />
+      <%= f.select(:theme, @themes, {:prompt => "Select a Theme"}, { :class => 'browser-default dropdown' }) %> <br />
     </div>
     <div class="field">
       <%= f.label :description %>
@@ -21,5 +21,5 @@
 </div>
 
 
-<button class="btn login-session white" type="submit" name="action"> Create Playlist</button>
+<button class="btn login-session white" id="playlist-button" type="submit" name="action"> Create Playlist</button>
 <% end %>

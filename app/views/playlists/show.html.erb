@@ -34,7 +34,9 @@
   </script>
 
 <div>
-  <% unless @playlist_q.public %>
+  <% if @playlist_q.public %>
+    <button class='hidden add-search-container'> Add a song </button>
+  <% else %>
     <button class='add-search-container'> Add a song </button>
   <%end %>
 </div>

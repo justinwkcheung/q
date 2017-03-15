@@ -33,7 +33,7 @@ $('document').ready(function(){
       if (data[0][0].playlist_id === playlist_id) {
       if (data[1] === "restart") {
         var nextSong = data[0][data[0].length - 1].song_id;
-        var nextRecord = data[0][data[0].length -1].id;
+        var nextRecord = data[0][data[0].length - 1].id;
           setTimeout(function(){DZ.player.playTracks([nextSong])}, 3000);
           setTimeout(function(){DZ.Event.subscribe('track_end', function(){
             console.log("Track has ended");

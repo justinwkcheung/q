@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get '/playlists/:id/next_song', to: 'playlists#next_song', as: 'next_song'
 
+  get '/playlists/:id/guestlist', to: 'playlists#guestlist', as: 'guestlist'
+
   root 'sessions#frontpage'
 
   get '/playlists/:playlist_id/suggestedsongs/access_token', to: 'suggestedsongs#access_token', as: 'access_token'

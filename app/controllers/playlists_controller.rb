@@ -149,6 +149,22 @@ class PlaylistsController < ApplicationController
     ActionCable.server.broadcast(:app, [@playlist])
   end
 
+  def guestlist
+    guests = Authorization.where(playlist_id: params[:id], status: "Guest")
+    @guest_names = []
+    guests.each do |guest|
+      first_name = guest.user.first_name
+      last_name = guest.user.last_name
+      g = [first_name, last_name]
+      @guest_names << g
+    end
+
+      respond_to do |format|
+        format.json do render json: @guest_names end
+      end
+
+  end
+
 private
 
   def playlist_params

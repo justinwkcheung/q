@@ -80,6 +80,9 @@ label {
   width: 100%
 }
 
+.hidden {
+  display: none;
+}
 
 input {
   // background-color: white;
@@ -94,6 +97,23 @@ input {
   .play-title {
     color: white;
   }
+}
+
+#close {
+  float: right;
+}
+
+.guest-list-container {
+  position: absolute;
+  top: 4rem;
+  width: 100%;
+  border: black solid 1px;
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+}
+
+.container {
+  position: relative;
 }
 
 h3 {

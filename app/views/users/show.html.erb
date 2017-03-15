@@ -6,9 +6,9 @@
 <div class="hosted-playlists"><span id="host-title">Hosted Playlists</span>
 <ol>
   <% @hosted.each do |playlist| %>
-  <div class='hosted-playlist'>
+  <div class='hosted-playlist' playlist-id="<%=playlist.id%>">
     <li><%= link_to "#{playlist.name} | #{playlist.theme} | Access Code: #{playlist.access_code}", playlist_path(playlist) %>
-      <span class="edit-delete"> <%= link_to "Edit", edit_playlist_path(playlist) %> | <%= link_to "Delete", playlist_path(playlist), method: :delete %> </span>
+      <span class='edit-delete'><span class="guestlist"><%= link_to "Guestlist", guestlist_path %> |</span> <span class="edits"> <%= link_to "Edit", edit_playlist_path(playlist) %> | <%= link_to "Delete", playlist_path(playlist), method: :delete %> </span></span>
 </div>
   <% end %>
 </ol>
@@ -23,4 +23,12 @@
   <% end %>
 </ol>
 
+</div>
+
+<div class="guest-list-container hidden">
+  Guest List:
+  <span id="close">X</span>
+  <ol>
+
+  </ol>
 </div>

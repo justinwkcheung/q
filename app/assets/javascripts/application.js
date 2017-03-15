@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require materialize
+
 
 
 function getRandomInt() {
@@ -88,7 +90,7 @@ $(document).on("ready", function(){
   $("body").delegate('.suggest_song1', 'click', function (event){
       Materialize.toast(randomPhrase(), 3000, randomColor());
        event.preventDefault();
-
+       console.log("this button was clicked");
        $.ajax({
           url:'/playlists/' + playlistId + '/suggestedsongs',
           method:'POST',
@@ -98,7 +100,6 @@ $(document).on("ready", function(){
            artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
-
          $('body').prepend((notify).css('display', 'block').html(data.message))
 
          $(this).addClass('suggest_song1-active');
@@ -106,6 +107,7 @@ $(document).on("ready", function(){
          setTimeout(function(){
            $(notify).fadeOut('slow');
          }, 2000);
+       }).fail(function(data){
        })
   });
 
@@ -218,7 +220,7 @@ $(document).on("ready", function(){
         status: 'down'
       }
     }).done(function(data){
-      
+
       $('body').prepend((notify).css('display', 'block').html(data.message))
       setTimeout(function(){
         $(notify).fadeOut('slow');

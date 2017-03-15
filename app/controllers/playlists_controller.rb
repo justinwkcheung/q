@@ -78,7 +78,7 @@ class PlaylistsController < ApplicationController
   def new
     @playlist_q = Playlist.new
     @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
-
+    @song_limits = ['None', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   end
 
   def destroy
@@ -95,11 +95,19 @@ class PlaylistsController < ApplicationController
     end
     #in case the playlist_q doesnt save, in the render :new, there needs to be an @playlist
 
+    if playlist_params[:song_limit] == "None"
+      song_limit = 1000
+    else
+      song_limit = playlist_params[:song_limit]
+    end
+
     @playlist_q = Playlist.new(
       name: playlist_params[:name],
       description: playlist_params[:description],
       theme: playlist_params[:theme],
-      access_code: access_code)
+      access_code: access_code,
+      song_limit: song_limit
+      )
     if @playlist_q.save
       @authorization = Authorization.new(
         playlist_id: @playlist_q.id,
@@ -143,7 +151,7 @@ class PlaylistsController < ApplicationController
 private
 
   def playlist_params
-      params.require(:playlist).permit(:name, :description, :theme)
+      params.require(:playlist).permit(:name, :description, :theme, :song_limit)
   end
 
 

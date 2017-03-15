@@ -17,7 +17,7 @@
 
 function getRandomInt() {
   min = Math.ceil(1);
-  max = Math.floor(5);
+  max = Math.floor(7);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -31,6 +31,10 @@ function randomColor() {
     return 'indigo accent-1'
   } else if (num === 4) {
     return 'green accent-4'
+  } else if (num === 5) {
+    return 'teal lighten-1'
+  } else if (num === 6) {
+    return 'orange lighten-1'
   }
 };
 
@@ -44,12 +48,16 @@ function randomPhrase() {
     return 'Nice taste in music! Song added.'
   } else if (num === 4) {
     return 'Achievement unlocked! Just kidding. Your song was still added though!'
+  } else if (num === 5) {
+    return 'Song added, sweet pick!'
+  } else if (num === 6) {
+    return 'Your song was successfully added, now go vote it up the Q!'
   }
 };
 
 
 $(document).on("ready", function(){
-  
+
   if ($('.song-list').html().trim() === '') {
     $('.search-container').css('display','none');
   }

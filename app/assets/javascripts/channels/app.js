@@ -90,12 +90,6 @@ $('document').ready(function(){
             $(div_replace).appendTo('.song-list');
           }
 
-
-
-          // $(div_replace).show('fast');
-
-            //  $('.song-list').append(div_replace);
-
         $('.que').first().addClass('playing');
         $('.que').first().find('.btn').addClass('hidden');
       })

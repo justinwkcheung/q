@@ -16,6 +16,10 @@
       <%= f.label :description %>
       <%= f.text_field :description %> <br />
     </div>
+    <div class="field">
+      <%= f.label :guest_song_limit %>
+      <%= f.select(:song_limit, @song_limits, {}, { :class => 'browser-default dropdown' }) %> <br />
+    </div>
 
 
 </div>

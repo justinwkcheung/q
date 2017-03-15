@@ -5,46 +5,82 @@ class SuggestedsongsController < ApplicationController
 
  def create
 
+   access = Authorization.find_by(playlist_id: params[:playlist_id], user_id: session[:user_id]).status
    guest_song_count = SuggestedSong.where(playlist_id: params[:playlist_id], user_id: session[:user_id]).count
    playlist_limit = Playlist.find(params[:playlist_id]).song_limit
 
-   if guest_song_count < playlist_limit
+   if access == "Guest"
 
-    @songs_before = SuggestedSong.playlist_songs(params[:playlist_id])
+     if guest_song_count < playlist_limit
 
-    if @songs_before.where(played: true).length == @songs_before.length
+      @songs_before = SuggestedSong.playlist_songs(params[:playlist_id])
+
+      if @songs_before.where(played: true).length == @songs_before.length
+          @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+         if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
+          (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+          render json: {message: "Track is already Q'd up", status: false}
+         else
+          @suggested_song.save
+          render json: {message: "Song added!", status: true}
+          @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+          ActionCable.server.broadcast(:app, [@songs, "restart"])
+        end
+
+      else
+
         @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
-       if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
-        (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
-        render json: {message: "Track is already Q'd up", status: false}
-       else
-        @suggested_song.save
-        render json: {message: "Song added!", status: true}
-        @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-        ActionCable.server.broadcast(:app, [@songs, "restart"])
+
+        if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
+          (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+          render json: {message: "Track is already Q'd up", status: false}
+         else
+          @suggested_song.save
+          render json: {message: "Song added!", status: true}
+          @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+          ActionCable.server.broadcast(:app, [@songs])
+         end
+
+
       end
 
-    else
+     else
+      render json: {message: "You've reached your maximum number of song adds!"}
 
-      @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+     end
 
+ else
+
+   @songs_before = SuggestedSong.playlist_songs(params[:playlist_id])
+
+   if @songs_before.where(played: true).length == @songs_before.length
+       @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
       if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
-        (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
-        render json: {message: "Track is already Q'd up", status: false}
-       else
-        @suggested_song.save
-        render json: {message: "Song added!", status: true}
-        @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-        ActionCable.server.broadcast(:app, [@songs])
-       end
-
-
-    end
+       (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+       render json: {message: "Track is already Q'd up", status: false}
+      else
+       @suggested_song.save
+       render json: {message: "Song added!", status: true}
+       @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+       ActionCable.server.broadcast(:app, [@songs, "restart"])
+     end
 
    else
-    render json: {message: "You've reached your maximum number of song adds!"}
 
+     @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+
+     if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
+       (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+       render json: {message: "Track is already Q'd up", status: false}
+      else
+       @suggested_song.save
+       render json: {message: "Song added!", status: true}
+       @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+       ActionCable.server.broadcast(:app, [@songs])
+      end
    end
+   
+ end
 
  end
 

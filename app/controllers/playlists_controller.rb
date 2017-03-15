@@ -127,6 +127,7 @@ class PlaylistsController < ApplicationController
   def edit
     @playlist_q = Playlist.find(params[:id])
     @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
+    @song_limits = ['None', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   end
 
   def update

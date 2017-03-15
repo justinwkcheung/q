@@ -5,7 +5,7 @@ class SuggestedsongsController < ApplicationController
 
  def create
     @songs_before = SuggestedSong.playlist_songs(params[:playlist_id])
-    @host_id = Authorization.where(playlist_id: @playlist_q.id, status: "Host")[0].user_id
+    @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
 
     if @songs_before.where(played: true).length == @songs_before.length
         @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
@@ -16,9 +16,9 @@ class SuggestedsongsController < ApplicationController
         @suggested_song.save
         render json: {message: "Song added!", status: true}
         @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-        ActionCable.server.broadcast(:app, [@songs, "restart"])
+        ActionCable.server.broadcast(:app, [@songs, "restart", @host_id])
       end
-     
+
     else
 
       @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
@@ -30,7 +30,7 @@ class SuggestedsongsController < ApplicationController
         @suggested_song.save
         render json: {message: "Song added!", status: true}
         @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-        ActionCable.server.broadcast(:app, [@songs])
+        ActionCable.server.broadcast(:app, [@songs, '', @host_id])
        end
 
 
@@ -60,6 +60,7 @@ class SuggestedsongsController < ApplicationController
  end
 
  def destroy
+    @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
     @playlist_q = Playlist.find(params[:playlist_id])
     @suggested_song = SuggestedSong.find_by(playlist_id: @playlist_q.id, id: params[:id])
     @suggested_song.destroy

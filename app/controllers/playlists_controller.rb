@@ -52,7 +52,7 @@ class PlaylistsController < ApplicationController
       render json: {song_id: @next_song_id, song_record: @next_song_record}
 
       @songs =  SuggestedSong.playlist_songs(params[:id])
-      ActionCable.server.broadcast(:app, [@songs,'', @host_id])
+      ActionCable.server.broadcast(:app, [@songs])
     end
   end
 
@@ -137,7 +137,7 @@ class PlaylistsController < ApplicationController
     else
       @playlist.update_attribute('public', false)
     end
-    ActionCable.server.broadcast(:app, [@playlist,'', @host_id])
+    ActionCable.server.broadcast(:app, [@playlist])
   end
 
 private

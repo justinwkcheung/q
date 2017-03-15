@@ -50,13 +50,13 @@ $('document').ready(function(){
       }
 
         $('.song-list').html('');
-        data[0].forEach(function(data) {
+        data[0].forEach(function(song) {
 
-          if (data.played) {
-            var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
+          if (song.played) {
+            var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id);
           }
           else {
-            var divContainer = $('<div>').attr('class', 'song-in-queue que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id).attr('data-deezer-id',data.song_id);
+            var divContainer = $('<div>').attr('class', 'song-in-queue que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id).attr('data-deezer-id',data.song_id);
             var span = $('<span>').attr('class',"buttons")
             var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2')
             var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
@@ -67,15 +67,16 @@ $('document').ready(function(){
           }
         var spanHeart = $('<span>').attr('class','heart')
         var iconHeart = $('<i>').attr('class','fa fa-heart').attr('style','font-size:12px')
-        var netVote = $('<span>').attr('class','netvote').attr('id',data.id).html(data.net_vote)
+        var netVote = $('<span>').attr('class','netvote').attr('id',song.id).html(song.net_vote)
 
         var heart = $(spanHeart).append(netVote).append(" ").append(iconHeart)
         var votes = $(span).append(upButton).append(" ").append(downButton)
-        var div_replace = $(divContainer).html(data.name + ' - ' + data.artist + ' | Added By: ' + data.user_name)
+        var div_replace = $(divContainer).html(song.name + ' - ' + song.artist + ' | Added By: ' + song.user_name)
 
         if (data[2] === parseInt($('.delete_user_id').text())){
           $(div_replace).append('<a rel="nofollow" data-method="delete" href="/playlists/' + playlist_id + '/suggestedsongs/' + data.id + '">Delete</a>').append(votes).append(heart);
-        } else {
+        }
+        else {
           $(div_replace).append(votes).append(heart);
         }
 

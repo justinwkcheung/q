@@ -5,7 +5,7 @@ class VotesController < ApplicationController
   end
 
   def create
-
+    @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
     @vote = Vote.new(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id], status: params[:status])
     @vote2 = Vote.where(user_id: session[:user_id], suggestedsong_id: params[:suggestedsong_id])
     if @vote2 != []
@@ -24,7 +24,7 @@ class VotesController < ApplicationController
 
   @songs =  SuggestedSong.playlist_songs(SuggestedSong.find(params[:suggestedsong_id]).playlist_id)
 
-  ActionCable.server.broadcast(:app, [@songs,'', @host_id])
+  ActionCable.server.broadcast(:app, [@songs, "", @host_id])
 
   end
 

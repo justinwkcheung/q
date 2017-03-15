@@ -15,45 +15,45 @@
 //= require_tree .
 
 
-function getRandomInt() {
-  min = Math.ceil(1);
-  max = Math.floor(7);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function randomColor() {
-  var num = getRandomInt()
-  if (num === 1) {
-    return 'pink lighten-3'
-  } else if (num === 2){
-    return 'purple accent-2'
-  } else if (num === 3) {
-    return 'indigo accent-1'
-  } else if (num === 4) {
-    return 'green accent-4'
-  } else if (num === 5) {
-    return 'teal lighten-1'
-  } else if (num === 6) {
-    return 'orange lighten-1'
-  }
-};
-
-function randomPhrase() {
-  var num = getRandomInt()
-  if (num === 1) {
-    return "Your song was added. Let's party!"
-  } else if (num === 2){
-    return "Woohoo! Song added!"
-  } else if (num === 3) {
-    return 'Nice taste in music! Song added.'
-  } else if (num === 4) {
-    return 'Achievement unlocked! Just kidding. Your song was still added though!'
-  } else if (num === 5) {
-    return 'Song added, sweet pick!'
-  } else if (num === 6) {
-    return 'Your song was successfully added, now go vote it up the Q!'
-  }
-};
+// function getRandomInt() {
+//   min = Math.ceil(1);
+//   max = Math.floor(7);
+//   return Math.floor(Math.random() * (max - min)) + min;
+// }
+//
+// function randomColor() {
+//   var num = getRandomInt()
+//   if (num === 1) {
+//     return 'pink lighten-3'
+//   } else if (num === 2){
+//     return 'purple accent-2'
+//   } else if (num === 3) {
+//     return 'indigo accent-1'
+//   } else if (num === 4) {
+//     return 'green accent-4'
+//   } else if (num === 5) {
+//     return 'teal lighten-1'
+//   } else if (num === 6) {
+//     return 'orange lighten-1'
+//   }
+// };
+//
+// function randomPhrase() {
+//   var num = getRandomInt()
+//   if (num === 1) {
+//     return "Your song was added. Let's party!"
+//   } else if (num === 2){
+//     return "Woohoo! Song added!"
+//   } else if (num === 3) {
+//     return 'Nice taste in music! Song added.'
+//   } else if (num === 4) {
+//     return 'Achievement unlocked! Just kidding. Your song was still added though!'
+//   } else if (num === 5) {
+//     return 'Song added, sweet pick!'
+//   } else if (num === 6) {
+//     return 'Your song was successfully added, now go vote it up the Q!'
+//   }
+// };
 
 
 $(document).on("ready", function(){
@@ -86,7 +86,7 @@ $(document).on("ready", function(){
   var notify = $("<div>").attr('class', 'notify').css('background-color', 'red').css('display', 'hidden').css('text-align', 'center');
 
   $("body").delegate('.suggest_song1', 'click', function (event){
-      Materialize.toast(randomPhrase(), 3000, randomColor());
+      // Materialize.toast(randomPhrase(), 3000, randomColor());
        event.preventDefault();
 
        $.ajax({
@@ -98,7 +98,7 @@ $(document).on("ready", function(){
            artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
-
+         
          $('body').prepend((notify).css('display', 'block').html(data.message))
 
          $(this).addClass('suggest_song1-active');
@@ -218,7 +218,7 @@ $(document).on("ready", function(){
         status: 'down'
       }
     }).done(function(data){
-      
+
       $('body').prepend((notify).css('display', 'block').html(data.message))
       setTimeout(function(){
         $(notify).fadeOut('slow');

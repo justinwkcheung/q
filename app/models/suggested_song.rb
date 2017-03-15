@@ -4,7 +4,7 @@ class SuggestedSong < ApplicationRecord
   has_many :votes
 
     def self.next_song_id(playlist_id)
-      songs = SuggestedSong.where(playlist_id: playlist_id).order(played: :desc, net_vote: :desc)
+      songs = SuggestedSong.where(playlist_id: playlist_id).order(played: :desc, net_vote: :desc, id: :asc)
       songs.each do |song|
         if song.played == false
           @next_song = song.song_id
@@ -15,7 +15,7 @@ class SuggestedSong < ApplicationRecord
     end
 
     def self.next_song_record(playlist_id)
-      songs = SuggestedSong.where(playlist_id: playlist_id).order(played: :desc, net_vote: :desc)
+      songs = SuggestedSong.where(playlist_id: playlist_id).order(played: :desc, net_vote: :desc, id: :asc)
       songs.each do |song|
         if song.played == false
           return song.id
@@ -29,6 +29,6 @@ class SuggestedSong < ApplicationRecord
     end
 
     def self.playlist_songs(playlist_id)
-      songs = SuggestedSong.where(playlist_id: playlist_id).order(played: :desc, net_vote: :desc)
+      songs = SuggestedSong.where(playlist_id: playlist_id).order(played: :desc, net_vote: :desc, id: :asc)
     end
 end

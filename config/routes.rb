@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  get '/playlists/:id/next_song', to: 'playlists#next_song', as: 'next_song'
+
   root 'sessions#frontpage'
 
   get '/playlists/:playlist_id/suggestedsongs/access_token', to: 'suggestedsongs#access_token', as: 'access_token'
@@ -24,8 +26,6 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
 
-
-  get '/playlists/:id/next_song', to: 'playlists#next_song', as: 'next_song'
   mount ActionCable.server => '/cable'
 
   get '/auth/deezer/callback', to: 'sessions#create'

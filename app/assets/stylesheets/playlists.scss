@@ -3,6 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $player-white: #e8e8ec;
 
+.playing {
+  background-color: red;
+}
+
 .intro-bio {
   font-size: 50px;
   color: white;

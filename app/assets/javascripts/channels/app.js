@@ -50,6 +50,7 @@ $('document').ready(function(){
       }}
 
         $('.song-list').html('');
+        var timeOut = 100;
         data[0].forEach(function(data) {
 
 
@@ -58,7 +59,7 @@ $('document').ready(function(){
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
           }
           else {
-            var divContainer = $('<div>').attr('class', 'song-in-queue que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id).attr('data-deezer-id',data.song_id);
+            var divContainer = $('<div>').attr('class', 'song-in-queue hidden que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id).attr('data-deezer-id',data.song_id);
             var span = $('<span>').attr('class',"buttons")
             var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2')
             var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
@@ -75,10 +76,25 @@ $('document').ready(function(){
         var votes = $(span).append(upButton).append(" ").append(downButton)
         var div_replace = $(divContainer).html(data.name + ' - ' + data.artist + ' | Added By: ' + data.user_name)
 
-        $(div_replace).append(votes).append(heart)
+        $(div_replace).append(votes).append(heart);
+
+          if ($(div_replace).attr('class') === 'song-in-queue hidden que'){
+            setTimeout(function(){
+              $(div_replace).appendTo('.song-list');
+              $(div_replace).fadeIn('500', function(){
+              })}, timeOut)
+
+              timeOut += 100;
+          }
+          else {
+            $(div_replace).appendTo('.song-list');
+          }
 
 
-             $('.song-list').append(div_replace);
+
+          // $(div_replace).show('fast');
+
+            //  $('.song-list').append(div_replace);
 
         $('.que').first().addClass('playing');
         $('.que').first().find('.btn').addClass('hidden');

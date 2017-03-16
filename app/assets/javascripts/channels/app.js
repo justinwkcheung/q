@@ -35,8 +35,8 @@ $('document').ready(function(){
         var nextSong = data[0][data[0].length - 1].song_id;
         var nextRecord = data[0][data[0].length - 1].id;
           setTimeout(function(){DZ.player.playTracks([nextSong])}, 3000);
+          $('.que').first().find('.buttons').addClass('hidden');
           setTimeout(function(){DZ.Event.subscribe('track_end', function(){
-            console.log("Track has ended");
             $.ajax({
               url: '/playlists/' + playlist_id + '/update_song?song_id=' + nextRecord,
               method: 'get',
@@ -50,16 +50,14 @@ $('document').ready(function(){
       }}
 
         $('.song-list').html('');
-
         var timeOut = 50;
         data[0].forEach(function(song) {
-
-
-
           if (song.status == "played") {
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id);
           }
-          else {
+          else if (song.status == "playing") {
+            var divContainer = $('<div>').attr('class', 'song-in-queue playing').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id);
+          } else {
             var divContainer = $('<div>').attr('class', 'song-in-queue hidden que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id).attr('data-deezer-id',song.song_id);
             var span = $('<span>').attr('class',"buttons")
             var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2')
@@ -83,21 +81,18 @@ $('document').ready(function(){
         else {
           $(div_replace).append(votes).append(heart);
         }
-
-        $(div_replace).append(votes).append(heart);
-
           if ($(div_replace).attr('class') === 'song-in-queue hidden que'){
+            console.log('Got to hidden queue');
             setTimeout(function(){
               $(div_replace).appendTo('.song-list');
               $(div_replace).fadeIn('200', function(){
               })}, timeOut)
-
               timeOut += 50;
           }
           else {
+            console.log('Got to regular queue');
             $(div_replace).appendTo('.song-list');
           }
-
         $('.que').first().addClass('playing');
         $('.que').first().find('.btn').addClass('hidden');
       })

@@ -17,7 +17,9 @@ $.ajax({
     url: '/playlists/' + playlistId + '/update_song_playing?song_id=' + nextSongRecord,
     method: 'get',
   }).done(function(data){
-    console.log("Update song to playing");  
+    console.log("Update song to playing");
+    $('.que').first().find('.buttons').addClass('hidden');
+    $('.que').first().addClass('playing').removeClass('que');
   });
   setTimeout(function(){DZ.Event.subscribe('track_end', function(){
     console.log("Track has ended");
@@ -25,9 +27,6 @@ $.ajax({
       url: '/playlists/' + playlistId + '/update_song?song_id=' + nextSongRecord,
       method: 'get',
     }).done(function(data){
-      console.log("Update song to playing");
-      console.log("Load next song");
-      console.log(data);
       DZ.player.playTracks([data['song_id']]);
       // $('.que').first().addClass('playing');
       // $('.que').first().find('.btn').addClass('hidden').removeClass('que');

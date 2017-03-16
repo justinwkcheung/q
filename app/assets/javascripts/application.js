@@ -100,6 +100,8 @@ $(document).on("ready", function(){
            artist: $(this).parent().attr('artist')
          }
        }).done(function(data){
+         console.log(data);
+         console.log("Added song");
          $('body').prepend((notify).css('display', 'block').html(data.message))
          Materialize.toast(randomPhrase(), 3000, randomColor());
 

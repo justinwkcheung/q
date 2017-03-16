@@ -51,16 +51,16 @@ $('document').ready(function(){
 
         $('.song-list').html('');
 
-        var timeOut = 100;
-        data[0].forEach(function(data) {
+        var timeOut = 50;
+        data[0].forEach(function(song) {
 
 
 
-          if (data.played) {
-            var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
+          if (song.played) {
+            var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id);
           }
           else {
-            var divContainer = $('<div>').attr('class', 'song-in-queue hidden que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id).attr('data-deezer-id',data.song_id);
+            var divContainer = $('<div>').attr('class', 'song-in-queue hidden que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id).attr('data-deezer-id',song.song_id);
             var span = $('<span>').attr('class',"buttons")
             var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2')
             var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
@@ -78,7 +78,7 @@ $('document').ready(function(){
         var div_replace = $(divContainer).html(song.name + ' - ' + song.artist + ' | Added By: ' + song.user_name)
 
         if (data[2] === parseInt($('.delete_user_id').text())){
-          $(div_replace).append('<a rel="nofollow" data-method="delete" href="/playlists/' + playlist_id + '/suggestedsongs/' + data.id + '">Delete</a>').append(votes).append(heart);
+          $(div_replace).append('<a rel="nofollow" data-method="delete" href="/playlists/' + playlist_id + '/suggestedsongs/' + song.id + '">Delete</a>').append(votes).append(heart);
         }
         else {
           $(div_replace).append(votes).append(heart);
@@ -89,10 +89,10 @@ $('document').ready(function(){
           if ($(div_replace).attr('class') === 'song-in-queue hidden que'){
             setTimeout(function(){
               $(div_replace).appendTo('.song-list');
-              $(div_replace).fadeIn('500', function(){
+              $(div_replace).fadeIn('200', function(){
               })}, timeOut)
 
-              timeOut += 100;
+              timeOut += 50;
           }
           else {
             $(div_replace).appendTo('.song-list');

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/playlists/:playlist_id/suggestedsongs/get_artist', to: 'suggestedsongs#get_artist', as: 'get_artist'
 
   get '/playlists/:id/update_song/', to: 'playlists#update_song', as: 'update_song'
+  get '/playlists/:id/update_song_playing/', to: 'playlists#update_song_playing', as: 'update_song_playing'
 
   get '/playlists/join', to: 'playlists#join', as: 'join'
 

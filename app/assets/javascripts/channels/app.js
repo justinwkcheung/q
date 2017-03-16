@@ -16,13 +16,13 @@ $('document').ready(function(){
       var playlist_id = parseInt(regExp.exec(window.location.pathname)[0]);
 
       if (data[0].id === playlist_id) {
-        if (data[0].public === true) {
+        if (data[0].public === true) {  //public
           $('#make-public').html('Public');
           $('.que').find('.btn').addClass('hidden');
           $('.add-search-container').addClass('hidden');
           $('#make-public').toggleClass('active');;
         }
-        else if (data[0].public === false) {
+        else if (data[0].public === false) {  //private
           $('#make-public').html('Private');
           $('.que').find('.btn').removeClass('hidden');
           $('.add-search-container').removeClass('hidden');
@@ -50,6 +50,7 @@ $('document').ready(function(){
       }}
 
         $('.song-list').html('');
+
         var timeOut = 100;
         data[0].forEach(function(data) {
 
@@ -70,11 +71,18 @@ $('document').ready(function(){
           }
         var spanHeart = $('<span>').attr('class','heart')
         var iconHeart = $('<i>').attr('class','fa fa-heart').attr('style','font-size:12px')
-        var netVote = $('<span>').attr('class','netvote').attr('id',data.id).html(data.net_vote)
+        var netVote = $('<span>').attr('class','netvote').attr('id',song.id).html(song.net_vote)
 
         var heart = $(spanHeart).append(netVote).append(" ").append(iconHeart)
         var votes = $(span).append(upButton).append(" ").append(downButton)
-        var div_replace = $(divContainer).html(data.name + ' - ' + data.artist + ' | Added By: ' + data.user_name)
+        var div_replace = $(divContainer).html(song.name + ' - ' + song.artist + ' | Added By: ' + song.user_name)
+
+        if (data[2] === parseInt($('.delete_user_id').text())){
+          $(div_replace).append('<a rel="nofollow" data-method="delete" href="/playlists/' + playlist_id + '/suggestedsongs/' + data.id + '">Delete</a>').append(votes).append(heart);
+        }
+        else {
+          $(div_replace).append(votes).append(heart);
+        }
 
         $(div_replace).append(votes).append(heart);
 

@@ -15,6 +15,7 @@ $.ajax({
   setTimeout(function(){DZ.player.playTracks([nextSongId])},3000);
   $('.que').first().addClass('playing');
   $('.que').first().find('.btn').addClass('hidden');
+  $('.que').first().removeClass('que');
   setTimeout(function(){DZ.Event.subscribe('track_end', function(){
     console.log("Track has ended");
     $.ajax({
@@ -23,7 +24,7 @@ $.ajax({
     }).done(function(data){
       DZ.player.playTracks([data['song_id']]);
       $('.que').first().addClass('playing');
-      $('.que').first().find('.btn').addClass('hidden');
+      $('.que').first().find('.btn').addClass('hidden').removeClass('que');
       nextSongRecord = data['song_record'];
       })
     })},3000);

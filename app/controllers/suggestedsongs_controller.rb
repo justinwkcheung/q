@@ -4,7 +4,8 @@ class SuggestedsongsController < ApplicationController
   end
 
  def create
-
+   @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
+      
    access = Authorization.find_by(playlist_id: params[:playlist_id], user_id: session[:user_id]).status
    guest_song_count = SuggestedSong.where(playlist_id: params[:playlist_id], user_id: session[:user_id]).count
    playlist_limit = Playlist.find(params[:playlist_id]).song_limit
@@ -24,7 +25,7 @@ class SuggestedsongsController < ApplicationController
           @suggested_song.save
           render json: {message: "Song added!", status: true}
           @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-          ActionCable.server.broadcast(:app, [@songs, "restart"])
+        ActionCable.server.broadcast(:app, [@songs, "restart", @host_id])
         end
 
       else
@@ -38,7 +39,7 @@ class SuggestedsongsController < ApplicationController
           @suggested_song.save
           render json: {message: "Song added!", status: true}
           @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-          ActionCable.server.broadcast(:app, [@songs])
+          ActionCable.server.broadcast(:app, [@songs, '', @host_id])
          end
 
 
@@ -62,7 +63,7 @@ class SuggestedsongsController < ApplicationController
        @suggested_song.save
        render json: {message: "Song added!", status: true}
        @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-       ActionCable.server.broadcast(:app, [@songs, "restart"])
+       ActionCable.server.broadcast(:app, [@songs, "restart", @host_id])
      end
 
    else
@@ -76,7 +77,7 @@ class SuggestedsongsController < ApplicationController
        @suggested_song.save
        render json: {message: "Song added!", status: true}
        @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-       ActionCable.server.broadcast(:app, [@songs])
+       ActionCable.server.broadcast(:app, [@songs, '', @host_id])
       end
    end
    
@@ -132,8 +133,13 @@ class SuggestedsongsController < ApplicationController
  end
 
  def destroy
-    @suggested_song = SuggestedSong.find(params[:id])
+    @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
+    @playlist_q = Playlist.find(params[:playlist_id])
+    @suggested_song = SuggestedSong.find_by(playlist_id: @playlist_q.id, id: params[:id])
     @suggested_song.destroy
+    @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+    ActionCable.server.broadcast(:app, [@songs,'', @host_id])
+
   end
 
 end

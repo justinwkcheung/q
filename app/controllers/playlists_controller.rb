@@ -171,7 +171,6 @@ class PlaylistsController < ApplicationController
       f = [first_name, last_name, user_id, status]
       @guest_names << f
     end
-
       respond_to do |format|
         format.json do render json: @guest_names end
       end
@@ -179,8 +178,13 @@ class PlaylistsController < ApplicationController
   end
 
   def update_authorization
+
     guest_authorization = Authorization.find_by(playlist_id: params[:playlist_id], user_id: params[:user_id])
-    @authorization_update = guest_authorization.update_attribute(:status, "Forbidden")
+    if guest_authorization.status == "Guest"
+      @authorization_update = guest_authorization.update_attribute(:status, "Forbidden")
+    else
+      @authorization_update = guest_authorization.update_attribute(:status, "Guest")
+    end
   end
 
 private

@@ -3,6 +3,7 @@
   <div class="playlist-details">
   <div class="playlist-name"><%= @playlist_q.name %>&nbsp|&nbsp</div><div class="playlist-description"> <%= @playlist_q.description %>&nbsp</div><div class="playlist-code">&nbsp|&nbspAccess Code: <%=@playlist_q.access_code%></div>
     <% if @access == "Host" %>
+    <span class="guestlist-playlist"><button> <%= link_to "Guestlist", '#modal1' %> </button></span>
     <button id="make-public" type="submit" name="action">
       <%if @playlist_q.public %>
       <%= "Public" %>
@@ -93,3 +94,13 @@
   <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
 </div>
   <% end %>
+
+
+  <div class="guest-list-container modal" id="modal1">
+    <h3 class='guest-title'>Guest List</h3>
+
+    <!-- <span class="modal-action modal-close waves-effect waves-green btn-flat">X</span> -->
+    <ol>
+
+    </ol>
+  </div>

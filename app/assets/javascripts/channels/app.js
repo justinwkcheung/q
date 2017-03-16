@@ -61,7 +61,7 @@ $('document').ready(function(){
 
 
 
-          if (song.played) {
+          if (song.status == "played") {
             var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id);
           }
           else {

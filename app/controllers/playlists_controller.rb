@@ -8,6 +8,7 @@ class PlaylistsController < ApplicationController
   end
 
   def show
+    SuggestedSong.where(playlist_id: params[:id], status: "playing").update_all(status: "que")
     @access = Authorization.find_by(playlist_id: params[:id], user_id: session[:user_id])
     if @access
       @access = @access.status
@@ -29,8 +30,8 @@ class PlaylistsController < ApplicationController
     @tracks = HTTParty.get("http://api.deezer.com/search/track?q=#{params[:search]}&#{access_token}")
     @artists = HTTParty.get("http://api.deezer.com/search/artist?q=#{params[:search]}&#{access_token}")
 
-    @unplayedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: false).order(played: :desc, net_vote: :desc)
-    @playedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, played: true)
+    @unplayedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, status: "played").order(status: :desc, net_vote: :desc)
+    @playedsongs = SuggestedSong.where(playlist_id: @playlist_q.id, status: "played")
 
   end
 
@@ -42,18 +43,18 @@ class PlaylistsController < ApplicationController
       end
   end
 
+  def update_song_playing
+    SuggestedSong.find(params[:song_id]).update_attribute(:status, "playing")
+  end
+
   def update_song
-    access = Authorization.find_by(playlist_id: params[:id], user_id: session[:user_id]).status
-
-    if access == "Host"
-      SuggestedSong.find(params[:song_id]).update_attribute(:played, true)
-      @next_song_id = SuggestedSong.next_song_id(params[:id])
-      @next_song_record = SuggestedSong.next_song_record(params[:id])
-      render json: {song_id: @next_song_id, song_record: @next_song_record}
-
+    SuggestedSong.find(params[:song_id]).update_attribute(:status, "played")
+    @next_song_id = SuggestedSong.next_song_id(params[:id])
+    @next_song_record = SuggestedSong.next_song_record(params[:id])
+    SuggestedSong.find(@next_song_record).update_attribute(:status, "playing")
+    render json: {song_id: @next_song_id, song_record: @next_song_record}
       @songs =  SuggestedSong.playlist_songs(params[:id])
       ActionCable.server.broadcast(:app, [@songs, '', '',   @votes])
-    end
   end
 
   def join
@@ -169,7 +170,6 @@ class PlaylistsController < ApplicationController
       f = [first_name, last_name, user_id, status]
       @guest_names << f
     end
-
       respond_to do |format|
         format.json do render json: @guest_names end
       end
@@ -177,8 +177,13 @@ class PlaylistsController < ApplicationController
   end
 
   def update_authorization
+
     guest_authorization = Authorization.find_by(playlist_id: params[:playlist_id], user_id: params[:user_id])
-    @authorization_update = guest_authorization.update_attribute(:status, "Forbidden")
+    if guest_authorization.status == "Guest"
+      @authorization_update = guest_authorization.update_attribute(:status, "Forbidden")
+    else
+      @authorization_update = guest_authorization.update_attribute(:status, "Guest")
+    end
   end
 
 private

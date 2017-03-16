@@ -3,6 +3,7 @@
   <div class="playlist-details">
   <div class="playlist-name"><%= @playlist_q.name %>&nbsp|&nbsp</div><div class="playlist-description"> <%= @playlist_q.description %>&nbsp</div><div class="playlist-code">&nbsp|&nbspAccess Code: <%=@playlist_q.access_code%></div>
     <% if @access == "Host" %>
+    <span class="guestlist-playlist"><button> <%= link_to "Guestlist", '#modal1' %> </button></span>
     <button id="make-public" type="submit" name="action">
       <%if @playlist_q.public %>
       <%= "Public" %>
@@ -60,7 +61,7 @@
 
 <div class="song-list">
   <% @songs.each do |song| %>
-    <% if song.played %>
+    <% if song.status == "played" %>
       <div class="song-in-queue played" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% else %>
       <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
@@ -78,7 +79,7 @@
           </span>
 
       <% else %>
-        <%if !(song.played) %>
+        <%if song.status != "played" %>
 
         <span class="contain">
           <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
@@ -93,3 +94,13 @@
   <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>
 </div>
   <% end %>
+
+
+  <div class="guest-list-container modal" id="modal1">
+    <h3 class='guest-title'>Guest List</h3>
+
+    <!-- <span class="modal-action modal-close waves-effect waves-green btn-flat">X</span> -->
+    <ol>
+
+    </ol>
+  </div>

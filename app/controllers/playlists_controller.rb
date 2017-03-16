@@ -157,14 +157,16 @@ class PlaylistsController < ApplicationController
       first_name = guest.user.first_name
       last_name = guest.user.last_name
       user_id = guest.user.id
-      g = [first_name, last_name, user_id]
+      status = guest.status
+      g = [first_name, last_name, user_id, status]
       @guest_names << g
     end
     forbiddens.each do |forb|
       first_name = forb.user.first_name
       last_name = forb.user.last_name
       user_id = forb.user.id
-      f = [first_name, last_name, user_id]
+      status = forb.status
+      f = [first_name, last_name, user_id, status]
       @guest_names << f
     end
 

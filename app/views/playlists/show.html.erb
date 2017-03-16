@@ -63,6 +63,8 @@
   <% @songs.each do |song| %>
     <% if song.status == "played" %>
       <div class="song-in-queue played" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
+    <% elsif song.status == "playing" %>
+      <div class="song-in-queue playing" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% else %>
       <div class="song-in-queue que" data-playlist-id=<%=@playlist_q.id%> data-suggested-song-id=<%= song.id %>>
     <% end %>
@@ -79,16 +81,15 @@
           </span>
 
       <% else %>
-        <%if song.status != "played" %>
-
-        <span class="contain">
-          <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
-        </span>
+        <%if song.status == "que" %>
+          <span class="contain">
+            <span class="buttons"><button type="button" name="button" class="upvote btn waves-effect waves-light blue lighten-2"><i class="material-icons">thumb_up</i></button>&nbsp<button type="button" name="button" class="downvote  btn waves-effect waves-light red lighten-2"><i class="material-icons">thumb_down</i></button></span> &nbsp
+          </span>
         <% else %>
           <span class="contain"></span>
         <% end %>
       <% end %>
-  <% if Authorization.where(playlist_id: @playlist_q.id, user_id: session[:user_id])[0].status == "Host" %>
+  <% if @access == "Host" %>
     <%= link_to "Delete", playlist_suggestedsong_path(@playlist_q, song), method: :delete%>
   <% end %>
   <span class="heart"><span class="netvote" id=<%=song.id%>><%= song.net_vote %></span>&nbsp<i class="fa fa-heart" style="font-size:12px"></i></span>

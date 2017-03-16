@@ -52,7 +52,7 @@ class PlaylistsController < ApplicationController
       render json: {song_id: @next_song_id, song_record: @next_song_record}
 
       @songs =  SuggestedSong.playlist_songs(params[:id])
-      ActionCable.server.broadcast(:app, [@songs])
+      ActionCable.server.broadcast(:app, [@songs, '', '',   @votes])
     end
   end
 

@@ -3,6 +3,88 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $player-white: #e8e8ec;
 
+.song-listing{
+  line-height: 2.5rem;
+  font-size: 20px;
+  margin-left: 1%;
+}
+
+
+.header {
+  display: table;
+  margin: auto;
+  font-size: 50px;
+}
+
+.header:hover{
+  text-decoration: underline;
+}
+
+.album {
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+}
+
+.album-img-container{
+  width: 90%;
+  margin: auto;
+}
+
+.album-img {
+  width: 75%;
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+}
+
+.album-img:hover{
+  opacity: 1.0;
+}
+
+.album-title {
+  text-align: center;
+  width: 88%;
+  margin: auto;
+}
+
+.album-title:hover {
+  text-decoration: underline;
+}
+
+.artist-img-container{
+  width: 90%;
+  margin: auto;
+}
+
+.artist{
+  display: inline-block;
+  width: 20%;
+  margin: auto;
+  vertical-align: top;
+}
+
+.artist-img {
+  width: 75%;
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+}
+
+.artist-img:hover{
+  opacity: 1.0;
+}
+
+.artist-title{
+  text-align:center;
+  width: 88%;
+  margin: auto;
+}
+
+.artist-title:hover {
+  text-decoration: underline;
+}
+
 .playing {
   background-color: red;
 }

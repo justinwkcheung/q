@@ -138,9 +138,9 @@ $(document).on("ready", function(){
       var tracksHeader = $('<div>').addClass('header').html('Tracks');
       $(tracksContainer).append(tracksHeader);
 
-      var allAlbums = $('div').addClass('all-albums').css('display', 'none')
+      var allAlbums = $('<div>').addClass('all-albums').css('display', 'none');
 
-      var allArtists = $('div').addClass('all-artists').css('display', 'none')
+      var allArtists = $('<div>').addClass('all-artists').css('display', 'none');
 
 
 

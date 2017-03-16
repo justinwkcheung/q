@@ -22,15 +22,21 @@ $.ajax({
     $('.que').first().addClass('playing').removeClass('que');
   });
   setTimeout(function(){DZ.Event.subscribe('track_end', function(){
-    console.log("Track has ended");
     $.ajax({
       url: '/playlists/' + playlistId + '/update_song?song_id=' + nextSongRecord,
       method: 'get',
     }).done(function(data){
+      console.log("Update previous song to played");
+      console.log("Update song in que to playing");
       DZ.player.playTracks([data['song_id']]);
-      // $('.que').first().addClass('playing');
-      // $('.que').first().find('.btn').addClass('hidden').removeClass('que');
       nextSongRecord = data['song_record'];
+      $.ajax({
+        url: '/playlists/' + playlistId + '/playlist_broadcast',
+        method: 'get',
+      }).done(function(data){
+        console.log(data);
+        console.log('created the latest playlist to send to actioncable');
+      })
       })
     })},3000);
   })

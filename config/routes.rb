@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  get '/playlists/:id/playlist_broadcast', to: 'playlists#playlist_broadcast', as: 'playlist_broadcast' 
+
   get '/playlists/:id/next_song', to: 'playlists#next_song', as: 'next_song'
 
   get '/playlists/:id/guestlist', to: 'playlists#guestlist', as: 'guestlist'

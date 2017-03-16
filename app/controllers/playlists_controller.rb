@@ -1,4 +1,5 @@
 class PlaylistsController < ApplicationController
+$counter = 0
 
   def player
     render :player, layout: false
@@ -48,13 +49,17 @@ class PlaylistsController < ApplicationController
   end
 
   def update_song
-    SuggestedSong.find(params[:song_id]).update_attribute(:status, "played")
-    @next_song_id = SuggestedSong.next_song_id(params[:id])
-    @next_song_record = SuggestedSong.next_song_record(params[:id])
-    SuggestedSong.find(@next_song_record).update_attribute(:status, "playing")
-    render json: {song_id: @next_song_id, song_record: @next_song_record}
+      SuggestedSong.find(params[:song_id]).update_attribute(:status, "played")
+      @next_song_id = SuggestedSong.next_song_id(params[:id])
+      @next_song_record = SuggestedSong.next_song_record(params[:id])
+      SuggestedSong.find(@next_song_record).update_attribute(:status, "playing")
+      render json: {song_id: @next_song_id, song_record: @next_song_record}
+  end
+
+  def playlist_broadcast
       @songs =  SuggestedSong.playlist_songs(params[:id])
-      ActionCable.server.broadcast(:app, [@songs, '', '',   @votes])
+      @votes = Vote.get_votes(params[:id])
+      ActionCable.server.broadcast(:app, [@songs, '', '', @votes])
   end
 
   def join

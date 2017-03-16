@@ -151,18 +151,32 @@ class PlaylistsController < ApplicationController
 
   def guestlist
     guests = Authorization.where(playlist_id: params[:id], status: "Guest")
+    forbiddens = Authorization.where(playlist_id: params[:id], status: "Forbidden")
     @guest_names = []
     guests.each do |guest|
       first_name = guest.user.first_name
       last_name = guest.user.last_name
-      g = [first_name, last_name]
+      user_id = guest.user.id
+      g = [first_name, last_name, user_id]
       @guest_names << g
+    end
+    forbiddens.each do |forb|
+      first_name = forb.user.first_name
+      last_name = forb.user.last_name
+      user_id = forb.user.id
+      f = [first_name, last_name, user_id]
+      @guest_names << f
     end
 
       respond_to do |format|
         format.json do render json: @guest_names end
       end
 
+  end
+
+  def update_authorization
+    guest_authorization = Authorization.find_by(playlist_id: params[:playlist_id], user_id: params[:user_id])
+    @authorization_update = guest_authorization.update_attribute(:status, "Forbidden")
   end
 
 private

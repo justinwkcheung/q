@@ -53,9 +53,8 @@ class PlaylistsController < ApplicationController
     @next_song_record = SuggestedSong.next_song_record(params[:id])
     SuggestedSong.find(@next_song_record).update_attribute(:status, "playing")
     render json: {song_id: @next_song_id, song_record: @next_song_record}
-
-    @songs =  SuggestedSong.playlist_songs(params[:id])
-    ActionCable.server.broadcast(:app, [@songs])
+      @songs =  SuggestedSong.playlist_songs(params[:id])
+      ActionCable.server.broadcast(:app, [@songs, '', '',   @votes])
   end
 
   def join

@@ -125,7 +125,27 @@ $(document).on("ready", function(){
       dataType: 'json'
     }).done(function(data){
       console.log(data);
-      $('#search_results').html('').append('<h5 id="search_results_albums">Albums</h5>').append('<h5 id="search_results_artists">Artists</h5>').append('<h5 id="search_results_tracks">Tracks</h5>');
+      var albumsContainer = $('<div>').attr('id', 'search_results_albums')
+      var albumsHeader = $('<div>').addClass('header').html('Albums');
+      $(albumsContainer).append(albumsHeader);
+
+      var artistsContainer = $('<div>').attr('id', 'search_results_artists');
+      var artistsHeader = $('<div>').addClass('header').html('Artists');
+      $(artistsContainer).append(artistsHeader);
+
+
+      var tracksContainer = $('<div>').attr('id', 'search_results_tracks')
+      var tracksHeader = $('<div>').addClass('header').html('Tracks');
+      $(tracksContainer).append(tracksHeader);
+
+      var allAlbums = $('div').addClass('all-albums').css('display', 'none')
+
+      var allArtists = $('div').addClass('all-artists').css('display', 'none')
+
+
+
+      $('#search_results').html('').append(albumsContainer).append(artistsContainer).append(tracksContainer);
+
       for (var i = 0; i < data['tracks']['data'].length; i++){
         var button = $('<button>')
         var button = $(button).attr('class', 'suggest_song1');
@@ -134,32 +154,45 @@ $(document).on("ready", function(){
 
 
 
-        $(div).html(data["tracks"]['data'][i]["title"]).append(' - ').append(data["tracks"]['data'][i]["artist"]["name"]).append(button);
+        $(div).html(data["tracks"]['data'][i]["title"]).append(' - ').append(data["tracks"]['data'][i]["artist"]["name"]).append('&nbsp;').append(button);
         $('#search_results_tracks').append(div);
       }
-      for (var i = 0; i < 16; i++){
-        var button = $('<button>').attr('class', 'search-album')
-        var div = $('<div>').attr('album_title', data["albums"]['data'][i]['title']).attr('album-id', data["albums"]['data'][i]['id']);
-        $(div).html(data["albums"]['data'][i]["title"]).append(button);
-        $('#search_results_albums').append(div);
-      }
 
-      for (var i = 0; i < 11; i++){
-        var button = $('<button>').attr('class', 'search-artist')
-        var div = $('<div>').attr('artist-name', data["artists"]['data'][i]['name']).attr('artist-id', data["artists"]['data'][i]['id']);
-        $(div).html(data["artists"]['data'][i]["name"]).append(button);
-        $('#search_results_artists').append(div);
-      }
+      var contain = $('<div>').addClass('contain');
+      for (var i = 0; i < 5; i++){
+        var div = $('<div>').addClass('album').attr('album_title', data["albums"]['data'][i]['title']).attr('album-id', data["albums"]['data'][i]['id']);
+        var image_container = $('<div>').addClass('album-img-container');
+        var img = $('<img>').attr('src',data["albums"]['data'][i]["cover_medium"]).addClass('album-img');
+        image_container =$(image_container).append(img);
+        var album_title = $('<div>').addClass('album-title').html(data["albums"]['data'][i]["title"]);
 
+        $(contain).append((div).append(image_container).append(album_title));
+
+      }
+        $('#search_results_albums').append(contain);
+
+      var contain = $('<div>').addClass('contain');
+      for (var i = 0; i < 5; i++){
+
+        var div = $('<div>').addClass('artist').attr('artist-name', data["artists"]['data'][i]['name']).attr('artist-id', data["artists"]['data'][i]['id']);
+        var image_container = $('<div>').addClass('artist-img-container');
+        var img = $('<img>').attr('src',data["artists"]['data'][i]["picture_medium"]).addClass('artist-img');
+        image_container =$(image_container).append(img);
+        var artist_title = $('<div>').addClass('artist-title').html(data["artists"]['data'][i]["name"]);
+
+        $(contain).append((div).append(image_container).append(artist_title));
+
+      }
+        $('#search_results_artists').append(contain);
     })
    })
 
 
 
-   $("body").delegate('.search-album','click',function(event) {
+   $("body").delegate('.album','click',function(event) {
      event.preventDefault();
 
-     var album_id = parseInt($(this).parent().attr('album-id'));
+     var album_id = parseInt($(this).attr('album-id'));
 
      $.ajax({
        url: '/playlists/' + playlistId + '/suggestedsongs/get_album',
@@ -181,12 +214,12 @@ $(document).on("ready", function(){
      })
    })
 
-   $("body").delegate('.search-artist','click',function(event) {
+   $("body").delegate('.artist','click',function(event) {
      event.preventDefault();
 
      console.log("this button was clicked!");
     //  console.log($(this).parent().text());
-     var artist_id = parseInt($(this).parent().attr('artist-id'));
+     var artist_id = parseInt($(this).attr('artist-id'));
 
      console.log(artist_id);
 

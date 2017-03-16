@@ -171,7 +171,6 @@ class PlaylistsController < ApplicationController
       f = [first_name, last_name, user_id, status]
       @guest_names << f
     end
-
       respond_to do |format|
         format.json do render json: @guest_names end
       end

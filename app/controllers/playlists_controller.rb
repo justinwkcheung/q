@@ -78,7 +78,7 @@ class PlaylistsController < ApplicationController
   def new
     @playlist_q = Playlist.new
     @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
-
+    @song_limits = ['None', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   end
 
   def destroy
@@ -95,11 +95,19 @@ class PlaylistsController < ApplicationController
     end
     #in case the playlist_q doesnt save, in the render :new, there needs to be an @playlist
 
+    if playlist_params[:song_limit] == "None"
+      song_limit = 1000
+    else
+      song_limit = playlist_params[:song_limit]
+    end
+
     @playlist_q = Playlist.new(
       name: playlist_params[:name],
       description: playlist_params[:description],
       theme: playlist_params[:theme],
-      access_code: access_code)
+      access_code: access_code,
+      song_limit: song_limit
+      )
     if @playlist_q.save
       @authorization = Authorization.new(
         playlist_id: @playlist_q.id,
@@ -118,7 +126,8 @@ class PlaylistsController < ApplicationController
 
   def edit
     @playlist_q = Playlist.find(params[:id])
-    @themes = ['House/EDM', 'Rock', 'Pop', 'Rap', 'Hip-Hop', 'R&B', 'Country', 'Other']
+    @themes = ['Pop', 'Alternative', 'Dance', 'Folk', 'Instrumental', 'Chill', 'Party', 'Blues', 'House/EDM', 'Rock', 'Rap', 'Hip-Hop', 'R&B', 'Electronic', 'Indie', 'Jazz', 'Reggae', 'Country', 'Other'].sort
+    @song_limits = ['None', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   end
 
   def update
@@ -140,10 +149,42 @@ class PlaylistsController < ApplicationController
     ActionCable.server.broadcast(:app, [@playlist])
   end
 
+  def guestlist
+    guests = Authorization.where(playlist_id: params[:id], status: "Guest")
+    forbiddens = Authorization.where(playlist_id: params[:id], status: "Forbidden")
+    @guest_names = []
+    guests.each do |guest|
+      first_name = guest.user.first_name
+      last_name = guest.user.last_name
+      user_id = guest.user.id
+      status = guest.status
+      g = [first_name, last_name, user_id, status]
+      @guest_names << g
+    end
+    forbiddens.each do |forb|
+      first_name = forb.user.first_name
+      last_name = forb.user.last_name
+      user_id = forb.user.id
+      status = forb.status
+      f = [first_name, last_name, user_id, status]
+      @guest_names << f
+    end
+
+      respond_to do |format|
+        format.json do render json: @guest_names end
+      end
+
+  end
+
+  def update_authorization
+    guest_authorization = Authorization.find_by(playlist_id: params[:playlist_id], user_id: params[:user_id])
+    @authorization_update = guest_authorization.update_attribute(:status, "Forbidden")
+  end
+
 private
-  
+
   def playlist_params
-      params.require(:playlist).permit(:name, :description, :theme)
+      params.require(:playlist).permit(:name, :description, :theme, :song_limit)
   end
 
 

@@ -19,32 +19,40 @@ $(document).on("ready", function(){
         if (guest[3] === 'Guest') {
           var li = $('<li>').attr('class','guest').attr("guest-id", guest[2]);
           var span = $('<span>').html(guest[0] + ' ' + guest[1]);
-          var guestDelete = $('<button>').html("Remove Guest").addClass('btn-flat').addClass('guest-delete')
+          var guestDelete = $('<button>').html("Block Guest").addClass('btn-flat').addClass('guest-delete')
           var guestdiv = $(li).append(span).append(guestDelete);
           $('.guest-list-container ol').append(guestdiv);
-          $('.guest-delete').on('click', function() {
-            var guestId = parseInt($(this).parents('.guest').attr("guest-id"))
-            console.log("[" + playlistId + "," + guestId + "]");
-            $.ajax({
-              url: '/playlists/' + playlistId + '/update_authorization',
-              method: "POST",
-              data: {
-               playlist_id: playlistId,
-               user_id: guestId
-             }
-            }).done(function(data) {
-               console.log('updating');
-            })
-
-          })
         } else {
           var li = $('<li>').attr('class','guest').attr("guest-id", guest[2]);
           var span = $('<span>').html(guest[0] + ' ' + guest[1]);
-          var guestForbidden = $('<span>').html("Blacklisted from playlist!").addClass('forbidden-guest')
+          var guestForbidden = $('<button>').html("Unblock Guest").addClass('btn-flat').addClass('guest-delete')
           var guestdiv = $(li).append(span).append(guestForbidden);
           $('.guest-list-container ol').append(guestdiv);
         };
       });
+      $('body').delegate('.guest-delete', 'click', function(event) {
+
+        var guestId = parseInt($(this).parents('.guest').attr("guest-id"))
+        console.log("[" + playlistId + "," + guestId + "]");
+        $.ajax({
+          url: '/playlists/' + playlistId + '/update_authorization',
+          method: "POST",
+          data: {
+            playlist_id: playlistId,
+            user_id: guestId
+          }
+        }).done(function(data) {
+          console.log('updating');
+          if ($('.guest-delete').html()==="Block Guest") {
+            console.log('changing to unblock');
+            $('.guest-delete').html('Unblock Guest')
+          } else {
+            console.log('changing to block');
+            $('.guest-delete').html('Block Guest')
+          }
+        })
+
+      })
     });
   });
 
@@ -55,41 +63,49 @@ $(document).on("ready", function(){
     $.ajax({
        url:'/playlists/' + playlistId + '/guestlist',
        method:'GET',
-    }).done(function(data) {
-      console.log(data);
-      $('.guest-list-container ol').html('');
-      data.forEach(function(guest){
-        if (guest[3] === 'Guest') {
-          var li = $('<li>').attr('class','guest').attr("guest-id", guest[2]);
-          var span = $('<span>').html(guest[0] + ' ' + guest[1]);
-          var guestDelete = $('<button>').html("Remove Guest").addClass('btn-flat').addClass('guest-delete')
-          var guestdiv = $(li).append(span).append(guestDelete);
-          $('.guest-list-container ol').append(guestdiv);
-          $('.guest-delete').on('click', function() {
-            var guestId = parseInt($(this).parents('.guest').attr("guest-id"))
-            console.log("[" + playlistId + "," + guestId + "]");
-            $.ajax({
-              url: '/playlists/' + playlistId + '/update_authorization',
-              method: "POST",
-              data: {
-               playlist_id: playlistId,
-               user_id: guestId
-             }
-            }).done(function(data) {
-               console.log('updating');
-            })
+     }).done(function(data) {
+       console.log(data);
+       $('.guest-list-container ol').html('');
+       data.forEach(function(guest){
+         if (guest[3] === 'Guest') {
+           var li = $('<li>').attr('class','guest').attr("guest-id", guest[2]);
+           var span = $('<span>').html(guest[0] + ' ' + guest[1]);
+           var guestDelete = $('<button>').html("Block Guest").addClass('btn-flat').addClass('guest-delete')
+           var guestdiv = $(li).append(span).append(guestDelete);
+           $('.guest-list-container ol').append(guestdiv);
+         } else {
+           var li = $('<li>').attr('class','guest').attr("guest-id", guest[2]);
+           var span = $('<span>').html(guest[0] + ' ' + guest[1]);
+           var guestForbidden = $('<button>').html("Unblock Guest").addClass('btn-flat').addClass('guest-delete')
+           var guestdiv = $(li).append(span).append(guestForbidden);
+           $('.guest-list-container ol').append(guestdiv);
+         };
+       });
+       $('body').delegate('.guest-delete', 'click', function(event) {
 
-          })
-        } else {
-          var li = $('<li>').attr('class','guest').attr("guest-id", guest[2]);
-          var span = $('<span>').html(guest[0] + ' ' + guest[1]);
-          var guestForbidden = $('<span>').html("Blacklisted from playlist!").addClass('forbidden-guest')
-          var guestdiv = $(li).append(span).append(guestForbidden);
-          $('.guest-list-container ol').append(guestdiv);
-        };
-      });
-    });
-  });
+         var guestId = parseInt($(this).parents('.guest').attr("guest-id"))
+         console.log("[" + playlistId + "," + guestId + "]");
+         $.ajax({
+           url: '/playlists/' + playlistId + '/update_authorization',
+           method: "POST",
+           data: {
+             playlist_id: playlistId,
+             user_id: guestId
+           }
+         }).done(function(data) {
+           console.log('updating');
+           if ($('.guest-delete').html()==="Block Guest") {
+             console.log('changing to unblock');
+             $('.guest-delete').html('Unblock Guest')
+           } else {
+             console.log('changing to block');
+             $('.guest-delete').html('Block Guest')
+           }
+         })
+
+       })
+     });
+   });
 });
 
 

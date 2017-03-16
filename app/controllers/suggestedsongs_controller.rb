@@ -84,6 +84,32 @@ class SuggestedsongsController < ApplicationController
 
  end
 
+ def get_album
+    response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=&output=json")
+    access_token = response["access_token"]
+    @album_results = HTTParty.get("http://api.deezer.com/album/#{params[:album]}")
+
+   if request.xhr?
+     respond_to do |format|
+       format.json do render json: {albums:  @album_results} end
+     end
+   end
+
+ end
+
+ def get_artist
+   response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=&output=json")
+   access_token = response["access_token"]
+   @artist_results = HTTParty.get("https://api.deezer.com/artist/#{params[:artist]}/top?limit=25/")
+
+   if request.xhr?
+     respond_to do |format|
+       format.json do render json: {artists:  @artist_results} end
+     end
+   end
+
+ end
+
   def index
     @playlist_q = Playlist.find(params[:playlist_id])
 

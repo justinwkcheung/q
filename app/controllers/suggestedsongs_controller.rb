@@ -5,7 +5,7 @@ class SuggestedsongsController < ApplicationController
 
  def create
    @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
-      
+
    access = Authorization.find_by(playlist_id: params[:playlist_id], user_id: session[:user_id]).status
    guest_song_count = SuggestedSong.where(playlist_id: params[:playlist_id], user_id: session[:user_id]).count
    playlist_limit = Playlist.find(params[:playlist_id]).song_limit
@@ -80,7 +80,7 @@ class SuggestedsongsController < ApplicationController
        ActionCable.server.broadcast(:app, [@songs, '', @host_id])
       end
    end
-   
+
  end
 
  end

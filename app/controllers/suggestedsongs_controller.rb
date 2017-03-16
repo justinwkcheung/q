@@ -4,37 +4,110 @@ class SuggestedsongsController < ApplicationController
   end
 
  def create
-    @songs_before = SuggestedSong.playlist_songs(params[:playlist_id])
-    @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
+   @host_id = Authorization.where(playlist_id: params[:playlist_id], status: "Host")[0].user_id
+      
+   access = Authorization.find_by(playlist_id: params[:playlist_id], user_id: session[:user_id]).status
+   guest_song_count = SuggestedSong.where(playlist_id: params[:playlist_id], user_id: session[:user_id]).count
+   playlist_limit = Playlist.find(params[:playlist_id]).song_limit
 
-    if @songs_before.where(played: true).length == @songs_before.length
-        @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
-       if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
-        (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
-        render json: {message: "Track is already Q'd up", status: false}
-       else
-        @suggested_song.save
-        render json: {message: "Song added!", status: true}
-        @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+   if access == "Guest"
+
+     if guest_song_count < playlist_limit
+
+      @songs_before = SuggestedSong.playlist_songs(params[:playlist_id])
+
+      if @songs_before.where(played: true).length == @songs_before.length
+          @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+         if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
+          (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+          render json: {message: "Track is already Q'd up", status: false}
+         else
+          @suggested_song.save
+          render json: {message: "Song added!", status: true}
+          @songs = SuggestedSong.playlist_songs(params[:playlist_id])
         ActionCable.server.broadcast(:app, [@songs, "restart", @host_id])
+        end
+
+      else
+
+        @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+
+        if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
+          (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+          render json: {message: "Track is already Q'd up", status: false}
+         else
+          @suggested_song.save
+          render json: {message: "Song added!", status: true}
+          @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+          ActionCable.server.broadcast(:app, [@songs, '', @host_id])
+         end
+
+
       end
 
-    else
+     else
+      render json: {message: "You've reached your maximum number of song adds!"}
 
-      @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+     end
 
+ else
+
+   @songs_before = SuggestedSong.playlist_songs(params[:playlist_id])
+
+   if @songs_before.where(played: true).length == @songs_before.length
+       @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
       if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
-        (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
-        render json: {message: "Track is already Q'd up", status: false}
-       else
-        @suggested_song.save
-        render json: {message: "Song added!", status: true}
-        @songs = SuggestedSong.playlist_songs(params[:playlist_id])
-        ActionCable.server.broadcast(:app, [@songs, '', @host_id])
-       end
+       (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+       render json: {message: "Track is already Q'd up", status: false}
+      else
+       @suggested_song.save
+       render json: {message: "Song added!", status: true}
+       @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+       ActionCable.server.broadcast(:app, [@songs, "restart", @host_id])
+     end
 
+   else
 
-    end
+     @suggested_song = SuggestedSong.new(song_id: params[:song_id], user_id: session[:user_id], user_name: User.find(session[:user_id]).first_name, playlist_id: params[:playlist_id], name: params[:name], artist: params[:artist])
+
+     if SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id]).count > 0 &&
+       (SuggestedSong.where(playlist_id: params[:playlist_id], song_id: params[:song_id])).last.played == false
+       render json: {message: "Track is already Q'd up", status: false}
+      else
+       @suggested_song.save
+       render json: {message: "Song added!", status: true}
+       @songs = SuggestedSong.playlist_songs(params[:playlist_id])
+       ActionCable.server.broadcast(:app, [@songs, '', @host_id])
+      end
+   end
+   
+ end
+
+ end
+
+ def get_album
+    response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=&output=json")
+    access_token = response["access_token"]
+    @album_results = HTTParty.get("http://api.deezer.com/album/#{params[:album]}")
+
+   if request.xhr?
+     respond_to do |format|
+       format.json do render json: {albums:  @album_results} end
+     end
+   end
+
+ end
+
+ def get_artist
+   response = HTTParty.get("https://connect.deezer.com/oauth/access_token.php?app_id=#{ENV["deezer_application_id"]}&secret=#{ENV["deezer_secret_key"]}&code=&output=json")
+   access_token = response["access_token"]
+   @artist_results = HTTParty.get("https://api.deezer.com/artist/#{params[:artist]}/top?limit=25/")
+
+   if request.xhr?
+     respond_to do |format|
+       format.json do render json: {artists:  @artist_results} end
+     end
+   end
 
  end
 

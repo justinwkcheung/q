@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310042213) do
+ActiveRecord::Schema.define(version: 20170315191647) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "authorizations", force: :cascade do |t|
     t.integer  "playlist_id"
@@ -29,6 +32,7 @@ ActiveRecord::Schema.define(version: 20170310042213) do
     t.string   "theme"
     t.integer  "access_code"
     t.boolean  "public",      default: false
+    t.integer  "song_limit"
   end
 
   create_table "suggested_songs", force: :cascade do |t|

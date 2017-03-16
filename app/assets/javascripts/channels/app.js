@@ -47,16 +47,20 @@ $('document').ready(function(){
               })
             })}
           , 3000)
-      }
+      }}
 
         $('.song-list').html('');
-        data[0].forEach(function(song) {
 
-          if (song.played) {
-            var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id);
+        var timeOut = 100;
+        data[0].forEach(function(data) {
+
+
+
+          if (data.played) {
+            var divContainer = $('<div>').attr('class', 'song-in-queue played').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id);
           }
           else {
-            var divContainer = $('<div>').attr('class', 'song-in-queue que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id).attr('data-deezer-id',data.song_id);
+            var divContainer = $('<div>').attr('class', 'song-in-queue hidden que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', data.id).attr('data-deezer-id',data.song_id);
             var span = $('<span>').attr('class',"buttons")
             var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2')
             var iconUp = $('<i>').attr('class','material-icons').html('thumb_up')
@@ -80,15 +84,29 @@ $('document').ready(function(){
           $(div_replace).append(votes).append(heart);
         }
 
-        $('.song-list').append(div_replace);
-          })
+        $(div_replace).append(votes).append(heart);
 
-          $('.que').first().addClass('playing');
-          $('.que').first().find('.btn').addClass('hidden').removeClass('que');
+          if ($(div_replace).attr('class') === 'song-in-queue hidden que'){
+            setTimeout(function(){
+              $(div_replace).appendTo('.song-list');
+              $(div_replace).fadeIn('500', function(){
+              })}, timeOut)
 
-      }
+              timeOut += 100;
+          }
+          else {
+            $(div_replace).appendTo('.song-list');
+          }
+
+        $('.que').first().addClass('playing');
+        $('.que').first().find('.btn').addClass('hidden');
+      })
 
     }
-    })
+
+
+})
+
   }
+
 )

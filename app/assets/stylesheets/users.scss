@@ -80,6 +80,9 @@ label {
   width: 100%
 }
 
+.hidden {
+  display: none;
+}
 
 input {
   // background-color: white;
@@ -94,6 +97,25 @@ input {
   .play-title {
     color: white;
   }
+}
+
+.guest-title {
+  text-decoration: none;
+  color: cadetblue;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+.guest {
+    color: slategray;
+}
+
+.guest-delete {
+  float: right;
+}
+
+.forbidden-guest{
+  float: right;
 }
 
 h3 {

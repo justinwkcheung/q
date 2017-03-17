@@ -18,8 +18,9 @@
 
 
     <nav class='nav_bar'>
-      <!-- <h3 class = "q">Q</h3> -->
-      <%= image_tag("Q.png") %>
+      <%= link_to root_path do %>
+        <%= image_tag("Q.png") %>
+      <% end %>
       <p class="user_info">
         <% if current_user %>
         Hello <%= link_to "#{current_user.first_name}!", user_path(session[:user_id]) %>

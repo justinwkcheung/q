@@ -17,15 +17,9 @@
 
 
     <nav class='nav_bar'>
-    <% if session[:user_id] %>
-      <%= link_to user_path(session[:user_id]) do %>
-        <%= image_tag("Q.png") %>
-      <% end %>
-      <% else %>
         <%= link_to root_path do %>
           <%= image_tag("Q.png") %>
         <% end %>
-    <% end %>
       <p class="user_info">
         <% if current_user %>
 

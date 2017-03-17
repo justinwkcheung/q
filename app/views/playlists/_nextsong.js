@@ -26,8 +26,6 @@ $.ajax({
       url: '/playlists/' + playlistId + '/update_song?song_id=' + nextSongRecord,
       method: 'get',
     }).done(function(data){
-      console.log("Update previous song to played");
-      console.log("Update song in que to playing");
       DZ.player.playTracks([data['song_id']]);
       nextSongRecord = data['song_record'];
       $.ajax({

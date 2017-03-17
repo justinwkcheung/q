@@ -52,8 +52,15 @@ $counter = 0
       SuggestedSong.find(params[:song_id]).update_attribute(:status, "played")
       @next_song_id = SuggestedSong.next_song_id(params[:id])
       @next_song_record = SuggestedSong.next_song_record(params[:id])
-      SuggestedSong.find(@next_song_record).update_attribute(:status, "playing")
-      render json: {song_id: @next_song_id, song_record: @next_song_record}
+      songs = SuggestedSong.playlist_songs(params[:song_id])
+      status = []
+      songs.each do |song|
+        status << song.status
+      end
+      if !status.include?('playing')
+        SuggestedSong.find(@next_song_record).update_attribute(:status, "playing")
+        render json: {song_id: @next_song_id, song_record: @next_song_record}
+      end
   end
 
   def playlist_broadcast

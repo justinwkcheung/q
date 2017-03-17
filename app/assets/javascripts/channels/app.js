@@ -36,24 +36,24 @@ $('document').ready(function(){
         console.log('we are in restarting');
         var nextSong = data[0][data[0].length - 1].song_id;
         var nextRecord = data[0][data[0].length - 1].id;
-          setTimeout(function(){DZ.player.playTracks([nextSong])}, 3000);
+          setTimeout(function(){DZ.player.playTracks([nextSong])}, 4000);
           $.ajax({
-            url: '/playlists/' + playlistId + '/update_song_playing?song_id=' + nextRecord,
+            url: '/playlists/' + playlist_id + '/update_song_playing?song_id=' + nextRecord,
             method: 'get',
-          }).done(function(data){
-            console.log("Update song to playing");
           });
           setTimeout(function(){DZ.Event.subscribe('track_end', function(){
             $.ajax({
               url: '/playlists/' + playlist_id + '/update_song?song_id=' + nextRecord,
               method: 'get',
             }).done(function(data){
-              nextRecord = data['song_record'];
-              nextSong = data['song_id'];
-              DZ.player.playTracks([nextSong]);
+              DZ.player.playTracks([data['song_id']]);
+              nextSongRecord = data['song_record'];
+              $.ajax({
+                url: '/playlists/' + playlist_id + '/playlist_broadcast',
+                method: 'get',
               })
-            })}
-          , 3000);
+              })
+            })},4000);
       }}
 
         $('.song-list').html('');
@@ -71,7 +71,7 @@ $('document').ready(function(){
             var divContainer = $('<div>').attr('class', 'song-in-queue playing').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id);
             console.log(divContainer);
           } else if (song.status === "que") {
-            var divContainer = $('<div>').attr('class', 'song-in-queue hidden que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id).attr('data-deezer-id',song.song_id);
+            var divContainer = $('<div>').attr('class', 'song-in-queue que').attr('data-playlist-id', playlist_id).attr('data-suggested-song-id', song.id).attr('data-deezer-id',song.song_id);
             console.log(divContainer);
             var span = $('<span>').attr('class',"buttons");
             var buttonUp = $('<button>').attr('type',"button").attr('name','button').attr('class','upvote btn waves-effect waves-light blue lighten-2');
@@ -111,23 +111,11 @@ $('document').ready(function(){
           $(div_replace).append(votes).append(heart);
         }
 
-        if ($(div_replace).attr('class') === 'song-in-queue hidden que'){
-            setTimeout(function(){
-              $(div_replace).appendTo('.song-list');
-              $(div_replace).fadeIn('200', function(){
-              })}, timeOut);
-              timeOut += 50;
-          }
-          else if (($(div_replace).attr('class') === 'song-in-queue playing') || ($(div_replace).attr('class') === 'song-in-queue played')) {
-            console.log('Got to regular playing/played');
-            $(div_replace).appendTo('.song-list');
-          }
+
+        $(div_replace).appendTo('.song-list');
 
       })
-      $('.que').first().addClass('playing');
-      $('.que').first().find('.btn').addClass('hidden');
-      console.log(hidden_append_counter);
-      console.log(regular_append_counter);
+
     }
 
 

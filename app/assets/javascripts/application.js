@@ -88,7 +88,6 @@ $(document).on("ready", function(){
   var notify = $("<div>").attr('class', 'notify').css('background-color', 'red').css('display', 'hidden').css('text-align', 'center');
 
   $("body").delegate('.suggest_song1', 'click', function (event){
-    Materialize.toast(randomPhrase(), 3000, randomColor());
        event.preventDefault();
        console.log("this button was clicked");
        $.ajax({

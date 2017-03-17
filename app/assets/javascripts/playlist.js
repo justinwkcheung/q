@@ -32,10 +32,6 @@ function randomPhrase() {
 
 $(document).on("ready", function(){
 
-  $('.suggest_song1').on('click', function() {
-    Materialize.toast(randomPhrase(), 3000, randomColor())
-  });
-
   $('.song-in-queue')
     .on('mouseenter', function(){ $(this).addClass('blue-grey darken-4') })
     .on('mouseleave', function() { $(this).removeClass('blue-grey darken-4') });
